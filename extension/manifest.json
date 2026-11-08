@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "ClipGo - YouTube / Instagram 视频下载",
+  "short_name": "ClipGo",
+  "version": "1.0.0",
+  "description": "一键把 YouTube 和 Instagram 视频下载为 MP4（需安装 ClipGo 本地助手）。",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuSmrG5BcuUT70oaikXbKu5YvO+YPPRSgQV4xhJ8ZnbW1DtqD4s8gAol4CdOtRPmAXKvPwMFHzi5fIzd8HqfDDf0KT22XXIaPcA1uVV8LLy3n+0Zi/HOd7SR3mdieF2eAtbiP9eLvFotovIqIq8728Yr/fy9relejjrwVEGc01XFAOkeCTRNq54XaOe167Y/Pq3RvbOJ6g7R1qFQOqzGZdX4pBrvUi+I0CrFQzlMYk4WLYKRVp7Bp/bN+YF/maV4oBd2g+2+W02XGO1Zu8vb023QzBMwpme33Y7VqE4EaiXTLVqRVEWyEWpExdXxAngBeg5WzHmiNezjSyaPGhqtDjwIDAQAB",
+  "minimum_chrome_version": "111",
+  "permissions": ["nativeMessaging", "storage", "contextMenus", "cookies", "notifications", "activeTab"],
+  "host_permissions": [
+    "*://*.youtube.com/*",
+    "*://youtu.be/*",
+    "*://*.instagram.com/*"
+  ],
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/*", "*://*.instagram.com/*"],
+      "js": ["common.js", "content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "ClipGo",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

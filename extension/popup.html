@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>ClipGo</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <img src="icons/icon32.png" width="22" height="22" alt="">
+      <span>ClipGo</span>
+    </div>
+    <button id="helperStatus" class="status" title="本地助手状态">
+      <i class="dot"></i><span>检测助手…</span>
+    </button>
+  </header>
+
+  <section id="setup" class="setup" hidden>
+    <h2>还差一步：安装本地助手</h2>
+    <p>ClipGo 通过本机的 yt-dlp + ffmpeg 下载并合成 MP4，需要先安装一次助手（约 150MB）。</p>
+    <div class="os">
+      <b>Windows</b>
+      <span>双击 <code>host\install-windows.bat</code></span>
+    </div>
+    <div class="os">
+      <b>macOS</b>
+      <span>终端运行 <code>bash host/install-mac.sh</code></span>
+    </div>
+    <p class="muted" id="setupDetail"></p>
+    <button id="recheck" class="ghost">我已安装，重新检测</button>
+  </section>
+
+  <section class="card">
+    <div class="source">
+      <span id="siteBadge" class="badge">—</span>
+      <span id="pageHint" class="hint">打开 YouTube / Instagram 视频，或粘贴链接</span>
+    </div>
+    <input id="url" type="url" spellcheck="false" placeholder="https://www.youtube.com/watch?v=… 或 instagram.com/reel/…">
+    <div class="row">
+      <select id="quality" aria-label="画质"></select>
+      <button id="download" class="primary" disabled>下载 MP4</button>
+    </div>
+    <p id="formError" class="error" hidden></p>
+  </section>
+
+  <section class="tasks">
+    <div class="tasks-head">
+      <h3>下载任务</h3>
+      <button id="clear" class="link">清除已完成</button>
+    </div>
+    <ul id="taskList"></ul>
+    <p id="empty" class="empty">还没有下载任务</p>
+  </section>
+
+  <details class="settings">
+    <summary>设置</summary>
+    <div class="setting">
+      <div>
+        <div class="label">保存位置</div>
+        <div id="dir" class="path">—</div>
+      </div>
+      <div class="btns">
+        <button id="openDir" class="ghost small">打开</button>
+        <button id="chooseDir" class="ghost small">更改</button>
+      </div>
+    </div>
+    <label class="setting check">
+      <input id="quickButton" type="checkbox">
+      <div>
+        <div class="label">页面上的快速下载按钮</div>
+        <div class="muted">鼠标移到视频缩略图或播放器上时显示「MP4」按钮，点一下按上面选的画质直接下载</div>
+      </div>
+    </label>
+    <label class="setting check">
+      <input id="ytCookies" type="checkbox">
+      <div>
+        <div class="label">YouTube 使用登录状态</div>
+        <div class="muted">遇到“请登录以确认你不是机器人”、年龄限制或会员视频时开启</div>
+      </div>
+    </label>
+    <label class="setting check">
+      <input id="notify" type="checkbox">
+      <div class="label">下载完成时通知</div>
+    </label>
+    <div class="setting">
+      <div>
+        <div class="label">下载引擎</div>
+        <div id="engine" class="muted">—</div>
+      </div>
+      <button id="update" class="ghost small">更新 yt-dlp</button>
+    </div>
+    <p class="muted small-note">Instagram 会自动使用本浏览器的登录状态。请只下载你有权保存的内容。</p>
+  </details>
+
+  <script src="common.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

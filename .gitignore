@@ -1,0 +1,22 @@
+# macOS / Windows
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+
+# Local helper state (never commit)
+host/bin/
+host/python/
+host/config.json
+host/host.log
+
+# Extension signing keys
+*.pem
+*.crx
+
+# Editors
+.vscode/
+.idea/
+.claude/
