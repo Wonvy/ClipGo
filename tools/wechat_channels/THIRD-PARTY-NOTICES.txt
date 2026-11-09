@@ -1,0 +1,137 @@
+ClipGo Channels — third-party notices
+====================================
+
+This is a local development/test tool. Its Python source implements the user
+interface, scoped capture observer, download validation and media-prefix decode.
+The optional Windows directory build includes Python and packages installed in
+the build environment. The build script preserves available package license
+files in its licenses/ directory. These notices do not replace those licenses.
+Before redistributing a binary package, retain its license directory and provide
+the corresponding source and other materials required by its bundled licenses.
+
+1. mitmproxy 12.3.1 — MIT
+------------------------
+Source: https://github.com/mitmproxy/mitmproxy
+Version: https://github.com/mitmproxy/mitmproxy/tree/v12.3.1
+License: https://github.com/mitmproxy/mitmproxy/blob/v12.3.1/LICENSE
+Documentation: https://docs.mitmproxy.org/stable/
+
+Copyright (c) 2013, Aldo Cortesi. All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+2. mitmproxy_rs and mitmproxy_windows — MIT
+-----------------------------------------
+The Windows process redirector and Rust networking runtime are supplied by
+mitmproxy dependencies. The development environment used version 0.12.15.
+Source: https://github.com/mitmproxy/mitmproxy_rs
+License: https://github.com/mitmproxy/mitmproxy_rs/blob/main/LICENSE
+
+Copyright (c) 2022, Fabio Valentini and Maximilian Hils
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+3. WinDivert — LGPL version 3
+----------------------------
+WinDivert is written by basil and contributors. Its upstream license offers
+LGPL version 3 or GPL version 2; the LGPL version 3 option applies here.
+The local mitmproxy_windows runtime bundles unmodified WinDivert 2.2.2 binaries,
+including WinDivert.dll and the WinDivert64.sys driver. Another copy may be
+included by the pydivert dependency. These components keep their own licenses.
+
+Project: https://reqrypt.org/windivert.html
+Source: https://github.com/basil00/WinDivert
+Version source: https://github.com/basil00/WinDivert/tree/v2.2.2
+Source archive: https://github.com/basil00/WinDivert/archive/refs/tags/v2.2.2.tar.gz
+License: https://github.com/basil00/WinDivert/blob/v2.2.2/LICENSE
+LGPL v3: https://www.gnu.org/licenses/lgpl-3.0.html
+GPL v3 incorporated by LGPL v3: https://www.gnu.org/licenses/gpl-3.0.html
+
+The library and driver are not modified by this project. They are distributed
+as separate files by the directory build. No restriction on replacing those
+components with compatible modified versions or reverse engineering for
+debugging such modifications is imposed by this tool. Binary redistribution
+must satisfy the applicable LGPL requirements, including license texts and
+corresponding source availability; these links alone are not a complete
+redistribution compliance package.
+
+4. ISAAC-64 — public domain
+--------------------------
+decoder.py adapts the ISAAC-64 algorithm published by Bob Jenkins, 1996.
+The upstream reference explicitly declares its code to be Public Domain.
+
+Reference: https://burtleburtle.net/bob/c/isaac64.c
+Header: https://burtleburtle.net/bob/c/isaac64.h
+Algorithm description: https://burtleburtle.net/bob/rand/isaacafa.html
+
+No downloader-specific third-party implementation, proprietary module or
+third-party WebAssembly decoder is bundled for this algorithm.
+
+5. Other bundled runtime packages
+---------------------------------
+Python, Tcl/Tk, cryptography/OpenSSL, Brotli, pydivert, PyInstaller's bootloader
+and mitmproxy's other dependencies retain their respective copyrights and
+licenses. See the packaged licenses/ directory and the installed package
+metadata for the actual dependency set. PyInstaller is a build dependency;
+its bootloader carries its published redistribution exception.
+
+Pillow 13.0.0 is used for bounded thumbnail decoding and resizing (MIT-CMU).
+Source and license: https://github.com/python-pillow/Pillow
+Package: https://pypi.org/project/Pillow/13.0.0/
+Its installed license files are retained in the packaged licenses/ directory.
+
+The HTML desktop interface uses pywebview 6.2.1 (BSD 3-Clause), with
+Python.NET and clr-loader for the Windows .NET host, and the machine's
+Microsoft Edge WebView2 Runtime. The system WebView2 browser runtime is not
+redistributed in this directory; pywebview's bundled WebView2 interoperability
+assemblies and loader retain their applicable Microsoft notices.
+pywebview source: https://github.com/r0x0r/pywebview
+pywebview package: https://pypi.org/project/pywebview/6.2.1/
+Python.NET source: https://github.com/pythonnet/pythonnet
+clr-loader source: https://github.com/pythonnet/clr-loader
+Microsoft WebView2: https://developer.microsoft.com/microsoft-edge/webview2/
+Available installed package license files are retained in licenses/.
+
+Python: https://docs.python.org/3/license.html
+Tcl/Tk: https://www.tcl-lang.org/software/tcltk/license.html
+cryptography: https://github.com/pyca/cryptography
+OpenSSL: https://github.com/openssl/openssl
+Brotli: https://github.com/google/brotli
+pydivert: https://github.com/ffalcinelli/pydivert
+PyInstaller: https://pyinstaller.org/en/stable/license.html
+
+No code from ltaoo/wx_channels_download or qiye45/wechatVideoDownload is copied
+or included. Their public documentation/issues were consulted only for
+compatibility research.
