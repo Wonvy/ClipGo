@@ -19,7 +19,27 @@ class MemoryMetadataTests(unittest.TestCase):
         self.assertEqual(found[0]['title'], '视频标题')
         self.assertEqual(found[0]['author'], '作者')
         self.assertEqual(found[0]['url'], self.url + '&token=sample')
-        self.assertEqual(set(found[0]), {'id','url','decode_key','title','author','source','seen_at'})
+        self.assertEqual(set(found[0]), {'id','url','decode_key','title','author','source','seen_at','engagement'})
+
+    def test_counts_follow_the_same_feed_not_neighbor_objects(self):
+        second = self.url.replace('sample', 'other')
+        payload = {'feeds': [
+            {'objectDesc': {'description': '甲', 'media': [{'url': self.url, 'decodeKey': '11'}]},
+             'favCount': 4302, 'forwardCount': 2380, 'likeCount': 3489, 'commentCount': 304},
+            {'objectDesc': {'description': '乙', 'media': [{'url': second, 'decodeKey': '22'}]},
+             'favCount': 0, 'forwardCount': 2, 'likeCount': -1, 'commentCount': True}],
+            'unrelated': {'favCount': 99999, 'likeCount': 99999}}
+        found = {item['title']: item for item in extract_media_metadata(json.dumps(payload).encode())}
+        self.assertEqual(found['甲']['engagement'], {'recommend': 4302, 'share': 2380, 'like': 3489, 'comment': 304})
+        self.assertEqual(found['乙']['engagement'], {'recommend': 0, 'share': 2, 'like': None, 'comment': None})
+
+    def test_count_context_is_not_inherited_by_unrelated_media_branch(self):
+        other = self.url.replace('sample', 'neighbor')
+        payload = {'objectDesc': {'description': '甲', 'media': [{'url': self.url, 'decodeKey': '11'}]},
+                   'favCount': 123, 'unrelated': {'url': other, 'decodeKey': '22'}}
+        found = extract_media_metadata(json.dumps(payload).encode())
+        neighbor = next(item for item in found if item['url'] == other)
+        self.assertTrue(all(value is None for value in neighbor['engagement'].values()))
 
     def test_unrelated_neighbor_key_is_never_paired(self):
         raw = json.dumps({'url': self.url, 'neighbor': {'decodeKey': '12345'}}).encode()

@@ -20,6 +20,23 @@
   const title = item => text(item.title).trim() || '暂未读取到标题';
   const downloadActive = () => ['downloading','cancelling'].includes(state.download.state);
   const safeThumbnail = value => typeof value === 'string' && value.length < 2_000_000 && /^data:image\/(?:jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(value) ? value : null;
+  const statNames = {recommend:'喜欢',share:'分享',like:'点赞',comment:'评论'};
+  const validCount = value => typeof value==='number' && Number.isSafeInteger(value) && value>=0;
+  function formatCount(value) {
+    if(!validCount(value))return '—';
+    if(value>=100000)return '10万+';
+    if(value>=10000)return String(Math.floor(value/1000)/10)+'万';
+    return String(value);
+  }
+  function updateStats(container, engagement) {
+    for(const number of container.querySelectorAll('[data-stat]')){
+      const key=number.dataset.stat,value=engagement?.[key];
+      number.textContent=formatCount(value);
+      const label=statNames[key]+'：'+(validCount(value)?String(value):'暂未读取');
+      number.parentElement.title=label;
+      number.parentElement.setAttribute('aria-label',label);
+    }
+  }
   function duration(value) {
     if (value === null || value === undefined || value === '') return '—';
     const n = Number(value);
@@ -105,6 +122,7 @@
     card.author.textContent = text(item.author).trim() || '作者暂未读取';
     card.author.title = card.author.textContent;
     card.duration.textContent = duration(item.duration);
+    updateStats(card.node.querySelector('.card-stats'),item.engagement);
     const image = safeThumbnail(item.thumbnail);
     if (card.thumbnail !== image) {
       card.thumbnail = image;
@@ -234,6 +252,7 @@
     detailItem={...item};
     dom['details-title'].textContent = title(item);
     dom['details-author'].textContent = `${text(item.author).trim() || '作者暂未读取'} · ${duration(item.duration)}`;
+    updateStats($('detail-stats'),item.engagement);
     dom['detail-duration'].textContent = duration(item.duration);
     const image = safeThumbnail(item.thumbnail);
     dom['detail-image'].hidden = !image;
@@ -387,7 +406,16 @@
   });
   window.addEventListener('error', () => { frontendErrors++; });
   window.addEventListener('unhandledrejection', () => { frontendErrors++; });
-  window.clipgoDiagnostics = () => ({ready:apiReady,cards:dom['video-grid'].querySelectorAll('[data-video-id]').length,titled:[...dom['video-grid'].querySelectorAll('[data-video-id]')].filter(node=>{const label=text(state.items.find(item=>item.id===node.dataset.videoId)?.title).trim();return label&&label!=='暂未读取到标题';}).length,thumbnails:[...dom['video-grid'].querySelectorAll('img[data-cover]')].filter(img=>!img.hidden&&img.complete&&img.naturalWidth>0).length,renderedRevision,horizontalOverflow:document.documentElement.scrollWidth>window.innerWidth,frontendErrors});
+  window.clipgoDiagnostics = () => {
+    const rows=[...dom['video-grid'].querySelectorAll('[data-video-id]')];
+    const countKnown=row=>[...row.querySelectorAll('[data-stat]')].filter(number=>number.textContent!=='—').length;
+    return {ready:apiReady,cards:rows.length,
+      titled:rows.filter(node=>{const label=text(state.items.find(item=>item.id===node.dataset.videoId)?.title).trim();return label&&label!=='暂未读取到标题';}).length,
+      thumbnails:[...dom['video-grid'].querySelectorAll('img[data-cover]')].filter(img=>!img.hidden&&img.complete&&img.naturalWidth>0).length,
+      engagementRows:rows.filter(row=>countKnown(row)>0).length,
+      completeEngagementRows:rows.filter(row=>countKnown(row)===4).length,
+      renderedRevision,horizontalOverflow:document.documentElement.scrollWidth>window.innerWidth,frontendErrors};
+  };
   window.addEventListener('pywebviewready', start, {once:true});
   render();
   if(window.pywebview?.api) start();

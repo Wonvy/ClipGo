@@ -137,6 +137,43 @@ class V8MediaTests(unittest.TestCase):
         self.obj, self.desc, self.map, self.backing, self.anchor = self.heap.media()
         self.layout = self.heap.layout
 
+    def count_feed(self, counts):
+        array = self.heap.array([self.heap.ptr(self.obj)])
+        desc = self.heap.object({'media': array, 'description': self.heap.string('绑定标题', True)})
+        contact = self.heap.object({'nickname': self.heap.string('绑定作者', True)})
+        return self.heap.object({'objectDesc': desc, 'contact': contact, **counts})
+
+    def test_engagement_is_bound_to_this_feed_and_icon_mapping(self):
+        feed = self.count_feed({'favCount': 34002 << 1, 'forwardCount': 70268 << 1,
+                                'likeCount': 23402 << 1, 'commentCount': 3712 << 1})
+        other = self.count_feed({'favCount': 1 << 1, 'forwardCount': 2 << 1,
+                                'likeCount': 3 << 1, 'commentCount': 4 << 1})
+        item, = self.layout.feed_media(feed)
+        self.assertEqual(item['engagement'], {'recommend': 34002, 'share': 70268, 'like': 23402, 'comment': 3712})
+        self.assertEqual(self.layout.feed_media(other)[0]['engagement']['recommend'], 1)
+
+    def test_missing_invalid_and_zero_counts_remain_distinct(self):
+        feed = self.count_feed({'favCount': 0, 'forwardCount': 0xFFFFFFFE,
+                                'likeCount': self.heap.string('123')})
+        item, = self.layout.feed_media(feed)
+        self.assertEqual(item['engagement'], {'recommend': 0, 'share': None, 'like': None, 'comment': None})
+
+    def test_same_map_counter_change_during_read_is_unknown(self):
+        feed = self.count_feed({'favCount': 10 << 1, 'likeCount': 11 << 1})
+        original = self.layout.field
+        calls = []
+        def changing(obj, schema, entry):
+            value = original(obj, schema, entry)
+            if entry[0] == 'favCount':
+                calls.append(1)
+                if len(calls) > 1:
+                    return 12 << 1
+            return value
+        self.layout.field = changing
+        counts = self.layout.feed_engagement(feed)
+        self.assertIsNone(counts['recommend'])
+        self.assertEqual(counts['like'], 11)
+
     def parsed_map(self):
         entries = self.layout.descriptor(self.desc, 3, self.anchor)
         self.assertIsNotNone(entries)

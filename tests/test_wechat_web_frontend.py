@@ -46,7 +46,8 @@ class WebFrontendTests(unittest.TestCase):
             path = ROOT / 'build' / name
             covers.append('data:image/jpeg;base64,' + base64.b64encode(path.read_bytes()).decode() if path.exists() else fallback_cover)
         items = [
-            {'id':'interview','title':'走进影视飓风，聊聊创作、生活与理想','author':'陈溥江','duration':1407,'thumbnail':covers[0]},
+            {'id':'interview','title':'走进影视飓风，聊聊创作、生活与理想','author':'陈溥江','duration':1407,'thumbnail':covers[0],
+             'engagement':{'recommend':34000,'share':70000,'like':23000,'comment':3712}},
             {'id':'basketball','title':'把热爱留在球场上，每一次跳投都是新的开始','author':'篮球日记','duration':22,'thumbnail':covers[1]},
             {'id':'family','title':'每次喊爸爸都是越喊越大声 🥰 记录生活中的小瞬间','author':'i是清樾呀','duration':10,'thumbnail':covers[2]},
             {'id':'long','title':'一个很长的视频标题：城市、光影与日常观察。' * 15,'author':'生活记录','duration':3705,'thumbnail':covers[0]},
@@ -56,6 +57,7 @@ class WebFrontendTests(unittest.TestCase):
         ]
         for item in items:
             item.update(recognized=item['id']!='pending',status='ready' if item['id']!='pending' else 'pending',thumbnail_state='ready' if item['thumbnail'] else 'unavailable')
+            item.setdefault('engagement', {name:None for name in ('recommend','share','like','comment')})
         initial = {'revision':1,'source':'all','folder':r'C:\Users\Wonvy\Downloads\ClipGo视频号','scan':{'state':'done','message':'已读取'},'items':items,'download':{'state':'idle'},'preview':{'state':'idle'}}
         self.page.add_init_script('''window.mockState = ''' + json.dumps(initial, ensure_ascii=False) + ''';
           window.bridgeCalls=[];
@@ -90,6 +92,25 @@ class WebFrontendTests(unittest.TestCase):
             self.assertEqual(self.errors, [])
         finally:
             self.page.close()
+
+    def assert_engagement(self, stats, values):
+        numbers = stats.locator('[data-stat]')
+        self.assertEqual(numbers.evaluate_all('nodes=>nodes.map(node=>node.dataset.stat)'),
+                         ['recommend','share','like','comment'])
+        self.assertEqual([value.strip() for value in numbers.all_text_contents()], values)
+        self.assertEqual(stats.locator('svg').count(), 4)
+        self.assertEqual(stats.locator('svg use').evaluate_all('nodes=>nodes.map(node=>node.getAttribute("href"))'),
+                         ['#i-thumb','#i-share','#i-heart','#i-comment'])
+        # Meaning is conveyed by the four icons and accessibility/hover metadata,
+        # without adding visible Chinese labels between the screenshot's counts.
+        self.assertNotRegex(stats.inner_text(), r'[^0-9.万+—\s]')
+
+    def update_engagement(self, values):
+        self.page.evaluate("""values=>{
+          mockState.items.find(item=>item.id==='interview').engagement=values;
+          mockState.revision++;
+        }""", values)
+        self.page.clock.run_for(600)
 
     def assert_readable_layout(self, label):
         snapshot = self.page.evaluate("""()=>{
@@ -132,18 +153,69 @@ class WebFrontendTests(unittest.TestCase):
             const rect=panel.getBoundingClientRect();
             return rect.left < -.5 || rect.right>innerWidth+.5 || panel.scrollWidth>panel.clientWidth+1;
           }).map(panel=>panel.id);
-          return {smallText,cardOverlaps,authorOverlaps,panelOverflow,
+          const statLayoutErrors=[];
+          for(const stats of document.querySelectorAll('.card-stats,#detail-stats')){
+            if(!shown(stats))continue;
+            const numbers=[...stats.querySelectorAll('[data-stat]')];
+            for(const number of numbers){
+              const icon=number.parentElement.querySelector('svg');
+              if(!icon||!shown(icon)){statLayoutErrors.push(number.dataset.stat+': missing icon');continue;}
+              const i=icon.getBoundingClientRect(),n=number.getBoundingClientRect(),bounds=stats.getBoundingClientRect();
+              if(i.bottom>n.top+1||Math.abs((i.left+i.right-n.left-n.right)/2)>2)
+                statLayoutErrors.push(number.dataset.stat+': icon is not above its number');
+              if(n.left<bounds.left-1||n.right>bounds.right+1)statLayoutErrors.push(number.dataset.stat+': count overflows');
+            }
+            for(let index=1;index<numbers.length;index++){
+              if(numbers[index-1].getBoundingClientRect().right>numbers[index].getBoundingClientRect().left+1)
+                statLayoutErrors.push('adjacent counts overlap');
+            }
+          }
+          return {smallText,cardOverlaps,authorOverlaps,panelOverflow,statLayoutErrors,
             horizontalOverflow:document.documentElement.scrollWidth>innerWidth};
         }""")
         problem = (snapshot['smallText'] or snapshot['cardOverlaps'] or snapshot['authorOverlaps']
-                   or snapshot['panelOverflow'] or snapshot['horizontalOverflow'])
+                   or snapshot['panelOverflow'] or snapshot['statLayoutErrors'] or snapshot['horizontalOverflow'])
         if problem:
             self.page.screenshot(path=str(ROOT / 'build' / f'wechat-layout-failure-{label}.png'))
         self.assertEqual(snapshot['smallText'], [], f'{label}: visible text smaller than 12px')
         self.assertEqual(snapshot['cardOverlaps'], [], f'{label}: cards overlap')
         self.assertEqual(snapshot['authorOverlaps'], 0, f'{label}: author overlaps card action')
         self.assertEqual(snapshot['panelOverflow'], [], f'{label}: popup overflows')
+        self.assertEqual(snapshot['statLayoutErrors'], [], f'{label}: engagement icon/count layout')
         self.assertFalse(snapshot['horizontalOverflow'], f'{label}: page overflows horizontally')
+
+    def test_engagement_icons_and_numbers_match_screenshot_order_and_player(self):
+        card = self.page.locator('[data-video-id="interview"] .card-stats')
+        self.assert_engagement(card, ['3.4万','7万','2.3万','3712'])
+        for name, meaning, count in (('recommend','喜欢',34000), ('share','分享',70000),
+                                     ('like','点赞',23000), ('comment','评论',3712)):
+            metadata = card.locator(f'[data-stat="{name}"]').evaluate("""node=>
+              [node,node.parentElement].flatMap(element=>[element.getAttribute('title')||'',element.getAttribute('aria-label')||'']).join(' ')
+            """)
+            self.assertIn(meaning, metadata)
+            self.assertIn(str(count), metadata.replace(',', '').replace('，', ''))
+        self.page.locator('[data-video-id="interview"] .card-title').click()
+        self.assert_engagement(self.page.locator('#detail-stats'), ['3.4万','7万','2.3万','3712'])
+        self.update_engagement({'recommend':0,'share':8,'like':None,'comment':12})
+        self.assert_engagement(card, ['0','8','—','12'])
+        self.assert_engagement(self.page.locator('#detail-stats'), ['0','8','—','12'])
+        self.update_engagement({})
+        self.assert_engagement(card, ['—','—','—','—'])
+        self.assert_engagement(self.page.locator('#detail-stats'), ['—','—','—','—'])
+        self.page.locator('#close-details').click()
+
+    def test_engagement_format_boundaries_and_invalid_values(self):
+        card = self.page.locator('[data-video-id="interview"] .card-stats')
+        cases = [
+            ({'recommend':9999,'share':10000,'like':99999,'comment':100000}, ['9999','1万','9.9万','10万+']),
+            ({'recommend':0,'share':10599,'like':9007199254740991,'comment':9007199254740992}, ['0','1万','10万+','—']),
+            ({'recommend':-1,'share':1.5,'like':True,'comment':'123'}, ['—','—','—','—']),
+        ]
+        for values, expected in cases:
+            with self.subTest(values=values):
+                self.update_engagement(values)
+                self.assert_engagement(card, expected)
+        self.assert_engagement(self.page.locator('[data-video-id="missing"] .card-stats'), ['—','—','—','—'])
 
     def test_search_filters_and_safe_text_detail_keeps_full_title(self):
         self.page.locator('#search').fill('篮球日记')

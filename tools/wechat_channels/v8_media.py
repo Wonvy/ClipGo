@@ -18,6 +18,7 @@ import time
 import threading
 
 from .capture import _decode_key, _media_url, valid_media_url
+from .engagement import FEED_COUNT_FIELDS, engagement_from_feed, merge_engagement
 
 MAP_TYPE = 277
 DESCRIPTOR_TYPE = 253
@@ -28,7 +29,7 @@ FIXED_ARRAY_TYPE = 205
 MAX_DESCRIPTORS = 128
 MEDIA_FIELDS = frozenset({'url', 'urlToken', 'decodeKey', 'mediaType', 'videoPlayLen',
                           'thumbUrl', 'coverUrl'})
-FIELDS = MEDIA_FIELDS | {'objectDesc', 'contact', 'description', 'media', 'nickname'}
+FIELDS = MEDIA_FIELDS | {'objectDesc', 'contact', 'description', 'media', 'nickname'} | set(FEED_COUNT_FIELDS.values())
 # Addresses and field structure only; never cached URLs, keys or media bytes.
 _HINTS = {}
 _HINTS_LOCK = threading.Lock()
@@ -295,6 +296,32 @@ class V8Layout:
             return None
         return [word(elements, index * 4) for index in range(count)]
 
+    def feed_engagement(self, pointer):
+        """Read optional counts from this exact feed, never nearby heap objects.
+
+        Counts observed in this runtime are tagged small integers. Other value
+        layouts (strings, booleans, BigInts, unsupported boxed numbers) remain
+        unknown rather than being guessed or rounded.
+        """
+        schema = self.object_map(pointer, ANCHORS['objectDesc'])
+        if not schema:
+            return engagement_from_feed(None)
+        obj = self.address(pointer)
+        entries = [entry for entry in schema['entries'] if entry[0] in FEED_COUNT_FIELDS.values()]
+        pointers = {entry[0]: self.field(obj, schema, entry) for entry in entries}
+        values = {}
+        for entry in entries:
+            value = pointers[entry[0]]
+            if value is not None and not value & 1:
+                values[entry[0]] = struct.unpack('<i', struct.pack('<I', value))[0] >> 1
+        if word(self.read(obj, 4)) != schema['address'] - self.cage + 1:
+            return engagement_from_feed(None)
+        # Same-map counter mutations are possible while the player is open.
+        for entry in entries:
+            if self.field(obj, schema, entry) != pointers[entry[0]]:
+                values.pop(entry[0], None)
+        return engagement_from_feed(values)
+
     def feed_media(self, pointer, allowed_ids=None):
         """Bind title/author through feed -> objectDesc -> media[] references."""
         feed = self.named_fields(pointer, ANCHORS['objectDesc'])
@@ -318,9 +345,11 @@ class V8Layout:
         title = self.string(desc['description'], 4096)
         contact = self.named_fields(feed['contact'], frozenset({'nickname'}))
         author = self.string(contact['nickname'], 120) if contact else None
+        engagement = self.feed_engagement(pointer)
         for item in found:
             item['title'] = title or ''
             item['author'] = author or ''
+            item['engagement'] = dict(engagement)
         # Reject a parent/array transition while following the complete chain.
         if (self.named_fields(pointer, ANCHORS['objectDesc']) != feed
                 or self.named_fields(feed['objectDesc'], desc_names) != desc
@@ -415,9 +444,11 @@ def extract_bound_media(reader, process, cancel, *, max_bytes=512 * 1024 * 1024,
                 for field in ('title', 'author'):
                     if not item.get(field):
                         item[field] = old.get(field, '')
+                if 'engagement' in old or 'engagement' in item:
+                    item['engagement'] = merge_engagement(old.get('engagement'), item.get('engagement'))
             # Ignore read timestamps when deciding whether the UI needs an update.
             changed |= old is None or any(item.get(k) != old.get(k) for k in
-                ('title', 'author', 'duration', 'thumbnail_url'))
+                ('title', 'author', 'duration', 'thumbnail_url', 'engagement'))
             found[key] = item
             if len(object_hints) < 256:
                 object_hints[object_hint] = None

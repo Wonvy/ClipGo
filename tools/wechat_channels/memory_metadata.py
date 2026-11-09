@@ -11,6 +11,7 @@ import re
 import time
 
 from .capture import _decode_key, _media_url, _text, media_identity
+from .engagement import engagement_from_feed, merge_engagement, normalize_engagement
 
 NEIGHBORHOOD_BYTES = 16 * 1024
 MAX_MATCHES = 1000
@@ -29,19 +30,20 @@ def _decoded_prefix(data: bytes, encoding: str) -> str:
 
 def _paired_objects(obj: object, exact_url: str, now: float) -> list[dict]:
     result = []
-    pending = [(obj, '', '', 0, False)]
+    pending = [(obj, '', '', 0, False, None)]
     visited = 0
     while pending and visited < 1000:
-        current, title, author, depth, media_context = pending.pop()
+        current, title, author, depth, media_context, engagement = pending.pop()
         visited += 1
         if depth > 12:
             continue
         if isinstance(current, list):
-            pending.extend((v, title, author, depth + 1, media_context) for v in current[:100])
+            pending.extend((v, title, author, depth + 1, media_context, engagement) for v in current[:100])
         elif isinstance(current, dict):
             desc = current.get('objectDesc') or current.get('object_desc')
             if isinstance(desc, dict):
                 title = _text(desc.get('description'), 500) or title
+                engagement = engagement_from_feed(current)
             elif isinstance(current.get('media'), list):
                 title = _text(current.get('description'), 500) or title
             contact = current.get('contact')
@@ -59,9 +61,11 @@ def _paired_objects(obj: object, exact_url: str, now: float) -> list[dict]:
                     result.append({
                         'id': media_identity(url), 'url': url, 'decode_key': key,
                         'title': title or '视频号视频', 'author': author,
+                        'engagement': normalize_engagement(engagement),
                         'source': 'memory_metadata', 'seen_at': now,
                     })
-            pending.extend((v, title, author, depth + 1, name == 'media' and isinstance(v, list))
+            pending.extend((v, title, author, depth + 1, name == 'media' and isinstance(v, list),
+                            engagement if name in ('objectDesc', 'object_desc', 'media') else None)
                            for name, v in list(current.items())[:100]
                            if isinstance(v, (dict, list)))
     return result
@@ -123,4 +127,6 @@ def extract_media_metadata(data: bytes, known_urls: set[str] | None = None,
                     old = found.get(ident)
                     if old is None or old['title'] == '视频号视频':
                         found[ident] = candidate
+                    if old is not None:
+                        found[ident]['engagement'] = merge_engagement(old.get('engagement'), candidate.get('engagement'))
     return list(found.values())

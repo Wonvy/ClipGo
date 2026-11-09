@@ -5,3 +5,5 @@
 *.ps1  text eol=crlf
 *.png  binary
 desktop.ini binary
+# Preserve upstream license bytes and formatting for provenance hashes.
+packaging/wechat_channels/licenses/** -text -whitespace

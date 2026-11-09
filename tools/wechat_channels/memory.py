@@ -21,6 +21,7 @@ from urllib.parse import parse_qsl, urlsplit
 
 from .capture import media_identity
 from .loaded_urls import extract_loaded_urls
+from .engagement import ENGAGEMENT_FIELDS, merge_engagement
 
 MAX_PROCESS_BYTES = 512 * 1024 * 1024
 MAX_PROCESS_SECONDS = 20
@@ -244,8 +245,12 @@ def merge_media_candidate(old: dict | None, candidate: dict) -> dict:
     """
     old_paired = old is not None and old.get('decode_key') not in (None, '')
     new_paired = candidate.get('decode_key') not in (None, '')
+    def finish(chosen):
+        if (old and 'engagement' in old) or 'engagement' in candidate:
+            chosen['engagement'] = merge_engagement((old or {}).get('engagement'), candidate.get('engagement'))
+        return chosen
     if not old_paired and not new_paired:
-        return dict(candidate)
+        return finish(dict(candidate))
     chosen = dict(old if old_paired else candidate)
     pairs, seen = [], set()
     for source in (old, candidate):
@@ -263,7 +268,7 @@ def merge_media_candidate(old: dict | None, candidate: dict) -> dict:
         missing = not chosen.get(field) or (field == 'title' and chosen.get(field) == '视频号视频')
         if missing and candidate.get(field) not in (None, ''):
             chosen[field] = candidate[field]
-    return chosen
+    return finish(chosen)
 
 
 def scan_loaded_videos(cancel: threading.Event, progress=lambda scanned, total: None,
@@ -298,6 +303,7 @@ def scan_loaded_videos(cancel: threading.Event, progress=lambda scanned, total: 
         snapshot = list(found.values())
         signature = tuple((item['id'], item.get('url'), item.get('decode_key'),
                            item.get('title'), item.get('author'), item.get('duration'), item.get('thumbnail_url'),
+                           tuple((item.get('engagement') or {}).get(field) for field in ENGAGEMENT_FIELDS),
                            tuple((p.get('url'), p.get('decode_key')) for p in item.get('media_options', [])))
                           for item in snapshot)
         if signature != last_emitted:
@@ -328,8 +334,9 @@ def scan_loaded_videos(cancel: threading.Event, progress=lambda scanned, total: 
                                 'author': '', 'url': url, 'decode_key': None,
                                 'seen_at': now, 'source': process_source}
                 if old:
-                    for key in ('title', 'author', 'decode_key'):
-                        found[ident][key] = old.get(key)
+                    for key in ('title', 'author', 'decode_key', 'engagement'):
+                        if key in old:
+                            found[ident][key] = old[key]
             if b'objectDesc' in chunk or b'decodeKey' in chunk or b'd\x00e\x00c\x00o\x00d\x00e\x00K\x00e\x00y' in chunk:
                 from .memory_metadata import extract_media_metadata
                 for candidate in extract_media_metadata(chunk):

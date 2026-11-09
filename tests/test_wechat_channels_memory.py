@@ -15,6 +15,36 @@ class MemoryTests(unittest.TestCase):
         bound.start()
         self.addCleanup(bound.stop)
 
+    def test_count_updates_do_not_change_selected_url_key_pair(self):
+        old = {'id': memory.loaded_identity(URL), 'url': URL, 'decode_key': '11',
+               'engagement': {'recommend': 10, 'share': 20, 'like': 30, 'comment': 40}}
+        incoming = dict(old, url=URL + '&variant=new', decode_key='22',
+                        engagement={'recommend': 0, 'share': None, 'like': 29, 'comment': False})
+        merged = memory.merge_media_candidate(old, incoming)
+        self.assertEqual((merged['url'], merged['decode_key']), (URL, '11'))
+        self.assertEqual(merged['engagement'], {'recommend': 0, 'share': 20, 'like': 29, 'comment': 40})
+
+    def test_count_only_change_is_published_progressively(self):
+        pair = {'id': memory.loaded_identity(URL), 'url': URL, 'decode_key': '123', 'title': '标题',
+                'engagement': {'recommend': 2, 'share': 3, 'like': 4, 'comment': 5}}
+        events = []
+        def chunks(reader, process, cancel, progress, diagnostics=None):
+            diagnostics['workers_opened'] += 1
+            diagnostics['bytes_read'] += 1
+            yield URL.encode() + b'\0'
+        def bound(reader, process, cancel, on_items=None, allowed_ids=None):
+            on_items([pair])
+            updated = dict(pair, engagement=dict(pair['engagement'], recommend=0))
+            on_items([updated])
+            self.assertEqual(events[-1][0]['engagement']['recommend'], 0)
+            return [updated]
+        with patch.object(memory, 'discover_processes', return_value=[{}]), \
+             patch.object(memory, 'WindowsMemoryReader'), \
+             patch.object(memory, 'iter_scoped_chunks', side_effect=chunks), \
+             patch('tools.wechat_channels.v8_media.extract_bound_media', side_effect=bound):
+            memory.scan_loaded_videos(threading.Event(), on_items=events.append)
+        self.assertEqual(len(events), 3)
+
     def test_progressive_rows_arrive_before_scan_finishes_and_are_detached(self):
         events = []
         def chunks(reader, process, cancel, progress, diagnostics=None):

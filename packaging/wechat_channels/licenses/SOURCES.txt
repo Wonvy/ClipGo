@@ -1,0 +1,38 @@
+Original license provenance (retrieved 2026-11-09)
+
+proxy_tools-0.1.0/LICENSE.txt
+https://raw.githubusercontent.com/jtushman/proxy_tools/master/LICENSE.txt
+SHA-256 a428fb8a2e762af3eb0a6edbbb88e9b42ccfee80fd9b423958bcacf9b9abbfe4
+The upstream text is retained verbatim, including its formatting and ending.
+
+Microsoft.Web.WebView2-1.0.3856.49/LICENSE.txt and NOTICE.txt
+Official Microsoft NuGet package:
+https://api.nuget.org/v3-flatcontainer/microsoft.web.webview2/1.0.3856.49/microsoft.web.webview2.1.0.3856.49.nupkg
+LICENSE SHA-256 0af8f1b807512aae39c2ac1aa4d0cae65cabecb6fd554b8439a5162a0d6eca55
+NOTICE SHA-256 106423785c5b7eba0a8e61d1837f2132e9c828e20ad530f565d981c1df60dd90
+Both files were extracted unchanged from the package root. The package's
+net462 Core/WinForms DLLs and win-x64 native Loader match the distributed
+pywebview copies byte for byte.
+
+OpenSSL-3.0.15/LICENSE.txt
+https://raw.githubusercontent.com/openssl/openssl/openssl-3.0.15/LICENSE.txt
+SHA-256 7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a
+
+Microsoft-Visual-C-Runtime-2015-2022/LICENSE.docx
+https://visualstudio.microsoft.com/license-terms/vs2022-cruntime/
+Original linked document:
+https://visualstudio.microsoft.com/wp-content/uploads/2021/09/Visual-C-Runtime-2015-2022-License-1.docx
+SHA-256 f1e3d56ceb2ad68aae0711b910375009e651ac5530fa0760f0dea6e81e54fae1
+LICENSE.txt is a convenience extraction of the document's paragraph text.
+The original document retains the formatting and automatic list numbering.
+
+NSIS/COPYING.txt
+Copied unchanged from the NSIS compiler distribution used for this release.
+Compiler version: v26-Jun-2019.cvs (Unicode).
+SHA-256 3c8de989f6504d52f5f8dfafedb6668cd47201f5d01f1319570727c091425dd6
+Project license page: https://nsis.sourceforge.io/License
+
+Other package licenses are copied from the pinned installed wheels by
+release_assets.py, preserving package-relative paths. Python's full
+LICENSE.txt is copied from the build interpreter distribution. Their exact
+files are also covered by the installer's package manifest.

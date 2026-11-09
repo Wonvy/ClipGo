@@ -1,0 +1,108 @@
+ClipGo Channels 1.0.0 — third-party component notices
+
+This file describes the Windows x64 HTML-only release. The accompanying
+licenses directory retains original upstream license and notice texts.
+The summaries below do not replace those texts. Component versions are
+pinned by tools/wechat_channels/requirements-release.txt and the release
+build manifest.
+
+Python 3.12.7
+  Python Software Foundation License Version 2 and historical Python terms.
+  Original LICENSE.txt is copied from the Python installation. It also
+  includes notices for standard-library dependencies, including libffi,
+  bzip2 and the Apache 2.0 license used by OpenSSL.
+  https://www.python.org/downloads/release/python-3127/
+  https://github.com/python/cpython/tree/v3.12.7
+
+OpenSSL 3.0.15 (Python's libssl-3.dll and libcrypto-3.dll)
+  Apache License 2.0; upstream LICENSE.txt is included separately.
+  https://github.com/openssl/openssl/tree/openssl-3.0.15
+
+Pillow 13.0.0
+  MIT-CMU. The wheel's full LICENSE is retained, including the notices
+  for bundled image-codec, font and compression libraries. Those libraries
+  have their own terms within the same license file.
+  https://github.com/python-pillow/Pillow/tree/13.0.0
+
+pywebview 6.2.1
+  BSD 3-Clause. Includes the pywebview Windows interoperability components.
+  https://github.com/r0x0r/pywebview/tree/6.2.1
+
+pythonnet 3.2.1
+  MIT. Original LICENSE and author notices are retained from the wheel.
+  https://github.com/pythonnet/pythonnet
+
+clr_loader 0.3.1
+  MIT.
+  https://github.com/pythonnet/clr-loader
+
+bottle 0.13.4
+  MIT.
+  https://github.com/bottlepy/bottle
+
+proxy_tools 0.1.0
+  The installed package metadata says MIT, while its module header and
+  upstream LICENSE.txt specify BSD. The original upstream two-condition
+  BSD license text is included unchanged, including its copyright notices
+  for Armin Ronacher and Jonathan Tushman.
+  https://github.com/jtushman/proxy_tools
+
+typing_extensions 4.16.0
+  Python Software Foundation License Version 2.
+  https://github.com/python/typing_extensions
+
+cffi 2.1.1
+  MIT No Attribution, subject to the exceptions identified in its original
+  license file. Its libffi attribution is retained in the shipped notices.
+  https://github.com/python-cffi/cffi
+
+pycparser 3.12
+  BSD 3-Clause.
+  https://github.com/eliben/pycparser
+
+Microsoft.Web.WebView2 SDK 1.0.3856.49
+  BSD 3-Clause. The original SDK LICENSE.txt and NOTICE.txt are retained.
+  The shipped Microsoft.Web.WebView2.Core.dll,
+  Microsoft.Web.WebView2.WinForms.dll and x64 WebView2Loader.dll match
+  the corresponding files in the official NuGet package.
+  https://www.nuget.org/packages/Microsoft.Web.WebView2/1.0.3856.49
+
+Microsoft Edge WebView2 Evergreen Runtime
+  The application uses the Windows-installed Runtime. The installer
+  includes Microsoft's unchanged Evergreen bootstrapper and runs it only
+  when the Runtime is absent. The Runtime is obtained from Microsoft under
+  its own terms; it is not covered by the SDK license above.
+  https://developer.microsoft.com/microsoft-edge/webview2/
+  https://learn.microsoft.com/microsoft-edge/webview2/concepts/distribution
+
+Microsoft Visual C++ runtime
+  Python's app-local VCRUNTIME140.dll and VCRUNTIME140_1.dll accompany this
+  release (file version 14.42.34226.3). Microsoft's Visual C++ 2015-2022
+  Runtime license is included, with a plain-text copy for convenience.
+  These Microsoft components retain their original copyright.
+  https://visualstudio.microsoft.com/license-terms/vs2022-cruntime/
+  https://learn.microsoft.com/cpp/windows/redistributing-visual-cpp-files
+
+PyInstaller 6.16.0 bootloader
+  GPL 2.0 or later with the PyInstaller bootloader distribution exception.
+  The original COPYING.txt, including the exception, is retained. The
+  PyInstaller development package is not an application runtime dependency.
+  https://github.com/pyinstaller/pyinstaller/tree/v6.16.0
+
+NSIS installer and zlib compression
+  The installer uses NSIS with its zlib compression module. NSIS and zlib
+  are provided under the zlib/libpng terms in the included NSIS COPYING.
+  The full original COPYING also documents other NSIS compression modules;
+  their presence in that text does not mean they are used by this installer.
+  https://nsis.sourceforge.io/License
+
+ISAAC-64 algorithm
+  decoder.py adapts Bob Jenkins's public-domain ISAAC-64 reference
+  algorithm. Attribution is retained in the source.
+  https://burtleburtle.net/bob/rand/isaacafa.html
+
+The release excludes the development-only network capture stack, WinDivert,
+mitmproxy, pydivert, the legacy Tk interface and browser automation tools.
+Application source and build instructions are provided in the companion
+source archive. Upstream links identify the original projects; they are
+not substitutes for the original license texts included with this release.

@@ -17,6 +17,7 @@ import threading
 import time
 
 from .download import Cancelled, DownloadError, download_video
+from .engagement import merge_engagement, normalize_engagement
 from .memory import ScanError, scan_loaded_videos
 from .playback import PlaybackServer
 from .thumbnails import load_thumbnail
@@ -105,7 +106,8 @@ class Api:
                     'library_revision': self._library_revision,
                     'auto_refresh_enabled': self._auto_refresh_enabled,
                     'folder': str(self._folder), 'scan': dict(self._scan),
-                    'items': [dict(item, status=self._item_states.get(ident, item['status']))
+                    'items': [dict(item, engagement=dict(item['engagement']),
+                                   status=self._item_states.get(ident, item['status']))
                               for ident, item in self._items.items()],
                     'download': dict(self._download), 'preview': dict(self._preview)}
 
@@ -181,7 +183,7 @@ class Api:
             self._seen_ids.add(ident)
             if ident in self._removed_ids:
                 continue
-            previous = previous_candidates.get(ident) or added.get(ident)
+            previous = updates.get(ident) or previous_candidates.get(ident) or added.get(ident)
             if previous is None and len(previous_candidates) + len(added) >= MAX_ITEMS:
                 # The cap limits admission; it never evicts existing cards.
                 continue
@@ -201,6 +203,12 @@ class Api:
                     merged['duration'] = previous.get('duration')
                 else:
                     merged['duration'] = item['duration']
+            if 'engagement' in item or previous and 'engagement' in previous:
+                # Counts belong to the same feed, independently of which valid
+                # URL/key pair is retained for download. Zero and lower updated
+                # counts are meaningful; absent/invalid fields retain known ones.
+                merged['engagement'] = merge_engagement(
+                    previous.get('engagement') if previous else None, item.get('engagement'))
             if ident in previous_candidates:
                 updates[ident] = merged
             else:
@@ -217,6 +225,7 @@ class Api:
             public = {'id': ident, 'title': _title(item),
                       'author': str(item.get('author') or '').strip()[:256],
                       'duration': _duration(item.get('duration')),
+                      'engagement': normalize_engagement(item.get('engagement')),
                       'recognized': bool((raw_title and raw_title != '视频号视频') or has_key or thumbnail_url),
                       'status': 'ready' if has_key else 'pending',
                       'thumbnail': None, 'thumbnail_state': 'unavailable'}
@@ -600,10 +609,13 @@ class Api:
         with self._lock:
             recognized = [item for item in self._items.values() if item['recognized']]
             visible = recognized or list(self._items.values())
+            counts = [tuple(normalize_engagement(item.get('engagement')).values()) for item in visible]
             return {'result': self._scan['state'], 'candidate_count': len(self._items),
                     'recognized_count': len(recognized), 'ui_rows': len(visible),
                     'titled_rows': sum(item['title'] != '暂未读取到标题' for item in visible),
                     'thumbnail_rows': sum(item['thumbnail_state'] == 'ready' for item in visible),
+                    'engagement_rows': sum(any(value is not None for value in row) for row in counts),
+                    'complete_engagement_rows': sum(all(value is not None for value in row) for row in counts),
                     'thumbnail_expected': len(self._thumb_requested),
                     'pending_thumbnails': len(self._thumb_pending),
                     'workers_discovered': int(self._diagnostics.get('workers_discovered', 0)),
@@ -701,6 +713,18 @@ def _diagnostic_result(report, dom, revision):
         return dict(report, result='error', page_loaded=True, reason='invalid_dom_report', frontend_errors=0)
     result = dict(report, page_loaded=True, dom_cards=cards, dom_titled=titled,
                   dom_images=images, horizontal_overflow=dom['horizontalOverflow'], frontend_errors=0)
+    engagement_mismatch = None
+    for key, dom_key, reason in (
+            ('engagement_rows', 'engagementRows', 'engagement_count_mismatch'),
+            ('complete_engagement_rows', 'completeEngagementRows', 'complete_engagement_count_mismatch')):
+        if key not in report:
+            continue
+        value = dom.get(dom_key)
+        if type(value) is not int or value < 0:
+            return dict(result, result='error', reason='invalid_dom_report')
+        result['dom_' + key] = value
+        if value != report[key] and engagement_mismatch is None:
+            engagement_mismatch = reason
     reason = None
     if cards != report['ui_rows']:
         reason = 'card_count_mismatch'
@@ -708,6 +732,8 @@ def _diagnostic_result(report, dom, revision):
         reason = 'title_count_mismatch'
     elif dom['horizontalOverflow']:
         reason = 'horizontal_overflow'
+    elif engagement_mismatch:
+        reason = engagement_mismatch
     elif images > report['thumbnail_rows']:
         reason = 'image_count_mismatch'
     elif images < report['thumbnail_rows']:
@@ -723,7 +749,7 @@ def main(diagnostic_path=None):
     if os.name != 'nt':
         raise SystemExit('本工具目前仅支持 Windows。')
     import webview
-    from .app import InstanceLock, MARKER, untrust_certificate
+    from .runtime import InstanceLock, MARKER, untrust_certificate
     lock = InstanceLock(BASE / 'instance.lock')
     if diagnostic_path is None and not lock.acquire():
         ctypes.windll.user32.MessageBoxW(None, '视频号助手已经打开，请使用现有窗口。', 'ClipGo 视频号', 0x40)

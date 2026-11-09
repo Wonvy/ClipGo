@@ -71,6 +71,22 @@ class WebDiagnosticTests(unittest.TestCase):
         result = _diagnostic_result(dict(self.report, result='error'), self.dom, 5)
         self.assertEqual(result['result'], 'error')
 
+    def test_optional_engagement_diagnostics_require_actual_matching_dom_counts(self):
+        report = dict(self.report, engagement_rows=2, complete_engagement_rows=1)
+        dom = dict(self.dom, engagementRows=2, completeEngagementRows=1)
+        result = _diagnostic_result(report, dom, 5)
+        self.assertEqual(result['result'], 'done')
+        self.assertEqual((result['dom_engagement_rows'], result['dom_complete_engagement_rows']), (2, 1))
+        for changed, reason in (({'engagementRows': 0}, 'engagement_count_mismatch'),
+                                ({'completeEngagementRows': 0}, 'complete_engagement_count_mismatch'),
+                                ({'completeEngagementRows': None}, 'invalid_dom_report'),
+                                ({'engagementRows': True}, 'invalid_dom_report')):
+            with self.subTest(changed=changed):
+                result = _diagnostic_result(report, dict(dom, **changed), 5)
+                self.assertEqual((result['result'], result['reason']), ('error', reason))
+        # Old reports deliberately omit these counters and remain compatible.
+        self.assertEqual(_diagnostic_result(self.report, self.dom, 5)['result'], 'done')
+
 
 class WebBridgeTests(unittest.TestCase):
     def setUp(self):
@@ -118,6 +134,90 @@ class WebBridgeTests(unittest.TestCase):
         state = self.scan(api)
         self.assertIn('items', api.get_state(before))
         self.assertEqual(api.get_state(state['revision']), {'revision': state['revision'], 'unchanged': True})
+
+    def test_engagement_whitelists_four_safe_numbers_and_isolates_snapshot(self):
+        counts = {'recommend': 3.0, 'share': 0, 'like': 42, 'comment': 2**53 - 1,
+                  'url': 'PRIVATE_COUNT_URL', 'decode_key': 'PRIVATE_COUNT_KEY'}
+        api = self.make_api(scanner=lambda *_a, **_kw: [video(engagement=counts)])
+        snapshot = self.scan(api)
+        public = snapshot['items'][0]['engagement']
+        self.assertEqual(public, {'recommend': 3, 'share': 0, 'like': 42, 'comment': 2**53 - 1})
+        self.assertTrue(all(type(value) is int for value in public.values()))
+        public['recommend'] = 999
+        self.assertEqual(api.get_state()['items'][0]['engagement']['recommend'], 3)
+        serialized = json.dumps(snapshot, allow_nan=False)
+        for secret in ('PRIVATE_COUNT_URL', 'PRIVATE_COUNT_KEY', 'PRIVATE_URL', 'PRIVATE_KEY'):
+            self.assertNotIn(secret, serialized)
+
+    def test_safe_report_counts_only_visible_known_engagement_including_zero(self):
+        complete = dict.fromkeys(('recommend', 'share', 'like', 'comment'), 0)
+        rows = [video('complete', engagement=complete), video('partial', engagement={'share': 8}),
+                video('unknown'), video('hidden', title='', decode_key=None, engagement=complete)]
+        api = self.make_api(scanner=lambda *_a, **_kw: rows)
+        self.scan(api)
+        report = api._report()
+        self.assertEqual((report['candidate_count'], report['ui_rows']), (4, 3))
+        self.assertEqual((report['engagement_rows'], report['complete_engagement_rows']), (2, 1))
+        self.assertNotIn('PRIVATE', json.dumps(report))
+
+    def test_missing_and_malformed_engagement_remains_unknown_not_zero(self):
+        fields = ('recommend', 'share', 'like', 'comment')
+        invalid = [True, False, '12', -1, .5, float('nan'), float('inf'), float('-inf'),
+                   2**53, {}, [], None]
+        rows = [video(str(index), engagement=dict.fromkeys(fields, value))
+                for index, value in enumerate(invalid)]
+        rows.extend([video('absent'), video('bad-object', engagement=['5', 6]),
+                     video('bad-string', engagement='{"recommend": 12}')])
+        api = self.make_api(scanner=lambda *_a, **_kw: rows)
+        snapshot = self.scan(api)
+        self.assertEqual(len(snapshot['items']), len(rows))
+        for item in snapshot['items']:
+            self.assertEqual(item['engagement'], dict.fromkeys(fields))
+        json.dumps(snapshot, allow_nan=False)
+
+    def test_new_counts_merge_independently_of_retained_download_pair(self):
+        original = video(engagement={'recommend': 10, 'share': 20, 'like': 30, 'comment': 40})
+        rows = [original]
+        api = self.make_api(scanner=lambda *_a, **_kw: list(rows))
+        first = self.scan(api)
+        rows[:] = [video(title='', url='https://finder.video.qq.com/unpaired', decode_key=None,
+                         engagement={'recommend': 0, 'share': 'invalid', 'like': 25, 'comment': None})]
+        second = self.scan(api)
+        self.assertEqual(second['items'][0]['engagement'],
+                         {'recommend': 0, 'share': 20, 'like': 25, 'comment': 40})
+        self.assertGreater(second['library_revision'], first['library_revision'])
+        self.assertEqual(api._candidates['a']['url'], original['url'])
+        self.assertEqual(api._candidates['a']['decode_key'], original['decode_key'])
+        self.assertEqual(api._candidates['a']['media_options'], original['media_options'])
+        rows[:] = [video(title='', decode_key=None)]
+        self.assertEqual(self.scan(api)['items'][0]['engagement'], second['items'][0]['engagement'])
+        rows[:] = [video(engagement={'share': 0, 'comment': 12.0})]
+        self.assertEqual(self.scan(api)['items'][0]['engagement'],
+                         {'recommend': 0, 'share': 0, 'like': 25, 'comment': 12})
+
+    def test_progressive_count_updates_survive_final_snapshot_missing_counts(self):
+        calls = []
+        def scanner(_cancel, **kwargs):
+            calls.append(True)
+            if len(calls) == 1:
+                return [video(engagement={'recommend': 7, 'share': 8})]
+            kwargs['on_items']([video(engagement={'recommend': 0, 'comment': 11})])
+            return [video()]
+        api = self.make_api(scanner=scanner)
+        self.scan(api)
+        snapshot = self.scan(api)
+        self.assertEqual(snapshot['items'][0]['engagement'],
+                         {'recommend': 0, 'share': 8, 'like': None, 'comment': 11})
+
+    def test_duplicate_same_feed_records_keep_independent_count_updates(self):
+        rows = [video(engagement={'recommend': 7, 'share': 8})]
+        api = self.make_api(scanner=lambda *_a, **_kw: list(rows))
+        self.scan(api)
+        rows[:] = [video(engagement={'recommend': 0}), video(engagement={'share': 3})]
+        snapshot = self.scan(api)
+        self.assertEqual(len(snapshot['items']), 1)
+        self.assertEqual(snapshot['items'][0]['engagement'],
+                         {'recommend': 0, 'share': 3, 'like': None, 'comment': None})
 
     def test_progressive_scan_retains_old_cards_even_after_final_snapshot(self):
         release, published = threading.Event(), threading.Event()
