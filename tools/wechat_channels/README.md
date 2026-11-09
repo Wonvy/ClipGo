@@ -1,8 +1,8 @@
 # ClipGo 视频号下载助手（Windows 实验版）
 
-独立桌面工具，同时从微信主界面和独立视频窗口的工作进程中**只读提取已加载的视频地址**，再下载为 MP4。不注入代码、不修改微信、不接管网络，也无需证书或代理。
+独立桌面工具，默认同时从微信主界面和独立视频窗口的工作进程中**只读提取已加载的视频地址**，再下载为 MP4。默认读取方式无需证书或代理；也可按需开启 **微信内下载按钮**，在微信的视频号网页中直接下载当前视频。
 
-默认界面采用 **HTML / CSS / JavaScript + pywebview**，由 Windows WebView2 在独立窗口中显示本地网页。视频地址和解码参数保留在 Python 后端，网页只接收标题、作者、时长、图片和下载状态；界面无需联网加载字体、脚本或样式。
+默认界面采用 **HTML / CSS / JavaScript + pywebview**，由 Windows WebView2 在独立窗口中显示本地网页。视频地址和解码参数保留在 Python 后端，本地界面只接收标题、作者、时长、图片和下载状态；界面无需联网加载字体、脚本或样式。
 
 ## 使用
 
@@ -17,7 +17,19 @@
 
 程序与 `_internal` 文件夹需要放在一起，不要只复制 EXE。下载过程中可以取消；网络等待中的取消需要等当前请求返回或超时。
 
-窗口缩放时自动调整卡片列数，所有界面字号至少 12px。`Ctrl+F` 聚焦搜索，`Ctrl+R` 重新读取。需要 Windows 的 Microsoft Edge WebView2 运行时；本机已验证存在，无需额外安装。旧 Tk 界面仍可用 `ClipGoChannels.exe --legacy-ui` 启动。
+窗口缩放时自动调整卡片列数，所有界面字号至少 12px。`Ctrl+F` 聚焦搜索，`Ctrl+R` 重新读取。需要 Windows 的 Microsoft Edge WebView2 运行时；本机已验证存在，无需额外安装。本机开发包的旧 Tk 界面仍可用 `ClipGoChannels.exe --legacy-ui` 启动。
+
+## 微信内下载按钮
+
+此功能默认关闭。在右上角设置中开启 **微信内下载按钮**，按 Windows 提示完成授权，然后重新打开视频号页面。微信操作栏会出现紫色下载按钮；页面布局不匹配时，按钮可能显示在网页侧边。点击按钮下载页面当前选中的视频，使用 ClipGo 设置中的保存位置。按钮尚未识别当前视频时不可点击，请等待视频加载或切换后重试。
+
+未额外配置时使用当前用户证书库（`user`），安装根证书时 Windows 可能显示证书安全警告。也支持经配置启用管理员机器库模式（`machine`）：启动工具时申请当前 Windows 账户的管理员权限，将证书安装到本机计算机证书库。此方式可减少根证书确认窗口，但 Windows 仍可能显示 UAC 管理员授权，不能保证完全没有弹窗。机器库证书的信任范围覆盖这台电脑的用户；此模式需要当前账户能够以管理员身份运行，不支持换用另一个管理员账户接管。
+
+**保留本机证书** 默认不勾选。勾选后复用这台电脑已经信任的证书，通常无需重新安装；Windows 所需的授权仍需完成。证书会持续受信任，直到在设置中点击 **移除证书**。移除操作会先关闭页内按钮、恢复网络设置，再移除本工具管理的证书。两种证书库模式都支持临时使用：关闭或退出 ClipGo 时始终恢复本次启用的网络设置；未勾选保留时，也会清理本工具的临时证书信任。机器库模式由已获得管理员权限的工具完成退出清理。关闭后重新打开视频号，可恢复原页面。
+
+实现仅改写 `channels.weixin.qq.com` 的视频页面和 `res.wx.qq.com` 的必要脚本，通过同源入口将当前视频信息传给本机下载服务。临时 PAC 仅路由这两个域名；视频文件下载沿用原有下载与 MP4 校验流程。Windows 对根证书的信任本身并不限于这两个域名，因此是否长期保留由用户选择。检测到已有代理设置时不会覆盖，请按界面提示处理。
+
+设置、恢复记录和本机证书保存在 `%LOCALAPPDATA%\ClipGoChannels\page-embedding`，不要将此目录随软件分享。微信升级可能改变页面结构或脚本，页内按钮需要相应适配；独立窗口中的默认读取功能仍可使用。
 
 ## 已验证与限制
 
@@ -99,13 +111,13 @@ powershell -ExecutionPolicy Bypass -File tools\wechat_channels\build.ps1
 
 ## 分享安装包
 
-朋友使用的发行版仅包含 HTML 界面及其运行依赖，不包含旧 Tk 界面和实验网络监听。与上面的本机开发包分开构建，版本独立于 ClipGo 浏览器扩展。
+朋友使用的发行版包含 HTML 界面、默认读取方式和可选的微信内下载按钮，不包含旧 Tk 界面及其按进程实验监听入口。与上面的本机开发包分开构建，版本独立于 ClipGo 浏览器扩展。安装程序本身不启用页内按钮或安装该功能的本机证书。
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File tools\wechat_channels\build-release.ps1 -Version 1.0.0
-powershell -ExecutionPolicy Bypass -File packaging\wechat_channels\build-installer.ps1 -Version 1.0.0
+powershell -ExecutionPolicy Bypass -File tools\wechat_channels\build-release.ps1 -Version 1.1.0
+powershell -ExecutionPolicy Bypass -File packaging\wechat_channels\build-installer.ps1 -Version 1.1.0
 ```
 
-输出为 `dist\ClipGoChannels-1.0.0-Windows-x64-Setup.exe`，分享这个完整安装程序即可。适用于 Windows 10 / 11 x64，安装到当前用户目录；已包含 Python。安装程序检查 .NET Framework 4.8 和 WebView2，缺少 WebView2 时通过微软原始安装程序联网安装。
+输出为 `dist\ClipGoChannels-1.1.0-Windows-x64-Setup.exe`，分享这个完整安装程序即可。适用于 Windows 10 / 11 x64，安装到当前用户目录；已包含 Python。安装程序检查 .NET Framework 4.8 和 WebView2，缺少 WebView2 时通过微软原始安装程序联网安装。
 
 发行构建、依赖校验和隔离安装测试详见 `packaging/wechat_channels/README.md`。随安装包保留原始第三方许可和简单使用说明；`release.json` 记录来源提交、版本和依赖，不包含个人数据。卸载按编译时的文件清单移除程序，保留已下载视频及额外用户文件。

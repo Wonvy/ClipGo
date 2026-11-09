@@ -123,8 +123,84 @@ class WebBridgeTests(unittest.TestCase):
         methods = {name for name in dir(Api) if not name.startswith('_') and callable(getattr(Api, name))}
         self.assertEqual(methods, {'get_state', 'scan', 'download', 'cancel_download', 'choose_folder',
                                    'open_folder', 'open_video', 'prepare_preview', 'close_preview',
-                                   'remove_video', 'clear_videos'})
+                                   'remove_video', 'clear_videos', 'set_page_button',
+                                   'set_page_certificate_keep', 'remove_page_certificate'})
         self.assertNotIn('companion', state)
+
+    def test_page_click_uses_exact_new_pair_even_if_cached_item_has_a_key(self):
+        received = []
+        def download(candidate, folder, cancel, progress):
+            received.append(candidate)
+            return folder / 'page-video.mp4'
+        api = self.make_api(scanner=lambda *_a, **_kw: [video()], downloader=download)
+        self.scan(api)
+        new = video(url='https://finder.video.qq.com/new?token=NEW_PAGE', decode_key=None,
+                    media_options=[])
+        self.assertTrue(api._page_candidate(new, download=True)['ok'])
+        wait_until(lambda: bool(received))
+        self.assertEqual((received[0]['url'], received[0]['decode_key']), (new['url'], None))
+        self.assertNotIn('NEW_PAGE', json.dumps(api.get_state()))
+
+    def test_certificate_preference_is_explicit_and_boolean_only(self):
+        with patch('tools.wechat_channels.page_controller.certificate_status',
+                   return_value={'keep': False, 'installed': False}) as status, \
+             patch('tools.wechat_channels.page_controller.set_certificate_preference') as choose:
+            api = self.make_api()
+            self.assertFalse(api.get_state()['page_certificate']['keep'])
+            for value in (1, 'true', None):
+                self.assertFalse(api.set_page_certificate_keep(value)['ok'])
+            choose.assert_not_called()
+            status.return_value = {'keep': True, 'installed': True}
+            self.assertTrue(api.set_page_certificate_keep(True)['ok'])
+            choose.assert_called_once_with(True)
+            snapshot = api.get_state()['page_certificate']
+            snapshot['keep'] = False
+            self.assertTrue(api.get_state()['page_certificate']['keep'])
+
+    def test_removing_certificate_stops_page_service_first(self):
+        order = []
+        with patch('tools.wechat_channels.page_controller.certificate_status',
+                   return_value={'keep': False, 'installed': False}), \
+             patch('tools.wechat_channels.page_controller.remove_owned_certificate',
+                   side_effect=lambda: order.append('remove') or {'keep': False, 'installed': False}):
+            api = self.make_api()
+            api._page_controller = Mock()
+            api._page_controller.stop.side_effect = lambda: order.append('stop')
+            self.assertTrue(api.remove_page_certificate()['ok'])
+            wait_until(lambda: not api._page_worker.is_alive())
+            self.assertEqual(order, ['stop', 'remove'])
+            self.assertEqual(api.get_state()['page_button']['state'], 'disabled')
+
+    def test_certificate_removal_error_does_not_report_success(self):
+        with patch('tools.wechat_channels.page_controller.certificate_status',
+                   return_value={'keep': False, 'installed': True}), \
+             patch('tools.wechat_channels.page_controller.recover_session'), \
+             patch('tools.wechat_channels.page_controller.remove_owned_certificate', side_effect=OSError()):
+            api = self.make_api()
+            self.assertTrue(api.remove_page_certificate()['ok'])
+            wait_until(lambda: not api._page_worker.is_alive())
+            self.assertEqual(api.get_state()['page_button']['state'], 'error')
+            self.assertTrue(api.get_state()['page_certificate']['installed'])
+
+    def test_certificate_changes_rejected_during_page_transition(self):
+        api = self.make_api()
+        api._page_worker = Mock()
+        api._page_worker.is_alive.return_value = True
+        with patch('tools.wechat_channels.page_controller.set_certificate_preference') as choose:
+            self.assertFalse(api.set_page_certificate_keep(True)['ok'])
+            self.assertFalse(api.remove_page_certificate()['ok'])
+            choose.assert_not_called()
+        api._page_worker = None
+
+    def test_page_events_keep_deleted_items_removed_until_explicit_download(self):
+        api = self.make_api(scanner=lambda *_a, **_kw: [video()],
+                            downloader=lambda candidate, folder, *_: folder / 'page-video.mp4')
+        self.scan(api)
+        api.remove_video('a')
+        api._page_candidate(video())
+        self.assertEqual(api.get_state()['items'], [])
+        self.assertTrue(api._page_candidate(video(), download=True)['ok'])
+        self.assertEqual(len(api.get_state()['items']), 1)
 
     def test_revision_poll_returns_only_version_until_something_changes(self):
         api = self.make_api(scanner=lambda *_a, **_kw: [video()])

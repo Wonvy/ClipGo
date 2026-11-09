@@ -36,3 +36,25 @@ Other package licenses are copied from the pinned installed wheels by
 release_assets.py, preserving package-relative paths. Python's full
 LICENSE.txt is copied from the build interpreter distribution. Their exact
 files are also covered by the installer's package manifest.
+
+mitmproxy_rs-0.12.15/LICENSE
+https://raw.githubusercontent.com/mitmproxy/mitmproxy_rs/v0.12.15/LICENSE
+SHA-256 fb21d4527ce8b8bb01ece568a4b446cb3b547ae61e24764adb2be9a3d18bb5c7
+
+OpenSSL-4.0.3/LICENSE.txt
+https://raw.githubusercontent.com/openssl/openssl/openssl-4.0.3/LICENSE.txt
+SHA-256 7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a
+
+Native proxy dependencies
+The original license texts for 358 crate/source archives are preserved in
+native-proxy/THIRD-PARTY-LICENSES.txt. Exact source URLs, archive hashes and
+individual original-license hashes are recorded in native-proxy/PROVENANCE.json.
+Where a crate omitted its license file, its recorded upstream source commit
+provided the original license. Winapi target archives use the original
+license texts supplied by their parent winapi 0.3.9 source archive.
+
+LGPL library source
+The ldap3 original source archive and pydivert source-only archive are
+under library-source. Its PROVENANCE.json records the official PyPI source
+URLs and hashes, plus the two removed pydivert binary members and repack hash.
+All source and license member contents remain unchanged.

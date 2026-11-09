@@ -96,6 +96,13 @@ class Api:
         self._close_waiter_started = False
         self._allow_close = False
         self._dialog_busy = False
+        self._page_controller = None
+        self._page_worker = None
+        self._page_requested = False
+        self._page_state = {'state': 'disabled', 'message': '在微信页面内显示下载按钮',
+                            'connected': False, 'buttons': 0, 'current': False}
+        from .page_controller import certificate_status
+        self._page_certificate = certificate_status()
 
     def get_state(self, known_revision=None):
         with self._lock:
@@ -109,7 +116,157 @@ class Api:
                     'items': [dict(item, engagement=dict(item['engagement']),
                                    status=self._item_states.get(ident, item['status']))
                               for ident, item in self._items.items()],
-                    'download': dict(self._download), 'preview': dict(self._preview)}
+                    'download': dict(self._download), 'preview': dict(self._preview),
+                    'page_button': deepcopy(self._page_state),
+                    'page_certificate': dict(self._page_certificate)}
+
+    def _page_status(self):
+        with self._lock:
+            return {'ok': not self._closing, 'download': {
+                key: self._download[key] for key in ('state', 'id', 'percent', 'message')}}
+
+    def _page_event(self, event):
+        with self._lock:
+            if self._closing:
+                return
+            self._page_state['connected'] = True
+            if type(event.get('buttons')) is int:
+                self._page_state['buttons'] = event['buttons']
+            if event.get('kind') == 'current' and 'has_feed' in event:
+                self._page_state['current'] = bool(event['has_feed'])
+            if event.get('placement') in ('inline', 'floating', 'none'):
+                self._page_state['placement'] = event['placement']
+            diagnostic_names = ('source_count', 'candidate_count', 'hook_count', 'video_count', 'vue_components', 'selected_index_valid',
+                                'vue_component', 'vue_feed', 'detail_seen')
+            diagnostics = {key: event[key] for key in diagnostic_names
+                           if type(event.get(key)) in (int, bool)}
+            if diagnostics:
+                self._page_state['diagnostics'] = diagnostics
+            self._page_state['message'] = ('下载按钮已加入微信页面' if self._page_state['buttons']
+                                           else '已连接微信页面，正在等待操作栏')
+            self._revision += 1
+            self._write_report()
+
+    def _page_candidate(self, candidate, *, download=False):
+        # Only the authenticated backend bridge calls this with a validated
+        # same-feed snapshot. It is not exported to the desktop HTML page.
+        with self._lock:
+            if self._closing:
+                return {'ok': False, 'message': '工具正在关闭。'}
+            ident = candidate['id']
+            if download:
+                self._removed_ids.discard(ident)
+            self._apply_candidates([candidate], self._generation, final=False)
+            self._revision += 1
+
+            if not download:
+                return {'ok': True}
+            if ident not in self._candidates:
+                return {'ok': False, 'message': '列表已满，请先清理部分记录。'}
+            # An explicit page click downloads this exact URL/key pair, even if
+            # a memory refresh previously retained another signature for the ID.
+            self._candidates[ident] = deepcopy(candidate)
+            return self.download(ident)
+
+    def _set_page_state(self, update):
+        with self._lock:
+            self._page_state.update(update)
+            if update.get('state') in ('disabled', 'error'):
+                self._page_state.update(connected=False, buttons=0, current=False)
+            self._revision += 1
+            self._write_report()
+
+    def set_page_button(self, enabled):
+        if type(enabled) is not bool:
+            return {'ok': False, 'message': '请选择开启或关闭。'}
+        with self._lock:
+            if self._closing:
+                return {'ok': False, 'message': '工具正在关闭。'}
+            if self._page_worker and self._page_worker.is_alive():
+                if not enabled:
+                    self._page_requested = False
+                    if self._page_controller:
+                        self._page_controller.request_stop()
+                    self._set_page_state({'state': 'stopping', 'message': '正在取消开启并恢复设置…'})
+                    return {'ok': True}
+                return {'ok': False, 'message': '正在更新微信内按钮，请稍候。'}
+            self._page_requested = enabled
+            self._set_page_state({'state': 'starting' if enabled else 'stopping',
+                                 'message': '正在开启微信内按钮…' if enabled else '正在关闭并恢复设置…'})
+            def change():
+                try:
+                    if enabled:
+                        from .page_controller import PageController
+                        if self._page_controller is None:
+                            self._page_controller = PageController(on_candidate=self._page_candidate,
+                                get_status=self._page_status, on_event=self._page_event,
+                                on_state=self._set_page_state)
+                        self._page_controller.start(cancelled=lambda: self._closing or not self._page_requested)
+                        if self._closing:
+                            self._page_controller.stop()
+                    elif self._page_controller:
+                        self._page_controller.stop()
+                    else:
+                        self._set_page_state({'state': 'disabled', 'message': '微信内按钮已关闭'})
+                except Exception as exc:
+                    from .page_controller import PageSetupError, PageSetupCancelled
+                    message = str(exc) if isinstance(exc, PageSetupError) else '页内按钮未能启动，请关闭后重试。'
+                    self._set_page_state({'state': 'disabled' if isinstance(exc, PageSetupCancelled) else 'error', 'message': message})
+                finally:
+                    self._refresh_page_certificate()
+            self._page_worker = threading.Thread(target=change, daemon=True, name='ClipGo page button')
+            self._page_worker.start()
+        return {'ok': True}
+
+    def _refresh_page_certificate(self):
+        from .page_controller import certificate_status
+        status = certificate_status()
+        with self._lock:
+            self._page_certificate = status
+            self._revision += 1
+
+    def set_page_certificate_keep(self, keep):
+        if type(keep) is not bool:
+            return {'ok': False, 'message': '请选择是否保留证书。'}
+        with self._lock:
+            if self._closing or self._page_worker and self._page_worker.is_alive():
+                return {'ok': False, 'message': '正在更新微信内按钮，请稍候。'}
+            from .page_controller import set_certificate_preference, PageSetupError
+            try:
+                set_certificate_preference(keep)
+            except (OSError, PageSetupError):
+                return {'ok': False, 'message': '未能保存证书设置，请重试。'}
+            self._refresh_page_certificate()
+            if not keep and self._page_state['state'] != 'enabled' and self._page_certificate['installed']:
+                return self.remove_page_certificate()
+        return {'ok': True, 'message': ('证书将保留在本机，下次开启可直接复用。' if keep
+                                      else '关闭微信内按钮时将移除证书。')}
+
+    def remove_page_certificate(self):
+        with self._lock:
+            if self._closing or self._page_worker and self._page_worker.is_alive():
+                return {'ok': False, 'message': '正在更新微信内按钮，请稍候。'}
+            self._page_requested = False
+            self._set_page_state({'state': 'stopping', 'message': '正在关闭微信内按钮并移除证书…'})
+            def remove():
+                from .page_controller import remove_owned_certificate, recover_session, PageSetupError
+                try:
+                    if self._page_controller:
+                        self._page_controller.stop()
+                    else:
+                        recover_session()
+                    status = remove_owned_certificate()
+                    if status['installed']:
+                        raise PageSetupError('证书不属于本工具安装，未作移除。')
+                    self._set_page_state({'state': 'disabled', 'message': '本机证书已移除'})
+                except Exception as exc:
+                    message = str(exc) if isinstance(exc, PageSetupError) else '证书未能移除，请重试。'
+                    self._set_page_state({'state': 'error', 'message': message})
+                finally:
+                    self._refresh_page_certificate()
+            self._page_worker = threading.Thread(target=remove, daemon=True, name='ClipGo remove certificate')
+            self._page_worker.start()
+        return {'ok': True}
 
     def scan(self, source='all'):
         if source not in ('all', 'standalone', 'main'):
@@ -611,6 +768,11 @@ class Api:
             visible = recognized or list(self._items.values())
             counts = [tuple(normalize_engagement(item.get('engagement')).values()) for item in visible]
             return {'result': self._scan['state'], 'candidate_count': len(self._items),
+                    'page_button_state': self._page_state['state'],
+                    'page_message': self._page_state['message'],
+                    'page_buttons': self._page_state['buttons'],
+                    'page_current': self._page_state['current'],
+                    'page_diagnostics': dict(self._page_state.get('diagnostics', {})),
                     'recognized_count': len(recognized), 'ui_rows': len(visible),
                     'titled_rows': sum(item['title'] != '暂未读取到标题' for item in visible),
                     'thumbnail_rows': sum(item['thumbnail_state'] == 'ready' for item in visible),
@@ -679,6 +841,17 @@ class Api:
         self._download_cancel.set()
         self._preview_cancel.set()
         self._stop.set()
+        self._page_requested = False
+        if self._page_controller:
+            self._page_controller.request_stop()
+        if self._page_worker and self._page_worker.is_alive():
+            self._page_worker.join(timeout=25)
+        if self._page_controller:
+            try:
+                self._page_controller.stop()
+            except Exception:
+                # The recovery journal survives; next launch retries cleanup.
+                self._set_page_state({'state': 'error', 'message': '临时设置将在下次打开时继续清理'})
         deadline = time.monotonic() + 25
         for worker in (self._download_worker, self._preview_worker):
             if worker and worker.is_alive():
@@ -744,21 +917,43 @@ def _diagnostic_result(report, dom, revision):
     return result
 
 
-def main(diagnostic_path=None):
+def main(diagnostic_path=None, enable_page_button=False):
     """Start the native HTML window. Diagnostic mode uses the same page/API."""
     if os.name != 'nt':
         raise SystemExit('本工具目前仅支持 Windows。')
-    import webview
     from .runtime import InstanceLock, MARKER, untrust_certificate
     lock = InstanceLock(BASE / 'instance.lock')
     if diagnostic_path is None and not lock.acquire():
         ctypes.windll.user32.MessageBoxW(None, '视频号助手已经打开，请使用现有窗口。', 'ClipGo 视频号', 0x40)
         return
+    if diagnostic_path is None:
+        from .page_controller import certificate_requires_admin
+        from .elevation import is_admin, request_elevated_start
+        if certificate_requires_admin() and not is_admin():
+            # No window, controller or network changes exist yet. Release the
+            # startup lock before launching the authorized replacement process.
+            lock.close()
+            try:
+                started = request_elevated_start(enable_page_button)
+                message = '已取消管理员授权。临时证书模式需要管理员权限，请重新打开工具后允许。'
+            except OSError:
+                started = False
+                message = '未能申请管理员权限，请右键工具并选择“以管理员身份运行”。'
+            if not started:
+                ctypes.windll.user32.MessageBoxW(None, message, 'ClipGo 视频号', 0x40)
+            return
+    import webview
     api = Api(report_path=None if diagnostic_path else REPORT_PATH,
               auto_refresh_enabled=diagnostic_path is None)
     try:
         if MARKER.exists():
             untrust_certificate()
+        if diagnostic_path is None:
+            from .page_controller import recover_session
+            recover_session()
+            api._refresh_page_certificate()
+        if enable_page_button:
+            api.set_page_button(True)
         entrypoint = _assets_path()
         if not entrypoint.is_file():
             raise RuntimeError('界面文件缺失，请重新解压完整的软件文件夹。')
@@ -816,12 +1011,14 @@ def main(diagnostic_path=None):
                       http_server=True, private_mode=True)
         if getattr(api, '_startup_error', False):
             raise RuntimeError('WebView2 is required')
-    except Exception:
+    except Exception as exc:
         if diagnostic_path:
             Path(diagnostic_path).write_text(json.dumps({'result': 'error', 'message': 'HTML 窗口未能完成启动。'}), encoding='utf-8')
             raise
-        ctypes.windll.user32.MessageBoxW(None,
-            '新版界面未能启动。请确认软件文件完整，并已安装 Microsoft Edge WebView2 运行时。',
+        from .page_controller import PageSetupError
+        message = (str(exc) if isinstance(exc, PageSetupError) else
+                   '新版界面未能启动。请确认软件文件完整，并已安装 Microsoft Edge WebView2 运行时。')
+        ctypes.windll.user32.MessageBoxW(None, message,
             'ClipGo 视频号', 0x10)
     finally:
         api._shutdown()

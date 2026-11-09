@@ -10,8 +10,20 @@ import shutil
 import subprocess
 import sys
 
-RUNTIME_PACKAGES = ('Pillow', 'pywebview', 'pythonnet', 'clr_loader', 'bottle',
-                    'proxy_tools', 'typing_extensions', 'cffi', 'pycparser')
+RUNTIME_PACKAGES = (
+    'Pillow', 'pywebview', 'pythonnet', 'clr_loader', 'bottle', 'proxy_tools',
+    'typing_extensions', 'cffi', 'pycparser', 'mitmproxy', 'mitmproxy_rs',
+    'aioquic', 'argon2-cffi', 'argon2-cffi-bindings', 'asgiref', 'attrs',
+    'backports.zstd', 'bcrypt', 'blinker', 'brotli', 'certifi', 'click',
+    'cryptography', 'Flask', 'h11', 'h2', 'hpack', 'hyperframe', 'itsdangerous',
+    'Jinja2', 'kaitaistruct', 'ldap3', 'MarkupSafe', 'pyasn1', 'pylsqpack',
+    'pyOpenSSL', 'pyparsing', 'pyperclip', 'ruamel.yaml', 'sortedcontainers',
+    'tornado', 'Werkzeug', 'wsproto', 'publicsuffix2', 'pydivert',
+)
+# Ship these unmodified libraries as readable/replaceable Python files. Their
+# complete Python source is also retained with the license notices below.
+SOURCE_PACKAGES = {'ldap3': 'ldap3', 'pydivert': 'pydivert',
+                   'certifi': 'certifi', 'publicsuffix2': 'publicsuffix2'}
 ROOT = Path(__file__).resolve().parents[2]
 
 
@@ -19,6 +31,20 @@ def prepare(version, target):
     if not re.fullmatch(r'\d+\.\d+\.\d+', version) or any(int(n)>65535 for n in version.split('.')):
         raise ValueError('Expected a three-part Windows version')
     target.mkdir(parents=True, exist_ok=True)
+    hooks = target/'hooks'
+    hooks.mkdir(exist_ok=True)
+    for module in SOURCE_PACKAGES.values():
+        (hooks/f'hook-{module}.py').write_text(
+            "from PyInstaller.utils.hooks import collect_data_files\n"
+            "module_collection_mode = 'py'\n"
+            + ("datas = []  # No WinDivert DLL, SYS or driver files.\n" if module == 'pydivert'
+               else f"datas = collect_data_files({module!r})\n"), encoding='utf-8')
+    (hooks/'hook-mitmproxy_rs.py').write_text(
+        "from PyInstaller.utils.hooks import collect_data_files, collect_dynamic_libs\n"
+        "datas = collect_data_files('mitmproxy_rs')\n"
+        "binaries = collect_dynamic_libs('mitmproxy_rs')\n"
+        "hiddenimports = []  # Regular proxy does not load the local redirector.\n",
+        encoding='utf-8')
     from PIL import Image
     with Image.open(ROOT/'extension/icons/icon128.png') as source:
         source.convert('RGBA').save(target/'ClipGoChannels.ico',sizes=[(16,16),(32,32),(48,48),(128,128)])
@@ -46,7 +72,13 @@ def collect_notices(version, payload):
         dist = metadata.distribution(package)
         for item in dist.files or []:
             path = Path(str(item))
-            if not (path.name.upper().startswith(('LICENSE','COPYING','NOTICE')) or 'licenses' in path.parts):
+            name = path.name.upper()
+            source_module = SOURCE_PACKAGES.get(package)
+            source_file = (source_module and path.parts and path.parts[0] == source_module
+                           and path.suffix in ('.py', '.dat', '.ABOUT'))
+            if not (name.startswith(('LICENSE', 'COPYING', 'NOTICE', 'AUTHORS'))
+                    or name.endswith(('.LICENSE', '.LICENCE'))
+                    or 'licenses' in path.parts or 'sboms' in path.parts or source_file):
                 continue
             source = Path(dist.locate_file(item))
             if not source.is_file():
@@ -58,6 +90,17 @@ def collect_notices(version, payload):
             target = destination/package/path
             target.parent.mkdir(parents=True,exist_ok=True)
             shutil.copy2(source,target)
+    # These notices cover native code whose wheel metadata does not include
+    # all upstream notices. Missing required originals must block distribution.
+    for relative in ('mitmproxy_rs-0.12.15/LICENSE',
+                     'native-proxy/THIRD-PARTY-LICENSES.txt',
+                     'native-proxy/PROVENANCE.json',
+                     'OpenSSL-4.0.3/LICENSE.txt',
+                     'library-source/ldap3-2.9.1.tar.gz',
+                     'library-source/pydivert-3.1.3-source.tar.gz',
+                     'library-source/PROVENANCE.json'):
+        if not (ROOT/'packaging/wechat_channels/licenses'/relative).is_file():
+            raise FileNotFoundError(f'Required proxy release notice missing: {relative}')
     python_license = Path(sys.base_prefix)/'LICENSE.txt'
     if not python_license.is_file():
         raise FileNotFoundError('Python redistribution license is missing')

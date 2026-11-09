@@ -1,0 +1,28 @@
+[
+  {
+    "name": "ldap3",
+    "version": "2.9.1",
+    "filename": "ldap3-2.9.1.tar.gz",
+    "url": "https://files.pythonhosted.org/packages/43/ac/96bd5464e3edbc61595d0d69989f5d9969ae411866427b2500a8e5b812c0/ldap3-2.9.1.tar.gz",
+    "sha256": "f3e7fc4718e3f09dda568b57100095e0ce58633bcabbed8667ce3f8fbaa4229f"
+  },
+  {
+    "name": "pydivert",
+    "version": "3.1.3",
+    "filename": "pydivert-3.1.3-source.tar.gz",
+    "url": "https://files.pythonhosted.org/packages/5f/19/dada7b2efd40eaaa7d5fc4d14f85c9e8aaf4eeacb23fc9294768fe6e44e2/pydivert-3.1.3.tar.gz",
+    "upstream_sha256": "e5cba087f3f17eb66cf50965cf9670c55691c580f81dcad20549a0ef49af8e06",
+    "sha256": "e9cc7f2c1bf07eca0c370903e2c25dfa78143c2249bf44856098a7e3c78b0540",
+    "removed_binary_members": [
+      {
+        "path": "pydivert-3.1.3/pydivert/windivert_dll/WinDivert64.dll",
+        "sha256": "c1e060ee19444a259b2162f8af0f3fe8c4428a1c6f694dce20de194ac8d7d9a2"
+      },
+      {
+        "path": "pydivert-3.1.3/pydivert/windivert_dll/WinDivert64.sys",
+        "sha256": "8da085332782708d8767bcace5327a6ec7283c17cfb85e40b03cd2323a90ddc2"
+      }
+    ],
+    "repack_note": "Source-only archive: only the listed WinDivert binary members were removed. All remaining archive member contents, including every Python source file and license, are byte-for-byte upstream originals."
+  }
+]

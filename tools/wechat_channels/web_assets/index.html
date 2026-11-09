@@ -36,6 +36,12 @@
       <section id="settings-menu" class="popover settings-menu" aria-label="设置" hidden>
         <div class="menu-label">显示视频</div><div class="filters"><button id="filter-recognized" class="filter active" aria-pressed="true">已识别 <span>0</span></button><button id="filter-all" class="filter" aria-pressed="false">全部 <span>0</span></button></div>
         <div class="menu-separator"></div><div class="menu-label">保存位置</div><p id="folder-path" class="folder-path"></p><div class="folder-actions"><button id="choose-folder" class="footer-link">更改位置</button><button id="open-folder" class="footer-link">打开文件夹<svg><use href="#i-folder"/></svg></button></div>
+        <div class="menu-separator"></div><button id="page-button-toggle" class="page-button-toggle" role="switch" aria-checked="false"><span>微信内下载按钮</span><span class="switch-track"></span></button><p id="page-button-status" class="page-button-status">在微信页面内显示下载按钮</p>
+        <p class="page-certificate-hint">仅处理视频号网页和脚本，关闭时恢复网络设置。</p>
+        <p id="page-certificate-mode" class="page-certificate-hint">证书范围：当前 Windows 用户</p>
+        <label class="certificate-choice"><input id="page-certificate-keep" type="checkbox" aria-describedby="page-certificate-hint"><span>保留本机证书</span></label>
+        <p id="page-certificate-hint" class="page-certificate-hint">下次开启免重复确认。证书会持续受信任，直到移除；首次仍需 Windows 确认。</p>
+        <div class="certificate-actions"><span id="page-certificate-status">未安装</span><button id="page-certificate-remove" class="footer-link" disabled>移除证书</button></div>
         <p class="shortcut-hint">点击卡片播放 · 空格播放 / 暂停</p>
       </section>
     </div>

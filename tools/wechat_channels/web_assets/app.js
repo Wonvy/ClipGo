@@ -16,6 +16,8 @@
   let libraryBusy = false, clearedLibrary = false;
   try { autoRefresh = localStorage.getItem('clipgo.autoRefresh') !== 'false'; } catch (_) {}
   const cards = new Map();
+  const pageToggle = $('page-button-toggle'), pageStatus = $('page-button-status');
+  const certificateKeep = $('page-certificate-keep'), certificateRemove = $('page-certificate-remove');
   const text = value => value == null ? '' : String(value);
   const title = item => text(item.title).trim() || '暂未读取到标题';
   const downloadActive = () => ['downloading','cancelling'].includes(state.download.state);
@@ -171,6 +173,21 @@
     dom['cancel-clear'].disabled = libraryBusy;
     dom['folder-path'].textContent = state.folder || '正在读取保存位置…';
     dom['folder-path'].title = state.folder || '';
+    const pageButton = state.page_button || {state:'disabled',message:'在微信页面内显示下载按钮'};
+    pageToggle.setAttribute('aria-checked', String(pageButton.state === 'enabled'));
+    pageToggle.disabled = !apiReady || ['starting','stopping'].includes(pageButton.state);
+    pageStatus.textContent = pageButton.message || '';
+    const certificate = state.page_certificate || {keep:false,installed:false};
+    $('page-certificate-mode').textContent = certificate.scope === 'machine'
+      ? '管理员模式 · 本机用户均信任。启动时可能需要管理员授权。'
+      : '证书范围：当前 Windows 用户';
+    $('page-certificate-hint').textContent = certificate.scope === 'machine'
+      ? '未勾选时关闭即移除。勾选后证书持续受信任，直到你移除。'
+      : '下次开启免重复确认。证书会持续受信任，直到移除；首次安装可能需要 Windows 确认。';
+    certificateKeep.checked = !!certificate.keep;
+    certificateKeep.disabled = !apiReady || ['starting','stopping'].includes(pageButton.state);
+    certificateRemove.disabled = certificateKeep.disabled || !certificate.installed;
+    $('page-certificate-status').textContent = certificate.installed ? (certificate.keep ? '已保留' : '临时信任') : '未安装';
     const recognized = state.items.filter(item => item.recognized);
     if (!manualFilter && state.scan.state === 'done') filter = recognized.length || !state.items.length ? 'recognized' : 'all';
     const query = dom.search.value.trim().toLocaleLowerCase();
@@ -389,6 +406,25 @@
   dom['preview-video'].addEventListener('error',()=>{if(previewUrl){mediaStarting=false;mediaError=true;dom['preview-message'].textContent='此视频暂时无法在窗口内播放，可下载后打开。';renderPreview();}});
   dom['preview-retry'].addEventListener('click',()=>{const id=detailId;detailId=null;if(id)openDetails(id);});
   dom['settings-trigger'].addEventListener('click',()=>toggleMenu('settings'));
+  pageToggle.addEventListener('click', async()=>{
+    const enabled = state.page_button?.state !== 'enabled';
+    pageToggle.disabled=true;
+    const result=await invoke('set_page_button',enabled);
+    if(result?.ok===false)notify(result.message);
+    await fetchState(true);
+  });
+  certificateKeep.addEventListener('change', async()=>{
+    certificateKeep.disabled=true;
+    const result=await invoke('set_page_certificate_keep',certificateKeep.checked);
+    if(result?.message)notify(result.message);
+    await fetchState(true);
+  });
+  certificateRemove.addEventListener('click', async()=>{
+    certificateRemove.disabled=true;
+    const result=await invoke('remove_page_certificate');
+    if(result?.ok===false)notify(result.message);
+    await fetchState(true);
+  });
   dom['clear-library'].addEventListener('click',()=>{closeMenus();render();dom['clear-dialog'].showModal();});
   dom['confirm-clear'].addEventListener('click',clearLibrary);
   dom['cancel-clear'].addEventListener('click',()=>dom['clear-dialog'].close());

@@ -1,4 +1,4 @@
-param([string]$Version = '1.0.0')
+param([string]$Version = '1.1.0')
 $ErrorActionPreference = 'Stop'
 $repoRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..\..'))
 $releaseBuild = Join-Path $repoRoot 'build\wechat-release'
@@ -16,8 +16,9 @@ if ($LASTEXITCODE) { throw 'The release requires Python 3.12 x64.' }
 if ($LASTEXITCODE) { throw 'Release dependency installation failed.' }
 & $pythonExe (Join-Path $PSScriptRoot 'release_assets.py') prepare --version $Version --target $releaseBuild
 if ($LASTEXITCODE) { throw 'Release metadata generation failed.' }
-$exclude = @('mitmproxy','mitmproxy_rs','mitmproxy_windows','pydivert','tkinter',
-    'cryptography','wechat_channels.app','wechat_channels.view','wechat_channels.cards',
+$exclude = @('mitmproxy_windows','mitmproxy_linux','mitmproxy_macos','tkinter',
+    'mitmproxy.tools.console','mitmproxy.tools.web','mitmproxy.tools.main','urwid','wcwidth',
+    'wechat_channels.app','wechat_channels.view','wechat_channels.cards',
     'playwright','pytest','IPython','numpy','pandas','matplotlib','PyQt5','PyQt6','PySide2','PySide6',
     'setuptools','packaging','_distutils_hack')
 $options = @('--noconfirm','--windowed','--onedir','--name','ClipGoChannels',
@@ -25,11 +26,15 @@ $options = @('--noconfirm','--windowed','--onedir','--name','ClipGoChannels',
     '--specpath',$releaseBuild,'--paths',(Join-Path $repoRoot 'tools'),
     '--icon',(Join-Path $releaseBuild 'ClipGoChannels.ico'),
     '--version-file',(Join-Path $releaseBuild 'version.txt'),
+    '--additional-hooks-dir',(Join-Path $releaseBuild 'hooks'),
     '--collect-data','webview','--collect-binaries','webview',
+    '--collect-data','mitmproxy','--collect-data','mitmproxy_rs','--collect-binaries','mitmproxy_rs',
     '--collect-all','pythonnet','--collect-binaries','clr_loader',
     '--hidden-import','webview.platforms.winforms','--hidden-import','webview.platforms.edgechromium',
-    '--hidden-import','clr','--copy-metadata','pywebview',
-    '--add-data',((Join-Path $PSScriptRoot 'web_assets')+';web_assets'))
+    '--hidden-import','clr','--copy-metadata','pywebview','--copy-metadata','mitmproxy',
+    '--copy-metadata','mitmproxy_rs',
+    '--add-data',((Join-Path $PSScriptRoot 'web_assets')+';web_assets'),
+    '--add-data',((Join-Path $PSScriptRoot 'page_assets')+';page_assets'))
 foreach ($name in $exclude) { $options += @('--exclude-module',$name) }
 $options += (Join-Path $PSScriptRoot 'release.py')
 & $pythonExe -m PyInstaller @options
@@ -50,8 +55,12 @@ Copy-Item -LiteralPath (Join-Path $releaseBuild 'dist\ClipGoChannels') -Destinat
 & $pythonExe (Join-Path $PSScriptRoot 'release_assets.py') notices --version $Version --target $resolvedPayload
 if ($LASTEXITCODE) { throw 'Release notices generation failed.' }
 $forbidden = @(Get-ChildItem -LiteralPath $resolvedPayload -Recurse -File | Where-Object {
-    $_.FullName -match '(?i)mitmproxy|pydivert|windivert|playwright|_tcl_data|_tk_data' -or
-    $_.Extension -in @('.pem','.key','.mp4','.part')
+    $relative = $_.FullName.Substring($resolvedPayload.Length + 1).Replace('\','/')
+    $publicCA = $relative -eq '_internal/certifi/cacert.pem'
+    $_.FullName -match '(?i)[\\/](mitmproxy_windows|mitmproxy_linux|mitmproxy_macos|playwright|_tcl_data|_tk_data)[\\/]' -or
+    $_.Name -match '(?i)^windivert.*\.(dll|sys|exe|lib)$|^windows-redirector\.exe$' -or
+    $_.Extension -in @('.key','.mp4','.part','.sys') -or
+    ($_.Extension -eq '.pem' -and -not $publicCA)
 })
 if ($forbidden.Count) { throw ('Unexpected release file: '+$forbidden[0].Name) }
 Write-Output ('Release payload: '+$resolvedPayload)

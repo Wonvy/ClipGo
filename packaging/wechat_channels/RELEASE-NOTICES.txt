@@ -1,6 +1,7 @@
-ClipGo Channels 1.0.0 — third-party component notices
+ClipGo Channels 1.1.0 — third-party component notices
 
-This file describes the Windows x64 HTML-only release. The accompanying
+This file describes the Windows x64 HTML desktop release, including its
+optional regular HTTPS page proxy. The accompanying
 licenses directory retains original upstream license and notice texts.
 The summaries below do not replace those texts. Component versions are
 pinned by tools/wechat_channels/requirements-release.txt and the release
@@ -60,6 +61,55 @@ pycparser 3.12
   BSD 3-Clause.
   https://github.com/eliben/pycparser
 
+mitmproxy 12.3.1 and mitmproxy_rs 0.12.15
+  MIT. Used for the explicitly enabled page-button session's regular proxy.
+  The original mitmproxy package notices, original mitmproxy_rs LICENSE,
+  supplied wheel SBOMs, and native dependency notices are included.
+  https://github.com/mitmproxy/mitmproxy/tree/v12.3.1
+  https://github.com/mitmproxy/mitmproxy_rs/tree/v0.12.15
+
+Proxy runtime dependencies
+  aioquic, argon2-cffi, argon2-cffi-bindings, asgiref, attrs, backports.zstd,
+  bcrypt, blinker, Brotli, certifi, click, cryptography, Flask, h11, h2,
+  hpack, hyperframe, itsdangerous, Jinja2, kaitaistruct, ldap3, MarkupSafe,
+  pyasn1, pylsqpack, pyOpenSSL, pyparsing, pyperclip, ruamel.yaml,
+  sortedcontainers, tornado, Werkzeug, wsproto, publicsuffix2 and pydivert.
+  Exact versions are pinned in requirements-release.txt and release.json.
+  These libraries retain their own terms: original wheel license files,
+  nested notices and supplied SBOMs are preserved under licenses/<package>.
+  Native crate/source license texts and archive hashes are included under
+  licenses/release/native-proxy; this conservatively covers the upstream
+  wheel SBOMs, including components not necessarily used on Windows.
+
+cryptography's bundled OpenSSL 4.0.3
+  Apache License 2.0. The original upstream license is included separately.
+  This is distinct from Python's OpenSSL 3.0.15 noted above.
+  https://github.com/openssl/openssl/tree/openssl-4.0.3
+
+ldap3 2.9.1 and pydivert 3.1.3
+  ldap3 is provided under LGPL 3.0 or later; pydivert is provided under its
+  LGPL 3.0 or later option. Their complete Python source and original
+  license texts accompany this release in source archives. The pydivert
+  source archive omits only two precompiled WinDivert binary members;
+  all remaining file contents are unchanged. Provenance and hashes are
+  recorded in licenses/release/library-source/PROVENANCE.json.
+  Their Python modules are
+  kept outside the frozen archive, under _internal/ldap3 and _internal/pydivert,
+  so recipients can inspect and replace the libraries with modified versions.
+  No restriction is imposed on modifying these library copies or reverse
+  engineering for debugging modifications to these libraries.
+  pydivert supplies constants required by mitmproxy's Windows import path;
+  no WinDivert DLL, kernel driver or local process redirector is distributed.
+  https://pypi.org/project/ldap3/2.9.1/
+  https://pypi.org/project/pydivert/3.1.3/
+
+certifi and the Public Suffix List
+  The original Mozilla-derived CA data and public suffix data are unchanged.
+  Their MPL 2.0 notices and available Python source are retained. The public
+  certifi CA bundle is a dependency asset, not a user-generated private CA.
+  https://github.com/certifi/python-certifi
+  https://publicsuffix.org/
+
 Microsoft.Web.WebView2 SDK 1.0.3856.49
   BSD 3-Clause. The original SDK LICENSE.txt and NOTICE.txt are retained.
   The shipped Microsoft.Web.WebView2.Core.dll,
@@ -101,8 +151,9 @@ ISAAC-64 algorithm
   algorithm. Attribution is retained in the source.
   https://burtleburtle.net/bob/rand/isaacafa.html
 
-The release excludes the development-only network capture stack, WinDivert,
-mitmproxy, pydivert, the legacy Tk interface and browser automation tools.
+The release excludes WinDivert binaries/drivers, mitmproxy's local process
+redirector packages, the legacy Tk interface, terminal console and browser
+automation tools. The optional page proxy uses ordinary HTTP(S) connections.
 Application source and build instructions are provided in the companion
 source archive. Upstream links identify the original projects; they are
 not substitutes for the original license texts included with this release.

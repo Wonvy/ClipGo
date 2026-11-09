@@ -105,6 +105,32 @@ class WebFrontendTests(unittest.TestCase):
         # without adding visible Chinese labels between the screenshot's counts.
         self.assertNotRegex(stats.inner_text(), r'[^0-9.万+—\s]')
 
+    def test_certificate_controls_require_explicit_choice_and_allow_removal(self):
+        self.page.evaluate('''()=>{
+          mockState.page_certificate={keep:false,installed:true};
+          pywebview.api.set_page_certificate_keep=async(keep)=>{
+            bridgeCalls.push(['set_page_certificate_keep',keep]);
+            mockState.page_certificate.keep=keep;mockState.revision++;return {ok:true};};
+          pywebview.api.remove_page_certificate=async()=>{
+            bridgeCalls.push(['remove_page_certificate']);
+            mockState.page_certificate={keep:false,installed:false};
+            mockState.revision++;return {ok:true};};
+          mockState.revision++;
+        }''')
+        self.page.clock.run_for(600)
+        self.page.get_by_role('button',name='设置',exact=True).click()
+        choice=self.page.get_by_label('保留本机证书',exact=True)
+        self.assertFalse(choice.is_checked())
+        self.assertNotIn('set_page_certificate_keep',str(self.page.evaluate('bridgeCalls')))
+        choice.check()
+        self.page.wait_for_function('mockState.page_certificate.keep===true')
+        self.assertIn(['set_page_certificate_keep',True],self.page.evaluate('bridgeCalls'))
+        self.page.get_by_role('button',name='移除证书',exact=True).click()
+        self.page.wait_for_function("document.querySelector('#page-certificate-status').textContent==='未安装'")
+        self.assertFalse(choice.is_checked())
+        self.assertTrue(self.page.get_by_role('button',name='移除证书',exact=True).is_disabled())
+        self.assert_readable_layout('certificate settings')
+
     def update_engagement(self, values):
         self.page.evaluate("""values=>{
           mockState.items.find(item=>item.id==='interview').engagement=values;
