@@ -65,17 +65,30 @@ try {
     } else { Write-Host "==> deno 已存在，跳过" }
 
     Copy-Item -Force (Join-Path $Src 'clipgo_host.py') (Join-Path $AppDir 'clipgo_host.py')
+    Copy-Item -Recurse -Force (Join-Path $Src 'plugins') $AppDir
     $bat = "@echo off`r`n`"%~dp0python\python.exe`" `"%~dp0clipgo_host.py`" %*`r`n"
     [IO.File]::WriteAllText((Join-Path $AppDir 'clipgo_host.bat'), $bat, [Text.Encoding]::ASCII)
 
     Write-Host "==> 注册 Native Messaging（当前用户，无需管理员权限）"
     $manifestPath = Join-Path $AppDir "$HostName.json"
+    $allowedIds = @($ExtId)
+    $storeIdsPath = Join-Path $Src 'browser-stores.json'
+    if (Test-Path -LiteralPath $storeIdsPath) {
+        $storeIds = Get-Content -LiteralPath $storeIdsPath -Raw -Encoding UTF8 | ConvertFrom-Json
+        foreach ($storeName in @('chrome', 'edge')) {
+            $storeId = [string]$storeIds.$storeName
+            if ($storeId) {
+                if ($storeId -cnotmatch '^[a-p]{32}$') { throw "Invalid $storeName extension ID" }
+                $allowedIds += $storeId
+            }
+        }
+    }
     $manifest = [ordered]@{
         name            = $HostName
         description     = 'ClipGo download helper'
         path            = (Join-Path $AppDir 'clipgo_host.bat')
         type            = 'stdio'
-        allowed_origins = @("chrome-extension://$ExtId/")
+        allowed_origins = @($allowedIds | Select-Object -Unique | ForEach-Object { "chrome-extension://$_/" })
     }
     [IO.File]::WriteAllText($manifestPath, ($manifest | ConvertTo-Json), $Utf8NoBom)
 

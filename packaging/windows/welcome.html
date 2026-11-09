@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title data-i18n="page_title">ClipGo 安装完成 · 添加到浏览器</title>
+  <style>
+    :root {
+      font-family: "Segoe UI", "Microsoft YaHei", "Yu Gothic UI", "Malgun Gothic", system-ui, sans-serif;
+      color: #18302d;
+      background: #f5f7f5;
+      font-synthesis: none;
+      line-height: 1.6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: radial-gradient(ellipse at 10% 0, #e4f1ea 0, transparent 46%);
+      min-height: 100vh;
+    }
+    button, select { font: inherit; }
+    button, code[tabindex] { outline-offset: 4px; }
+    :focus-visible { outline: 3px solid #247763; }
+    main { max-width: 1040px; margin: 0 auto; padding: 42px 28px 36px; }
+    .masthead { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 18px; }
+    .language { display: flex; align-items: center; gap: 8px; color: #566861; font-size: 13px; }
+    .language select { max-width: 180px; border: 1px solid #ccd9d1; border-radius: 7px; padding: 5px 8px; background: #fff; color: #18302d; }
+    .brand { display: flex; align-items: center; gap: 10px; font-size: 21px; font-weight: 750; letter-spacing: -.5px; }
+    .brand-mark {
+      display: grid; place-items: center; width: 34px; height: 34px;
+      background: #183d34; color: #fff; border-radius: 10px; font-size: 22px;
+    }
+    .hero { padding: 34px 0 26px; }
+    .status {
+      display: inline-flex; align-items: center; gap: 7px;
+      color: #196549; background: #e2f2e8; border: 1px solid #cbe6d6;
+      padding: 4px 10px; border-radius: 999px; font-size: 13px; font-weight: 600;
+    }
+    h1 { margin: 14px 0 10px; font-size: clamp(27px, 4vw, 38px); line-height: 1.3; letter-spacing: -1px; }
+    .intro { margin: 0; color: #566861; font-size: 16px; max-width: 710px; }
+    .folder {
+      background: #fff; border: 1px solid #dbe4de; border-radius: 16px;
+      padding: 20px 22px; box-shadow: 0 5px 24px #183d3405;
+    }
+    .folder-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+    h2 { font-size: 17px; line-height: 1.4; margin: 0; }
+    .folder-label { color: #63726c; font-size: 13px; margin: 3px 0 0; }
+    code {
+      font-family: Consolas, "Cascadia Code", monospace;
+      user-select: all; -webkit-user-select: all;
+    }
+    .path {
+      display: block; padding: 13px 15px; background: #f4f7f5;
+      border: 1px solid #e2e9e4; border-radius: 9px; color: #24463b;
+      font-size: 14px; overflow-wrap: anywhere; white-space: pre-wrap;
+    }
+    .copy {
+      flex: none; border: 1px solid #ccd9d1; background: #fff;
+      color: #275846; border-radius: 8px; padding: 6px 11px;
+      font-size: 13px; font-weight: 600; cursor: pointer; min-height: 36px;
+    }
+    .copy:hover { background: #edf5ef; border-color: #9db8a8; }
+    .copy:disabled { cursor: wait; opacity: .65; }
+    .copy.primary { color: #fff; background: #245c48; border-color: #245c48; }
+    .copy.primary:hover { background: #194a38; }
+    .copy-status { min-height: 21px; margin: 9px 0 0; font-size: 13px; color: #38634c; }
+    .browsers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 22px; }
+    .browser { background: #fff; border: 1px solid #dbe4de; border-radius: 16px; padding: 24px; }
+    .browser-heading { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+    .browser-symbol {
+      display: grid; place-items: center; width: 40px; height: 40px; flex: none;
+      border-radius: 12px; background: #f1f5ec; color: #527633; font-size: 19px; font-weight: 700;
+    }
+    .edge .browser-symbol { background: #e9f4f5; color: #197b85; }
+    .browser-heading h2 { font-size: 20px; }
+    .browser-heading p { margin: 1px 0 0; font-size: 13px; color: #6e7a74; }
+    ol { margin: 0; padding: 0; list-style: none; counter-reset: steps; }
+    li { position: relative; padding-left: 35px; margin-bottom: 22px; counter-increment: steps; }
+    li:last-child { margin-bottom: 0; }
+    li::before {
+      content: counter(steps); position: absolute; left: 0; top: 1px;
+      width: 23px; height: 23px; display: grid; place-items: center;
+      border: 1px solid #d8e3db; border-radius: 50%; color: #46614e; font-size: 12px; font-weight: 700;
+    }
+    li strong { display: block; font-size: 15px; font-weight: 650; }
+    li p { margin: 4px 0 0; font-size: 14px; color: #5d6e64; }
+    .address { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .address code { font-size: 13px; color: #285e4a; overflow-wrap: anywhere; }
+    .address .copy { min-height: 32px; padding: 3px 9px; }
+    .finish {
+      display: flex; gap: 12px; align-items: flex-start; padding: 19px 22px;
+      margin-top: 22px; border-radius: 14px; background: #eaf2eb;
+    }
+    .finish-icon { color: #2b6847; font-size: 20px; line-height: 1.4; }
+    .finish h2 { font-size: 15px; margin: 0 0 3px; }
+    .finish p { font-size: 14px; color: #4c6554; margin: 0; }
+    .note { margin: 18px 3px 0; color: #6b766f; font-size: 13px; }
+    .note strong { color: #4c5f53; font-weight: 600; }
+    footer { padding-top: 28px; color: #87918a; font-size: 12px; }
+    @media (max-width: 720px) {
+      main { padding: 25px 18px; }
+      .hero { padding-top: 25px; }
+      .browsers { grid-template-columns: 1fr; }
+      .folder, .browser { padding: 19px; }
+    }
+    @media (max-width: 380px) {
+      main { padding-left: 12px; padding-right: 12px; }
+      .folder-heading { align-items: flex-start; flex-direction: column; }
+      .folder, .browser { padding: 16px; }
+      li { padding-left: 31px; }
+    }
+    @media print {
+      body { background: #fff; }
+      main { padding: 0; }
+      .copy, .copy-status, .language { display: none; }
+      .browser, .folder, .finish { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="masthead">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">↓</span>ClipGo</div>
+      <label class="language"><span data-i18n="language">语言</span>
+        <select id="language">
+          <option value="zh_CN">简体中文</option>
+          <option value="zh_TW">繁體中文</option>
+          <option value="en">English</option>
+          <option value="ja">日本語</option>
+          <option value="ko">한국어</option>
+        </select>
+      </label>
+    </div>
+    <header class="hero">
+      <span class="status"><span aria-hidden="true">✓</span><span data-i18n="installed">本地助手已安装</span></span>
+      <h1 data-i18n="heading">最后一步，把 ClipGo 加入浏览器</h1>
+      <p class="intro" data-i18n="intro">浏览器扩展需要你手动加载一次。选择正在使用的 Chrome 或 Edge，按下面 3 步完成。</p>
+    </header>
+
+    <section class="folder" aria-labelledby="folder-title">
+      <div class="folder-heading">
+        <div>
+          <h2 id="folder-title" data-i18n="folder_title">扩展文件夹</h2>
+          <p class="folder-label" data-i18n="folder_description">加载扩展时，选择这个完整路径对应的文件夹。</p>
+        </div>
+        <button type="button" class="copy primary" data-copy-target="extension-path" data-copy-name="path_name" data-i18n="copy_path">复制路径</button>
+      </div>
+      <code id="extension-path" class="path" tabindex="0" aria-label="完整扩展文件夹路径" data-i18n-aria-label="path_label">{{EXTENSION_PATH}}</code>
+      <p id="copy-status" class="copy-status" role="status" aria-live="polite" aria-atomic="true" data-i18n="copy_hint">路径可以直接选中，也可以点击「复制路径」。</p>
+    </section>
+
+    <div class="browsers">
+      <section class="browser chrome" aria-labelledby="chrome-title">
+        <div class="browser-heading">
+          <span class="browser-symbol" aria-hidden="true">C</span>
+          <div><h2 id="chrome-title">Google Chrome</h2><p data-i18n="chrome_intro">在 Chrome 中完成以下操作</p></div>
+        </div>
+        <ol>
+          <li>
+            <strong data-i18n="open_extensions">打开扩展管理页</strong>
+            <p data-i18n="open_extensions_description">复制地址，粘贴到浏览器地址栏，按 Enter。</p>
+            <div class="address">
+              <code id="chrome-address" tabindex="0">chrome://extensions</code>
+              <button type="button" class="copy" data-copy-target="chrome-address" data-copy-name="chrome_address_name" data-i18n="copy_address">复制地址</button>
+            </div>
+          </li>
+          <li><strong data-i18n="chrome_developer_mode">开启「开发者模式」</strong><p data-i18n="chrome_developer_description">开关在扩展管理页的右上角。</p></li>
+          <li><strong data-i18n="load_clipgo">加载 ClipGo</strong><p data-i18n="chrome_load_description">点击「加载已解压的扩展程序」，选择上方的扩展文件夹。也可以把完整路径粘贴到文件夹选择窗口的地址栏。</p></li>
+        </ol>
+      </section>
+
+      <section class="browser edge" aria-labelledby="edge-title">
+        <div class="browser-heading">
+          <span class="browser-symbol" aria-hidden="true">E</span>
+          <div><h2 id="edge-title">Microsoft Edge</h2><p data-i18n="edge_intro">在 Edge 中完成以下操作</p></div>
+        </div>
+        <ol>
+          <li>
+            <strong data-i18n="open_extensions">打开扩展管理页</strong>
+            <p data-i18n="open_extensions_description">复制地址，粘贴到浏览器地址栏，按 Enter。</p>
+            <div class="address">
+              <code id="edge-address" tabindex="0">edge://extensions</code>
+              <button type="button" class="copy" data-copy-target="edge-address" data-copy-name="edge_address_name" data-i18n="copy_address">复制地址</button>
+            </div>
+          </li>
+          <li><strong data-i18n="edge_developer_mode">开启「开发人员模式」</strong><p data-i18n="edge_developer_description">开关在扩展管理页的左侧；窗口较窄时，先展开左上角菜单。</p></li>
+          <li><strong data-i18n="load_clipgo">加载 ClipGo</strong><p data-i18n="edge_load_description">点击「加载解压缩的扩展」，选择上方的扩展文件夹。也可以把完整路径粘贴到文件夹选择窗口的地址栏。</p></li>
+        </ol>
+      </section>
+    </div>
+
+    <section class="finish" aria-labelledby="finish-title">
+      <span class="finish-icon" aria-hidden="true">✓</span>
+      <div>
+        <h2 id="finish-title" data-i18n="finish_title">看到「助手已就绪」，就可以开始下载了</h2>
+        <p data-i18n="finish_description">打开浏览器工具栏的扩展菜单，找到 ClipGo 并固定到工具栏。点击 ClipGo 图标，确认显示「助手已就绪」；已经打开的视频页面请刷新一次。</p>
+      </div>
+    </section>
+    <p class="note"><strong data-i18n="keep_folder">请保留上方的扩展文件夹，不要删除或移动。</strong> <span data-i18n="troubleshooting">浏览器会持续从这里加载 ClipGo。如果还显示「未连接助手」，先在扩展管理页重新加载 ClipGo，再打开弹窗检查。</span></p>
+    <footer data-i18n="footer">ClipGo · 安装指引保存在本机，无需联网查看。</footer>
+  </main>
+  <script type="application/json" id="welcome-locales">{"page_title":{"zh_CN":"ClipGo 安装完成 · 添加到浏览器","zh_TW":"ClipGo 安裝完成 · 加入瀏覽器","en":"ClipGo installed · Add to your browser","ja":"ClipGo インストール完了 · ブラウザーに追加","ko":"ClipGo 설치 완료 · 브라우저에 추가"},"language":{"zh_CN":"语言","zh_TW":"語言","en":"Language","ja":"言語","ko":"언어"},"installed":{"zh_CN":"本地助手已安装","zh_TW":"本機助手已安裝","en":"Local helper installed","ja":"ローカルヘルパーをインストール済み","ko":"로컬 도우미 설치 완료"},"heading":{"zh_CN":"最后一步，把 ClipGo 加入浏览器","zh_TW":"最後一步，將 ClipGo 加入瀏覽器","en":"One last step: add ClipGo to your browser","ja":"最後に ClipGo をブラウザーへ追加","ko":"마지막 단계: 브라우저에 ClipGo 추가"},"intro":{"zh_CN":"浏览器扩展需要你手动加载一次。选择正在使用的 Chrome 或 Edge，按下面 3 步完成。","zh_TW":"瀏覽器擴充功能需要手動載入一次。選擇使用中的 Chrome 或 Edge，依照下方 3 個步驟完成。","en":"Load the browser extension manually once. Follow the three steps below for Chrome or Edge.","ja":"ブラウザーの拡張機能は、初回のみ手動で読み込む必要があります。Chrome または Edge の手順に沿って、3 ステップで設定できます。","ko":"브라우저 확장 프로그램은 처음 한 번 직접 추가해야 합니다. 사용 중인 Chrome 또는 Edge의 아래 3단계를 따라 진행하세요."},"folder_title":{"zh_CN":"扩展文件夹","zh_TW":"擴充功能資料夾","en":"Extension folder","ja":"拡張機能のフォルダー","ko":"확장 프로그램 폴더"},"folder_description":{"zh_CN":"加载扩展时，选择这个完整路径对应的文件夹。","zh_TW":"載入擴充功能時，請選擇此完整路徑所對應的資料夾。","en":"Select the folder at this full path when loading the extension.","ja":"拡張機能を読み込む際に、このパスのフォルダーを選択してください。","ko":"확장 프로그램을 추가할 때 이 전체 경로의 폴더를 선택하세요."},"copy_path":{"zh_CN":"复制路径","zh_TW":"複製路徑","en":"Copy path","ja":"パスをコピー","ko":"경로 복사"},"path_label":{"zh_CN":"完整扩展文件夹路径","zh_TW":"完整擴充功能資料夾路徑","en":"Full extension folder path","ja":"拡張機能フォルダーのフルパス","ko":"확장 프로그램 폴더의 전체 경로"},"copy_hint":{"zh_CN":"路径可以直接选中，也可以点击「复制路径」。","zh_TW":"可直接選取路徑，或點選「複製路徑」。","en":"Select the path directly, or click “Copy path”.","ja":"パスを直接選択するか、「パスをコピー」をクリックしてください。","ko":"경로를 직접 선택하거나 “경로 복사”를 클릭하세요."},"chrome_intro":{"zh_CN":"在 Chrome 中完成以下操作","zh_TW":"在 Chrome 中完成以下操作","en":"Follow these steps in Chrome","ja":"Chrome で次の操作を行います","ko":"Chrome에서 아래 단계를 진행하세요"},"edge_intro":{"zh_CN":"在 Edge 中完成以下操作","zh_TW":"在 Edge 中完成以下操作","en":"Follow these steps in Edge","ja":"Edge で次の操作を行います","ko":"Edge에서 아래 단계를 진행하세요"},"open_extensions":{"zh_CN":"打开扩展管理页","zh_TW":"開啟擴充功能管理頁面","en":"Open the extensions page","ja":"拡張機能の管理ページを開く","ko":"확장 프로그램 관리 페이지 열기"},"open_extensions_description":{"zh_CN":"复制地址，粘贴到浏览器地址栏，按 Enter。","zh_TW":"複製網址，貼到瀏覽器網址列，再按 Enter。","en":"Copy the address, paste it into the address bar, and press Enter.","ja":"アドレスをコピーしてブラウザーのアドレスバーに貼り付け、Enter キーを押します。","ko":"주소를 복사해 브라우저 주소창에 붙여넣고 Enter 키를 누르세요."},"copy_address":{"zh_CN":"复制地址","zh_TW":"複製網址","en":"Copy address","ja":"アドレスをコピー","ko":"주소 복사"},"chrome_developer_mode":{"zh_CN":"开启「开发者模式」","zh_TW":"開啟「開發人員模式」","en":"Turn on “Developer mode”","ja":"「デベロッパー モード」をオンにする","ko":"“개발자 모드” 켜기"},"chrome_developer_description":{"zh_CN":"开关在扩展管理页的右上角。","zh_TW":"開關位於擴充功能管理頁面的右上角。","en":"The switch is in the top-right corner of the extensions page.","ja":"拡張機能の管理ページ右上にあるスイッチをオンにします。","ko":"확장 프로그램 관리 페이지 오른쪽 위에 있는 스위치를 켜세요."},"edge_developer_mode":{"zh_CN":"开启「开发人员模式」","zh_TW":"開啟「開發人員模式」","en":"Turn on “Developer mode”","ja":"「開発者モード」をオンにする","ko":"“개발자 모드” 켜기"},"edge_developer_description":{"zh_CN":"开关在扩展管理页的左侧；窗口较窄时，先展开左上角菜单。","zh_TW":"開關位於擴充功能管理頁面的左側；視窗較窄時，請先展開左上角選單。","en":"Find the switch on the left. If the window is narrow, open the top-left menu first.","ja":"スイッチは管理ページの左側にあります。ウィンドウが狭い場合は、左上のメニューを先に開いてください。","ko":"스위치는 관리 페이지 왼쪽에 있습니다. 창이 좁으면 왼쪽 위 메뉴를 먼저 펼치세요."},"load_clipgo":{"zh_CN":"加载 ClipGo","zh_TW":"載入 ClipGo","en":"Load ClipGo","ja":"ClipGo を読み込む","ko":"ClipGo 추가하기"},"chrome_load_description":{"zh_CN":"点击「加载已解压的扩展程序」，选择上方的扩展文件夹。也可以把完整路径粘贴到文件夹选择窗口的地址栏。","zh_TW":"點選「載入未封裝項目」，選擇上方的擴充功能資料夾。也可將完整路徑貼到資料夾選擇視窗的網址列。","en":"Click “Load unpacked” and select the extension folder shown above. You can also paste the full path into the folder picker’s address bar.","ja":"「パッケージ化されていない拡張機能を読み込む」をクリックし、上の拡張機能フォルダーを選択します。フォルダー選択画面のアドレスバーにフルパスを貼り付けることもできます。","ko":"“압축 해제된 항목 로드”(Load unpacked)를 클릭하고 위의 확장 프로그램 폴더를 선택하세요. 폴더 선택 창의 주소창에 전체 경로를 붙여넣어도 됩니다."},"edge_load_description":{"zh_CN":"点击「加载解压缩的扩展」，选择上方的扩展文件夹。也可以把完整路径粘贴到文件夹选择窗口的地址栏。","zh_TW":"點選「載入解壓縮」(Load unpacked)，選擇上方的擴充功能資料夾。也可將完整路徑貼到資料夾選擇視窗的網址列。","en":"Click “Load unpacked” and select the extension folder shown above. You can also paste the full path into the folder picker’s address bar.","ja":"「展開して読み込み」（Load unpacked）をクリックし、上の拡張機能フォルダーを選択します。フォルダー選択画面のアドレスバーにフルパスを貼り付けることもできます。","ko":"“압축 풀린 파일 로드”(Load unpacked)를 클릭하고 위의 확장 프로그램 폴더를 선택하세요. 폴더 선택 창의 주소창에 전체 경로를 붙여넣어도 됩니다."},"finish_title":{"zh_CN":"看到「助手已就绪」，就可以开始下载了","zh_TW":"看到「助手已就緒」，即可開始下載","en":"When you see “Helper ready”, you’re set","ja":"「ヘルパー接続済み」と表示されれば準備完了","ko":"“도우미 준비됨”이 표시되면 준비 완료"},"finish_description":{"zh_CN":"打开浏览器工具栏的扩展菜单，找到 ClipGo 并固定到工具栏。点击 ClipGo 图标，确认显示「助手已就绪」；已经打开的视频页面请刷新一次。","zh_TW":"開啟瀏覽器工具列的擴充功能選單，找到 ClipGo 並釘選至工具列。點選 ClipGo 圖示，確認顯示「助手已就緒」；已開啟的影片頁面請重新整理一次。","en":"Open the toolbar’s extensions menu, find ClipGo and pin it. Click its icon and check for “Helper ready”. Refresh any video pages that were already open.","ja":"ツールバーの拡張機能メニューから ClipGo を見つけて固定します。アイコンをクリックし、「ヘルパー接続済み」と表示されることを確認してください。すでに開いている動画ページは再読み込みしてください。","ko":"브라우저 도구 모음의 확장 프로그램 메뉴에서 ClipGo를 찾아 고정하세요. 아이콘을 클릭해 “도우미 준비됨”이 표시되는지 확인하세요. 이미 열려 있던 동영상 페이지는 새로고침하세요."},"keep_folder":{"zh_CN":"请保留上方的扩展文件夹，不要删除或移动。","zh_TW":"請保留上方的擴充功能資料夾，不要刪除或移動。","en":"Keep the extension folder in place. Do not delete or move it.","ja":"上の拡張機能フォルダーは、削除や移動をせず、そのまま保管してください。","ko":"확장 프로그램 폴더를 삭제하거나 이동하지 마세요."},"troubleshooting":{"zh_CN":"浏览器会持续从这里加载 ClipGo。如果还显示「未连接助手」，先在扩展管理页重新加载 ClipGo，再打开弹窗检查。","zh_TW":"瀏覽器會持續從此處載入 ClipGo。如果仍顯示「未連線至助手」，請先在擴充功能管理頁面重新載入 ClipGo，再開啟彈出視窗檢查。","en":"Your browser continues to load ClipGo from this folder. If you see “Helper disconnected”, reload ClipGo on the extensions page, then open its popup again.","ja":"ブラウザーはこのフォルダーから ClipGo を読み込みます。「ヘルパー未接続」と表示される場合は、拡張機能の管理ページで ClipGo を再読み込みしてから、ポップアップを開き直してください。","ko":"브라우저는 이 폴더에서 ClipGo를 계속 불러옵니다. “도우미 연결 안 됨”이 표시되면 확장 프로그램 관리 페이지에서 ClipGo를 새로고침한 뒤 팝업을 다시 여세요."},"footer":{"zh_CN":"ClipGo · 安装指引保存在本机，无需联网查看。","zh_TW":"ClipGo · 安裝指引儲存於本機，不需連線即可查看。","en":"ClipGo · This guide is saved on your computer and works offline.","ja":"ClipGo · このガイドはパソコンに保存され、オフラインで閲覧できます。","ko":"ClipGo · 이 안내는 컴퓨터에 저장되며 인터넷 없이 볼 수 있습니다."},"path_name":{"zh_CN":"扩展文件夹路径","zh_TW":"擴充功能資料夾路徑","en":"the extension folder path","ja":"拡張機能フォルダーのパス","ko":"확장 프로그램 폴더 경로"},"chrome_address_name":{"zh_CN":"Chrome 扩展管理页地址","zh_TW":"Chrome 擴充功能管理頁面網址","en":"the Chrome extensions address","ja":"Chrome の拡張機能管理ページのアドレス","ko":"Chrome 확장 프로그램 관리 페이지 주소"},"edge_address_name":{"zh_CN":"Edge 扩展管理页地址","zh_TW":"Edge 擴充功能管理頁面網址","en":"the Edge extensions address","ja":"Edge の拡張機能管理ページのアドレス","ko":"Edge 확장 프로그램 관리 페이지 주소"},"copied":{"zh_CN":"已复制","zh_TW":"已複製","en":"Copied","ja":"コピーしました","ko":"복사됨"},"copy_success":{"zh_CN":"已复制$1。","zh_TW":"已複製$1。","en":"Copied $1.","ja":"$1をコピーしました。","ko":"$1 복사 완료."},"copy_selected":{"zh_CN":"自动复制未成功，已选中$1。请按 Ctrl+C 复制。","zh_TW":"自動複製未成功，已選取$1。請按 Ctrl+C 複製。","en":"Automatic copying failed. $1 is selected; press Ctrl+C to copy.","ja":"自動コピーできませんでした。$1を選択しました。Ctrl+C キーでコピーしてください。","ko":"자동 복사에 실패했습니다. $1 항목이 선택되어 있습니다. Ctrl+C를 눌러 복사하세요."},"copy_manual":{"zh_CN":"自动复制未成功，请手动选中$1，再按 Ctrl+C 复制。","zh_TW":"自動複製未成功，請手動選取$1，再按 Ctrl+C 複製。","en":"Automatic copying failed. Select $1 manually, then press Ctrl+C.","ja":"自動コピーできませんでした。$1を手動で選択し、Ctrl+C キーでコピーしてください。","ko":"자동 복사에 실패했습니다. $1 항목을 직접 선택한 뒤 Ctrl+C를 누르세요."},"copy_shortcut":{"zh_CN":"按 Ctrl+C 复制","zh_TW":"按 Ctrl+C 複製","en":"Press Ctrl+C","ja":"Ctrl+C でコピー","ko":"Ctrl+C로 복사"}}</script>
+  <script>
+    (() => {
+      const messages = JSON.parse(document.getElementById("welcome-locales").textContent);
+      const selector = document.getElementById("language");
+      const status = document.getElementById("copy-status");
+      let locale;
+      function matchLanguage(language) {
+        const tag = String(language || "en").toLowerCase().replace(/_/g, "-");
+        if (tag === "zh" || tag.startsWith("zh-")) return /(?:^|-)(?:tw|hk|mo|hant)(?:-|$)/.test(tag) ? "zh_TW" : "zh_CN";
+        return ["en", "ja", "ko"].find(value => tag === value || tag.startsWith(value + "-")) || "en";
+      }
+      function text(key, substitutions = []) {
+        const value = messages[key]?.[locale] || messages[key]?.en || "";
+        return value.replace(/\$(\d+)/g, (_, index) => String(substitutions[Number(index) - 1] || ""));
+      }
+      function applyLanguage(value) {
+        locale = ["zh_CN", "zh_TW", "en", "ja", "ko"].includes(value) ? value : "en";
+        selector.value = locale;
+        document.documentElement.lang = locale.replace("_", "-");
+        for (const element of document.querySelectorAll("[data-i18n]")) element.textContent = text(element.dataset.i18n);
+        for (const element of document.querySelectorAll("[data-i18n-aria-label]")) element.setAttribute("aria-label", text(element.dataset.i18nAriaLabel));
+      }
+      applyLanguage(matchLanguage(navigator.language));
+      selector.addEventListener("change", () => applyLanguage(selector.value));
+      for (const button of document.querySelectorAll("[data-copy-target]")) {
+        let resetTimer;
+        button.addEventListener("click", async () => {
+          const target = document.getElementById(button.dataset.copyTarget);
+          if (!target) return;
+          clearTimeout(resetTimer);
+          button.disabled = true;
+          try {
+            if (!navigator.clipboard || !navigator.clipboard.writeText) throw new Error("clipboard unavailable");
+            await navigator.clipboard.writeText(target.textContent);
+            button.textContent = text("copied");
+            status.textContent = text("copy_success", [text(button.dataset.copyName)]);
+          } catch (_) {
+            const selection = window.getSelection();
+            if (selection) {
+              target.focus({ preventScroll: true });
+              const range = document.createRange();
+              range.selectNodeContents(target);
+              selection.removeAllRanges();
+              selection.addRange(range);
+              target.scrollIntoView({ block: "nearest" });
+              status.textContent = text("copy_selected", [text(button.dataset.copyName)]);
+              button.textContent = text("copy_shortcut");
+            } else {
+              status.textContent = text("copy_manual", [text(button.dataset.copyName)]);
+            }
+          } finally {
+            button.disabled = false;
+            resetTimer = setTimeout(() => { button.textContent = text(button.dataset.i18n); }, 3500);
+          }
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

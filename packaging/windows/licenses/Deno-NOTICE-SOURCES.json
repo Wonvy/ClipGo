@@ -1,0 +1,8 @@
+{
+  "Deno-2.9.8-Node-LICENSE.txt": "https://raw.githubusercontent.com/denoland/deno/v2.9.8/cli/tsc/dts/node/LICENSE",
+  "Deno-2.9.8-Undici-LICENSE.txt": "https://raw.githubusercontent.com/denoland/deno/v2.9.8/cli/tsc/dts/node/undici/LICENSE",
+  "Deno-2.9.8-WebGPU-LICENSE.txt": "https://raw.githubusercontent.com/denoland/deno/v2.9.8/ext/webgpu/LICENSE.md",
+  "Rusty-V8-150.4.0-LICENSE.txt": "https://raw.githubusercontent.com/denoland/rusty_v8/v150.4.0/LICENSE",
+  "TypeScript-6.0.3-LICENSE.txt": "https://raw.githubusercontent.com/microsoft/TypeScript/v6.0.3/LICENSE.txt",
+  "V8-ac1e23989121713ca642f6650b34deff7b686896-LICENSE.txt": "https://raw.githubusercontent.com/denoland/v8/ac1e23989121713ca642f6650b34deff7b686896/LICENSE"
+}

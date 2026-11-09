@@ -1,0 +1,416 @@
+{
+  "appDescription": {
+    "message": "ClipGo 데스크톱 도우미로 지원 사이트의 동영상을 MP4로 저장하세요. 여러 동영상 플랫폼을 지원하며 도우미를 별도로 설치해야 합니다."
+  },
+  "appName": {
+    "message": "ClipGo - 동영상 다운로더"
+  },
+  "bg_already_downloading": {
+    "message": "이 동영상은 이미 다운로드 중입니다."
+  },
+  "bg_bilibili_login": {
+    "message": "빌리빌리 로그인 또는 시청 권한이 필요합니다. 이 브라우저에서 권한이 있는 계정으로 로그인한 후 다시 시도해 주세요."
+  },
+  "bg_bilibili_rate_limit": {
+    "message": "빌리빌리가 요청을 일시적으로 제한하고 있습니다. 브라우저에서 동영상이 재생되는지 확인하고 나중에 다시 시도해 주세요."
+  },
+  "bg_douyin_request_rejected": {
+    "message": "더우인이 동영상 요청을 거부했습니다. 동영상을 열어 재생한 뒤 다시 시도해 주세요. 이미 열린 페이지는 먼저 새로고침해 주세요."
+  },
+  "bg_douyin_url_expired": {
+    "message": "더우인 재생 주소가 만료되었습니다. 페이지를 새로고침하고 동영상을 재생한 뒤 다시 시도해 주세요."
+  },
+  "bg_download_complete": {
+    "message": "ClipGo 다운로드 완료"
+  },
+  "bg_download_failed": {
+    "message": "ClipGo 다운로드 실패"
+  },
+  "bg_host_disconnected": {
+    "message": "로컬 도우미와의 연결이 끊겼습니다."
+  },
+  "bg_host_empty_response": {
+    "message": "로컬 도우미가 데이터를 반환하지 않았습니다."
+  },
+  "bg_host_forbidden": {
+    "message": "확장 프로그램 ID가 일치하지 않아 도우미가 연결을 거부했습니다. 설치 프로그램을 다시 실행해 주세요."
+  },
+  "bg_host_not_found": {
+    "message": "ClipGo 로컬 도우미를 찾을 수 없습니다. 먼저 설치 프로그램을 실행해 주세요."
+  },
+  "bg_host_start_failed": {
+    "message": "로컬 도우미를 시작할 수 없습니다. 설치 프로그램을 다시 실행해 주세요."
+  },
+  "bg_host_timeout": {
+    "message": "로컬 도우미가 응답하지 않습니다."
+  },
+  "bg_instagram_login": {
+    "message": "Instagram 로그인이 필요합니다. 이 브라우저에서 instagram.com에 로그인한 후 다시 시도해 주세요."
+  },
+  "bg_interrupted": {
+    "message": "브라우저 또는 확장 프로그램이 다시 시작되어 작업이 중단되었습니다. 다시 시도해 주세요."
+  },
+  "bg_members_only": {
+    "message": "회원 전용 동영상입니다. 권한이 있는 계정으로 로그인해야 합니다."
+  },
+  "bg_menu_link": {
+    "message": "ClipGo로 이 동영상 다운로드(MP4)"
+  },
+  "bg_menu_page": {
+    "message": "ClipGo로 현재 동영상 다운로드(MP4)"
+  },
+  "bg_network_error": {
+    "message": "네트워크 오류입니다. 인터넷 연결 또는 프록시를 확인한 후 다시 시도해 주세요: $1"
+  },
+  "bg_no_video": {
+    "message": "이 링크에는 동영상이 없습니다. 이미지 게시물일 수 있습니다."
+  },
+  "bg_not_video_page": {
+    "message": "동영상 페이지가 아닙니다. 특정 동영상을 열거나 동영상 링크를 붙여 넣어 주세요."
+  },
+  "bg_private_video": {
+    "message": "비공개 동영상이므로 다운로드할 수 없습니다."
+  },
+  "bg_site_login": {
+    "message": "$1의 유효한 로그인 상태 또는 시청 권한이 필요합니다. 이 브라우저에서 동영상을 열어 재생하고 페이지를 새로고침한 후 다시 시도해 주세요."
+  },
+  "bg_site_no_video": {
+    "message": "이 $1 링크에는 다운로드할 수 있는 동영상이 없습니다. 이미지나 텍스트 게시물일 수 있습니다."
+  },
+  "bg_site_protected": {
+    "message": "$1의 이 동영상은 암호화로 보호되어 일반 MP4로 저장할 수 없습니다."
+  },
+  "bg_site_rate_limit": {
+    "message": "$1에서 요청을 일시적으로 제한하고 있습니다. 나중에 다시 시도해 주세요."
+  },
+  "bg_stage_douyin_page": {
+    "message": "더우인 동영상 페이지 읽는 중…"
+  },
+  "bg_stage_downloading": {
+    "message": "다운로드 중"
+  },
+  "bg_stage_page_video": {
+    "message": "페이지의 동영상 읽는 중…"
+  },
+  "bg_stage_starting": {
+    "message": "로컬 도우미 시작 중…"
+  },
+  "bg_supported_sites": {
+    "message": "YouTube, Instagram, 빌리빌리, X, 샤오홍슈, TikTok, 더우인, 텐센트 비디오 링크를 지원합니다."
+  },
+  "bg_tencent_preview": {
+    "message": "텐센트 비디오가 미리보기만 반환하여 전체 동영상으로 저장하지 않았습니다. 이 브라우저에서 시청 권한이 있는 계정으로 로그인한 후 다시 시도해 주세요. 계속 제한되면 공식 앱의 오프라인 보기를 이용해 주세요."
+  },
+  "bg_tencent_protected": {
+    "message": "텐센트 비디오가 보호된 형식 또는 지원되지 않는 형식을 반환하여 현재 MP4로 저장할 수 없습니다."
+  },
+  "bg_tencent_unverified": {
+    "message": "텐센트 비디오의 전체 길이를 확인할 수 없습니다. 일부만 저장되는 것을 방지하기 위해 중단했습니다. 나중에 다시 시도해 주세요."
+  },
+  "bg_unexpected_error": {
+    "message": "오류가 발생했습니다: $1"
+  },
+  "bg_unknown_command": {
+    "message": "알 수 없는 작업"
+  },
+  "bg_video_unavailable": {
+    "message": "동영상이 없거나 삭제되었습니다."
+  },
+  "bg_x_login": {
+    "message": "X 로그인 또는 시청 권한이 필요합니다. 이 브라우저에서 x.com에 로그인하고 게시물의 동영상이 재생되는지 확인해 주세요."
+  },
+  "bg_x_no_video": {
+    "message": "이 X 게시물에는 다운로드할 수 있는 동영상이 없습니다."
+  },
+  "bg_x_rate_limit": {
+    "message": "X가 요청을 일시적으로 제한하고 있습니다. 나중에 다시 시도해 주세요."
+  },
+  "bg_youtube_login": {
+    "message": "YouTube 로그인 확인이 필요합니다. 이 브라우저에서 YouTube에 로그인하고 설정에서 'YouTube 로그인 상태 사용'을 켠 후 다시 시도해 주세요."
+  },
+  "common_host_douyin_cdn_only": {
+    "message": "더우인 동영상 CDN의 HTTPS 재생 주소만 사용할 수 있습니다."
+  },
+  "common_host_douyin_title": {
+    "message": "더우인 동영상 $1"
+  },
+  "common_host_exit_code": {
+    "message": "yt-dlp 종료 코드 $1"
+  },
+  "common_host_internal": {
+    "message": "도우미 내부 오류: $1"
+  },
+  "common_host_invalid_douyin_url": {
+    "message": "더우인 재생 주소가 잘못되었습니다."
+  },
+  "common_host_invalid_text": {
+    "message": "다운로더가 잘못된 텍스트 값을 반환했습니다."
+  },
+  "common_host_media_mismatch": {
+    "message": "페이지의 동영상이 다운로드 작업과 일치하지 않습니다."
+  },
+  "common_host_missing_engine": {
+    "message": "yt-dlp를 찾을 수 없습니다. 설치 프로그램을 다시 실행해 주세요."
+  },
+  "common_host_missing_id": {
+    "message": "작업 ID가 없습니다."
+  },
+  "common_host_supported_sites": {
+    "message": "YouTube, Instagram, 빌리빌리, X, 샤오홍슈, TikTok, 더우인, 텐센트 비디오 링크만 지원합니다."
+  },
+  "common_host_unknown_action": {
+    "message": "알 수 없는 작업: $1"
+  },
+  "common_note_exists": {
+    "message": "파일이 이미 있어 건너뛰었습니다"
+  },
+  "common_quality_360": {
+    "message": "360p"
+  },
+  "common_quality_480": {
+    "message": "480p"
+  },
+  "common_quality_720": {
+    "message": "720p"
+  },
+  "common_quality_best": {
+    "message": "최고 화질(4K)"
+  },
+  "common_quality_recommended": {
+    "message": "1080p(권장)"
+  },
+  "common_site_bilibili": {
+    "message": "빌리빌리"
+  },
+  "common_site_douyin": {
+    "message": "더우인"
+  },
+  "common_site_instagram": {
+    "message": "Instagram"
+  },
+  "common_site_tencent": {
+    "message": "텐센트 비디오"
+  },
+  "common_site_tiktok": {
+    "message": "TikTok"
+  },
+  "common_site_twitter": {
+    "message": "X"
+  },
+  "common_site_xiaohongshu": {
+    "message": "샤오홍슈"
+  },
+  "common_site_youtube": {
+    "message": "YouTube"
+  },
+  "common_stage_merging": {
+    "message": "오디오와 동영상을 MP4로 병합 중…"
+  },
+  "common_stage_parsing": {
+    "message": "동영상 정보 분석 중…"
+  },
+  "common_stage_preparing": {
+    "message": "다운로드 준비 중…"
+  },
+  "common_stage_remuxing": {
+    "message": "MP4로 리먹싱 중…"
+  },
+  "common_update_failed": {
+    "message": "업데이트 실패: $1"
+  },
+  "common_updated": {
+    "message": "$1(으)로 업데이트했습니다"
+  },
+  "content_download_failed": {
+    "message": "다운로드 실패"
+  },
+  "content_download_failed_prefix": {
+    "message": "다운로드 실패: "
+  },
+  "content_download_started": {
+    "message": "다운로드를 시작했습니다. ClipGo 아이콘에서 진행 상황을 확인하세요."
+  },
+  "content_download_title": {
+    "message": "ClipGo로 MP4 다운로드"
+  },
+  "content_downloaded_again": {
+    "message": "저장됨 · 다시 저장"
+  },
+  "content_error_prefix": {
+    "message": "ClipGo: "
+  },
+  "content_extension_updated": {
+    "message": "ClipGo가 업데이트되었습니다. 이 페이지를 새로고침한 후 다시 시도하세요."
+  },
+  "content_failed": {
+    "message": "실패"
+  },
+  "content_merging": {
+    "message": "병합 중…"
+  },
+  "content_mp4": {
+    "message": "MP4"
+  },
+  "content_percent": {
+    "message": "$1%"
+  },
+  "content_preparing": {
+    "message": "준비 중…"
+  },
+  "content_started": {
+    "message": "✓ 시작됨"
+  },
+  "content_starting": {
+    "message": "시작 중…"
+  },
+  "popup_cancel": {
+    "message": "취소"
+  },
+  "popup_cancelled": {
+    "message": "취소됨"
+  },
+  "popup_change": {
+    "message": "변경"
+  },
+  "popup_clear_finished": {
+    "message": "완료된 항목 지우기"
+  },
+  "popup_current_page": {
+    "message": "현재 페이지"
+  },
+  "popup_download": {
+    "message": "MP4 다운로드"
+  },
+  "popup_download_failed": {
+    "message": "다운로드 실패"
+  },
+  "popup_empty": {
+    "message": "아직 다운로드가 없습니다"
+  },
+  "popup_engine": {
+    "message": "다운로드 엔진"
+  },
+  "popup_engine_version": {
+    "message": "도우미 $1 · yt-dlp $2"
+  },
+  "popup_helper_checking": {
+    "message": "도우미 확인 중…"
+  },
+  "popup_helper_disconnected": {
+    "message": "도우미 연결 안 됨"
+  },
+  "popup_helper_ready": {
+    "message": "도우미 준비됨"
+  },
+  "popup_helper_status": {
+    "message": "로컬 도우미 상태"
+  },
+  "popup_helper_version": {
+    "message": "ClipGo 도우미 $1 · yt-dlp $2"
+  },
+  "popup_login_note": {
+    "message": "YouTube는 별도로 설정할 수 있으며, 다른 사이트는 이 브라우저의 로그인 상태를 자동으로 사용합니다. 화질은 계정 권한에 따라 달라집니다. 저장할 권한이 있는 콘텐츠만 다운로드하세요."
+  },
+  "popup_merging": {
+    "message": "MP4로 병합 중…"
+  },
+  "popup_not_installed": {
+    "message": "설치되지 않음"
+  },
+  "popup_notify": {
+    "message": "다운로드 완료 시 알림"
+  },
+  "popup_open": {
+    "message": "열기"
+  },
+  "popup_page_hint": {
+    "message": "동영상을 열거나 링크를 붙여넣으세요"
+  },
+  "popup_post_hint": {
+    "message": "게시물을 우클릭 → “ClipGo로 다운로드”하거나 링크를 붙여넣으세요"
+  },
+  "popup_preparing": {
+    "message": "준비 중…"
+  },
+  "popup_quality_label": {
+    "message": "화질"
+  },
+  "popup_quick_button": {
+    "message": "페이지에 빠른 다운로드 버튼 표시"
+  },
+  "popup_quick_button_description": {
+    "message": "동영상 미리보기나 플레이어에 마우스를 올리면 MP4 버튼이 표시됩니다. 클릭하면 위에서 선택한 화질로 다운로드합니다."
+  },
+  "popup_recheck": {
+    "message": "설치 완료, 다시 확인"
+  },
+  "popup_remaining": {
+    "message": "$1 남음"
+  },
+  "popup_remove": {
+    "message": "목록에서 제거"
+  },
+  "popup_retry": {
+    "message": "다시 시도"
+  },
+  "popup_reveal": {
+    "message": "폴더에서 보기"
+  },
+  "popup_save_location": {
+    "message": "저장 위치"
+  },
+  "popup_saved": {
+    "message": "✓ MP4로 저장됨"
+  },
+  "popup_settings": {
+    "message": "설정"
+  },
+  "popup_setup_description": {
+    "message": "ClipGo 도우미를 한 번 설치하면 동영상을 MP4로 저장할 수 있습니다."
+  },
+  "popup_setup_mac": {
+    "message": "터미널에서 실행:"
+  },
+  "popup_setup_title": {
+    "message": "마지막 단계: 도우미 설치"
+  },
+  "popup_setup_windows": {
+    "message": "ClipGo Windows 설치 파일 실행"
+  },
+  "popup_start_failed": {
+    "message": "다운로드를 시작하지 못했습니다"
+  },
+  "popup_supported": {
+    "message": "YouTube, Instagram, Bilibili, X, 샤오홍슈, TikTok, 더우인, 텐센트 비디오 지원"
+  },
+  "popup_tasks": {
+    "message": "다운로드 목록"
+  },
+  "popup_up_to_date": {
+    "message": "최신 버전"
+  },
+  "popup_update": {
+    "message": "yt-dlp 업데이트"
+  },
+  "popup_update_failed": {
+    "message": "업데이트 실패"
+  },
+  "popup_updating": {
+    "message": "업데이트 중…"
+  },
+  "popup_url_label": {
+    "message": "동영상 링크"
+  },
+  "popup_url_placeholder": {
+    "message": "동영상 링크 또는 공유 문구 붙여넣기"
+  },
+  "popup_video_hint": {
+    "message": "개별 동영상을 열거나 링크를 붙여넣으세요"
+  },
+  "popup_youtube_login": {
+    "message": "YouTube 로그인 상태 사용"
+  },
+  "popup_youtube_login_description": {
+    "message": "로그인 확인, 연령 제한 또는 회원 전용 동영상에 사용하세요."
+  }
+}

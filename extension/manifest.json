@@ -1,22 +1,42 @@
 {
   "manifest_version": 3,
-  "name": "ClipGo - YouTube / Instagram 视频下载",
+  "name": "__MSG_appName__",
   "short_name": "ClipGo",
-  "version": "1.0.0",
-  "description": "一键把 YouTube 和 Instagram 视频下载为 MP4（需安装 ClipGo 本地助手）。",
+  "version": "1.3.0",
+  "default_locale": "en",
+  "description": "__MSG_appDescription__",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuSmrG5BcuUT70oaikXbKu5YvO+YPPRSgQV4xhJ8ZnbW1DtqD4s8gAol4CdOtRPmAXKvPwMFHzi5fIzd8HqfDDf0KT22XXIaPcA1uVV8LLy3n+0Zi/HOd7SR3mdieF2eAtbiP9eLvFotovIqIq8728Yr/fy9relejjrwVEGc01XFAOkeCTRNq54XaOe167Y/Pq3RvbOJ6g7R1qFQOqzGZdX4pBrvUi+I0CrFQzlMYk4WLYKRVp7Bp/bN+YF/maV4oBd2g+2+W02XGO1Zu8vb023QzBMwpme33Y7VqE4EaiXTLVqRVEWyEWpExdXxAngBeg5WzHmiNezjSyaPGhqtDjwIDAQAB",
   "minimum_chrome_version": "111",
   "permissions": ["nativeMessaging", "storage", "contextMenus", "cookies", "notifications", "activeTab"],
   "host_permissions": [
     "*://*.youtube.com/*",
     "*://youtu.be/*",
-    "*://*.instagram.com/*"
+    "*://*.instagram.com/*",
+    "*://*.bilibili.com/*",
+    "*://b23.tv/*",
+    "*://*.x.com/*",
+    "*://*.twitter.com/*",
+    "*://*.xiaohongshu.com/*",
+    "*://*.xhslink.com/*",
+    "*://*.tiktok.com/*",
+    "*://*.douyin.com/*",
+    "*://v.qq.com/*"
   ],
   "background": { "service_worker": "background.js" },
   "content_scripts": [
     {
-      "matches": ["*://*.youtube.com/*", "*://*.instagram.com/*"],
-      "js": ["common.js", "content.js"],
+      "matches": ["*://*.douyin.com/*"],
+      "js": ["douyin-media.js", "douyin-page.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "*://*.youtube.com/*", "*://*.instagram.com/*", "*://*.bilibili.com/*",
+        "*://*.x.com/*", "*://*.twitter.com/*", "*://*.xiaohongshu.com/*",
+        "*://*.tiktok.com/*", "*://*.douyin.com/*", "*://v.qq.com/*"
+      ],
+      "js": ["common.js", "douyin-media.js", "content.js"],
       "run_at": "document_idle"
     }
   ],

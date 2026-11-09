@@ -1,0 +1,416 @@
+{
+  "appDescription": {
+    "message": "ClipGo デスクトップヘルパーで対応サイトの動画を MP4 として保存。複数の動画サイトに対応。ヘルパーの別途インストールが必要です。"
+  },
+  "appName": {
+    "message": "ClipGo - 動画ダウンローダー"
+  },
+  "bg_already_downloading": {
+    "message": "この動画は既にダウンロード中です。"
+  },
+  "bg_bilibili_login": {
+    "message": "ビリビリへのログインまたは視聴権限が必要です。このブラウザで権限のあるアカウントにログインして再試行してください。"
+  },
+  "bg_bilibili_rate_limit": {
+    "message": "ビリビリが一時的にリクエストを制限しています。ブラウザで再生できることを確認し、しばらくしてから再試行してください。"
+  },
+  "bg_douyin_request_rejected": {
+    "message": "Douyin が動画の取得を拒否しました。動画を開いて再生してから再試行してください。既に開いているページは先に更新してください。"
+  },
+  "bg_douyin_url_expired": {
+    "message": "Douyin の再生 URL の有効期限が切れました。ページを更新して動画を再生し、再試行してください。"
+  },
+  "bg_download_complete": {
+    "message": "ClipGo ダウンロード完了"
+  },
+  "bg_download_failed": {
+    "message": "ClipGo でダウンロードできません"
+  },
+  "bg_host_disconnected": {
+    "message": "ローカルヘルパーとの接続が切れました。"
+  },
+  "bg_host_empty_response": {
+    "message": "ローカルヘルパーからデータが返されませんでした。"
+  },
+  "bg_host_forbidden": {
+    "message": "拡張機能の ID が一致しないため、ヘルパーが接続を拒否しました。インストーラーを再実行してください。"
+  },
+  "bg_host_not_found": {
+    "message": "ClipGo のローカルヘルパーが見つかりません。先にインストーラーを実行してください。"
+  },
+  "bg_host_start_failed": {
+    "message": "ローカルヘルパーを起動できませんでした。インストーラーを再実行してください。"
+  },
+  "bg_host_timeout": {
+    "message": "ローカルヘルパーから応答がありません。"
+  },
+  "bg_instagram_login": {
+    "message": "Instagram へのログインが必要です。このブラウザで instagram.com にログインしてから再試行してください。"
+  },
+  "bg_interrupted": {
+    "message": "ブラウザまたは拡張機能の再起動により中断されました。再試行してください。"
+  },
+  "bg_members_only": {
+    "message": "メンバー限定の動画です。視聴権限のあるアカウントへのログインが必要です。"
+  },
+  "bg_menu_link": {
+    "message": "この動画を ClipGo でダウンロード (MP4)"
+  },
+  "bg_menu_page": {
+    "message": "現在の動画を ClipGo でダウンロード (MP4)"
+  },
+  "bg_network_error": {
+    "message": "ネットワークエラーです。接続またはプロキシを確認して再試行してください: $1"
+  },
+  "bg_no_video": {
+    "message": "このリンクに動画はありません。画像の投稿の可能性があります。"
+  },
+  "bg_not_video_page": {
+    "message": "動画ページではありません。個別の動画を開くか、動画のリンクを貼り付けてください。"
+  },
+  "bg_private_video": {
+    "message": "非公開動画のためダウンロードできません。"
+  },
+  "bg_site_login": {
+    "message": "$1 への有効なログインまたは視聴権限が必要です。このブラウザで動画を開いて再生し、ページを更新して再試行してください。"
+  },
+  "bg_site_no_video": {
+    "message": "この $1 のリンクにダウンロードできる動画はありません。画像やテキストの投稿の可能性があります。"
+  },
+  "bg_site_protected": {
+    "message": "$1 のこの動画は暗号化で保護されているため、通常の MP4 として保存できません。"
+  },
+  "bg_site_rate_limit": {
+    "message": "$1 が一時的にリクエストを制限しています。しばらくしてから再試行してください。"
+  },
+  "bg_stage_douyin_page": {
+    "message": "Douyin の動画ページを読み込み中…"
+  },
+  "bg_stage_downloading": {
+    "message": "ダウンロード中"
+  },
+  "bg_stage_page_video": {
+    "message": "ページの動画を読み込み中…"
+  },
+  "bg_stage_starting": {
+    "message": "ローカルヘルパーを起動中…"
+  },
+  "bg_supported_sites": {
+    "message": "YouTube、Instagram、ビリビリ、X、小紅書、TikTok、Douyin、テンセントビデオのリンクに対応しています。"
+  },
+  "bg_tencent_preview": {
+    "message": "テンセントビデオからプレビューのみが返されたため、完全な動画として保存しませんでした。このブラウザで視聴権限のあるアカウントにログインして再試行してください。制限が続く場合は公式アプリのオフライン視聴をご利用ください。"
+  },
+  "bg_tencent_protected": {
+    "message": "テンセントビデオから保護された形式または未対応の形式が返されたため、現在 MP4 に保存できません。"
+  },
+  "bg_tencent_unverified": {
+    "message": "テンセントビデオの動画が完全か確認できませんでした。不完全な動画を保存しないよう停止しました。しばらくしてから再試行してください。"
+  },
+  "bg_unexpected_error": {
+    "message": "エラーが発生しました: $1"
+  },
+  "bg_unknown_command": {
+    "message": "不明な操作"
+  },
+  "bg_video_unavailable": {
+    "message": "動画が存在しないか、削除されています。"
+  },
+  "bg_x_login": {
+    "message": "X へのログインまたは視聴権限が必要です。このブラウザで x.com にログインし、投稿の動画を再生できることを確認してください。"
+  },
+  "bg_x_no_video": {
+    "message": "この X の投稿にダウンロードできる動画はありません。"
+  },
+  "bg_x_rate_limit": {
+    "message": "X が一時的にリクエストを制限しています。しばらくしてから再試行してください。"
+  },
+  "bg_youtube_login": {
+    "message": "YouTube でログイン確認が必要です。このブラウザで YouTube にログインし、設定の「YouTube のログイン状態を使用」を有効にして再試行してください。"
+  },
+  "common_host_douyin_cdn_only": {
+    "message": "Douyin の動画 CDN の HTTPS 再生 URL のみ使用できます。"
+  },
+  "common_host_douyin_title": {
+    "message": "Douyin 動画 $1"
+  },
+  "common_host_exit_code": {
+    "message": "yt-dlp 終了コード $1"
+  },
+  "common_host_internal": {
+    "message": "ヘルパー内部エラー: $1"
+  },
+  "common_host_invalid_douyin_url": {
+    "message": "Douyin の再生 URL が無効です。"
+  },
+  "common_host_invalid_text": {
+    "message": "ダウンローダーが無効なテキストを返しました。"
+  },
+  "common_host_media_mismatch": {
+    "message": "ページの動画がダウンロード対象と一致しません。"
+  },
+  "common_host_missing_engine": {
+    "message": "yt-dlp が見つかりません。インストーラーをもう一度実行してください。"
+  },
+  "common_host_missing_id": {
+    "message": "タスク ID がありません。"
+  },
+  "common_host_supported_sites": {
+    "message": "YouTube、Instagram、ビリビリ、X、小紅書、TikTok、Douyin、テンセントビデオのリンクに対応しています。"
+  },
+  "common_host_unknown_action": {
+    "message": "不明な操作: $1"
+  },
+  "common_note_exists": {
+    "message": "ファイルが既に存在するためスキップしました"
+  },
+  "common_quality_360": {
+    "message": "360p"
+  },
+  "common_quality_480": {
+    "message": "480p"
+  },
+  "common_quality_720": {
+    "message": "720p"
+  },
+  "common_quality_best": {
+    "message": "最高画質 (4K)"
+  },
+  "common_quality_recommended": {
+    "message": "1080p（推奨）"
+  },
+  "common_site_bilibili": {
+    "message": "ビリビリ"
+  },
+  "common_site_douyin": {
+    "message": "Douyin"
+  },
+  "common_site_instagram": {
+    "message": "Instagram"
+  },
+  "common_site_tencent": {
+    "message": "テンセントビデオ"
+  },
+  "common_site_tiktok": {
+    "message": "TikTok"
+  },
+  "common_site_twitter": {
+    "message": "X"
+  },
+  "common_site_xiaohongshu": {
+    "message": "小紅書"
+  },
+  "common_site_youtube": {
+    "message": "YouTube"
+  },
+  "common_stage_merging": {
+    "message": "音声と映像を MP4 に結合中…"
+  },
+  "common_stage_parsing": {
+    "message": "動画情報を解析中…"
+  },
+  "common_stage_preparing": {
+    "message": "ダウンロードを準備中…"
+  },
+  "common_stage_remuxing": {
+    "message": "MP4 に再格納中…"
+  },
+  "common_update_failed": {
+    "message": "更新に失敗しました: $1"
+  },
+  "common_updated": {
+    "message": "$1 に更新しました"
+  },
+  "content_download_failed": {
+    "message": "ダウンロードに失敗しました"
+  },
+  "content_download_failed_prefix": {
+    "message": "ダウンロード失敗："
+  },
+  "content_download_started": {
+    "message": "ダウンロードを開始しました。ClipGo アイコンから進行状況を確認できます。"
+  },
+  "content_download_title": {
+    "message": "ClipGo で MP4 としてダウンロード"
+  },
+  "content_downloaded_again": {
+    "message": "保存済み · 再保存"
+  },
+  "content_error_prefix": {
+    "message": "ClipGo："
+  },
+  "content_extension_updated": {
+    "message": "ClipGo が更新されました。このページを再読み込みして、もう一度お試しください。"
+  },
+  "content_failed": {
+    "message": "失敗"
+  },
+  "content_merging": {
+    "message": "結合中…"
+  },
+  "content_mp4": {
+    "message": "MP4"
+  },
+  "content_percent": {
+    "message": "$1%"
+  },
+  "content_preparing": {
+    "message": "準備中…"
+  },
+  "content_started": {
+    "message": "✓ 開始しました"
+  },
+  "content_starting": {
+    "message": "開始中…"
+  },
+  "popup_cancel": {
+    "message": "キャンセル"
+  },
+  "popup_cancelled": {
+    "message": "キャンセル済み"
+  },
+  "popup_change": {
+    "message": "変更"
+  },
+  "popup_clear_finished": {
+    "message": "完了した項目を消去"
+  },
+  "popup_current_page": {
+    "message": "現在のページ"
+  },
+  "popup_download": {
+    "message": "MP4 をダウンロード"
+  },
+  "popup_download_failed": {
+    "message": "ダウンロードに失敗しました"
+  },
+  "popup_empty": {
+    "message": "まだダウンロードはありません"
+  },
+  "popup_engine": {
+    "message": "ダウンロードエンジン"
+  },
+  "popup_engine_version": {
+    "message": "ヘルパー $1 · yt-dlp $2"
+  },
+  "popup_helper_checking": {
+    "message": "ヘルパーを確認中…"
+  },
+  "popup_helper_disconnected": {
+    "message": "ヘルパー未接続"
+  },
+  "popup_helper_ready": {
+    "message": "ヘルパー接続済み"
+  },
+  "popup_helper_status": {
+    "message": "ローカルヘルパーの状態"
+  },
+  "popup_helper_version": {
+    "message": "ClipGo ヘルパー $1 · yt-dlp $2"
+  },
+  "popup_login_note": {
+    "message": "YouTube は個別に設定できます。他のサイトでは、このブラウザーのログイン状態を自動で使用します。画質はアカウントの権限によって異なります。保存する権利のあるコンテンツのみダウンロードしてください。"
+  },
+  "popup_merging": {
+    "message": "MP4 に結合中…"
+  },
+  "popup_not_installed": {
+    "message": "未インストール"
+  },
+  "popup_notify": {
+    "message": "ダウンロード完了時に通知"
+  },
+  "popup_open": {
+    "message": "開く"
+  },
+  "popup_page_hint": {
+    "message": "動画ページを開くか、リンクを貼り付け"
+  },
+  "popup_post_hint": {
+    "message": "投稿を右クリック →「ClipGo でダウンロード」、またはリンクを貼り付け"
+  },
+  "popup_preparing": {
+    "message": "準備中…"
+  },
+  "popup_quality_label": {
+    "message": "画質"
+  },
+  "popup_quick_button": {
+    "message": "ページにクイックダウンロードボタンを表示"
+  },
+  "popup_quick_button_description": {
+    "message": "動画のサムネイルやプレーヤーにカーソルを合わせると MP4 ボタンが表示されます。クリックすると上で選んだ画質でダウンロードします。"
+  },
+  "popup_recheck": {
+    "message": "インストール済み・再確認"
+  },
+  "popup_remaining": {
+    "message": "残り $1"
+  },
+  "popup_remove": {
+    "message": "削除"
+  },
+  "popup_retry": {
+    "message": "再試行"
+  },
+  "popup_reveal": {
+    "message": "保存先を開く"
+  },
+  "popup_save_location": {
+    "message": "保存先"
+  },
+  "popup_saved": {
+    "message": "✓ MP4 で保存済み"
+  },
+  "popup_settings": {
+    "message": "設定"
+  },
+  "popup_setup_description": {
+    "message": "ClipGo ヘルパーを一度インストールすると、動画を MP4 で保存できます。"
+  },
+  "popup_setup_mac": {
+    "message": "ターミナルで実行："
+  },
+  "popup_setup_title": {
+    "message": "あと一歩：ヘルパーをインストール"
+  },
+  "popup_setup_windows": {
+    "message": "ClipGo の Windows インストーラーを実行"
+  },
+  "popup_start_failed": {
+    "message": "ダウンロードを開始できませんでした"
+  },
+  "popup_supported": {
+    "message": "YouTube、Instagram、Bilibili、X、小紅書、TikTok、抖音、騰訊視頻に対応"
+  },
+  "popup_tasks": {
+    "message": "ダウンロード"
+  },
+  "popup_up_to_date": {
+    "message": "最新版です"
+  },
+  "popup_update": {
+    "message": "yt-dlp を更新"
+  },
+  "popup_update_failed": {
+    "message": "更新に失敗しました"
+  },
+  "popup_updating": {
+    "message": "更新中…"
+  },
+  "popup_url_label": {
+    "message": "動画リンク"
+  },
+  "popup_url_placeholder": {
+    "message": "動画リンクや共有テキストを貼り付け"
+  },
+  "popup_video_hint": {
+    "message": "個別の動画を開くか、リンクを貼り付け"
+  },
+  "popup_youtube_login": {
+    "message": "YouTube のログイン状態を使用"
+  },
+  "popup_youtube_login_description": {
+    "message": "ログイン確認、年齢制限、メンバー限定動画で有効にしてください。"
+  }
+}

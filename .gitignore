@@ -20,3 +20,7 @@ host/host.log
 .vscode/
 .idea/
 .claude/
+
+# Windows installer artifacts and downloaded dependencies
+build/
+dist/

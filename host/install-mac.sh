@@ -30,6 +30,8 @@ fetch() { echo "↓ $2"; curl -fL --retry 3 --progress-bar -o "$1" "$2"; }
 
 echo "==> 安装 ClipGo 助手到: $APP_DIR"
 cp "$SRC_DIR/clipgo_host.py" "$APP_DIR/clipgo_host.py"
+mkdir -p "$APP_DIR/plugins"
+cp -R "$SRC_DIR/plugins/." "$APP_DIR/plugins/"
 chmod +x "$APP_DIR/clipgo_host.py"
 
 echo "==> yt-dlp（每次安装都会更新到最新版）"
@@ -63,15 +65,24 @@ chmod +x "$BIN"/ffmpeg "$BIN"/ffprobe "$BIN"/deno "$BIN"/yt-dlp-mac/yt-dlp_macos
 xattr -dr com.apple.quarantine "$APP_DIR" 2>/dev/null || true
 
 echo "==> 注册 Native Messaging"
-MANIFEST_JSON=$(cat <<EOF
-{
-  "name": "$HOST_NAME",
-  "description": "ClipGo download helper",
-  "path": "$APP_DIR/clipgo_host.py",
-  "type": "stdio",
-  "allowed_origins": ["chrome-extension://$EXT_ID/"]
-}
-EOF
+MANIFEST_JSON=$(/usr/bin/python3 - "$SRC_DIR/browser-stores.json" "$APP_DIR/clipgo_host.py" "$EXT_ID" "$HOST_NAME" <<'PY'
+import json, pathlib, re, sys
+source, host_path, unpacked_id, host_name = sys.argv[1:]
+ids = [unpacked_id]
+if pathlib.Path(source).is_file():
+    stores = json.loads(pathlib.Path(source).read_text(encoding='utf-8-sig'))
+    for store in ('chrome', 'edge'):
+        value = stores.get(store, '')
+        if value:
+            if not isinstance(value, str) or not re.fullmatch(r'[a-p]{32}', value):
+                raise SystemExit('Invalid extension ID: ' + store)
+            ids.append(value)
+print(json.dumps({
+    'name': host_name, 'description': 'ClipGo download helper',
+    'path': host_path, 'type': 'stdio',
+    'allowed_origins': ['chrome-extension://' + value + '/' for value in dict.fromkeys(ids)],
+}, ensure_ascii=True))
+PY
 )
 SUPPORT="$HOME/Library/Application Support"
 # Chrome 和 Edge 总是注册（之后再装浏览器也能直接用）；其他 Chromium 浏览器已安装才注册。

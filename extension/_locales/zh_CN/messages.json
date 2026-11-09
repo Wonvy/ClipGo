@@ -1,0 +1,416 @@
+{
+  "appDescription": {
+    "message": "使用 ClipGo 本地助手，将支持平台的视频保存为 MP4。支持多个视频平台，需单独安装助手。"
+  },
+  "appName": {
+    "message": "ClipGo - 多平台视频下载"
+  },
+  "bg_already_downloading": {
+    "message": "这个视频正在下载中"
+  },
+  "bg_bilibili_login": {
+    "message": "哔哩哔哩需要登录或相应观看权限：请在本浏览器登录有权限的账号后重试"
+  },
+  "bg_bilibili_rate_limit": {
+    "message": "哔哩哔哩暂时限制了请求，请稍后重试，并确认本浏览器能正常播放该视频"
+  },
+  "bg_douyin_request_rejected": {
+    "message": "抖音解析接口拒绝了请求，请打开这条视频并播放后重试；已打开的旧页面请先刷新"
+  },
+  "bg_douyin_url_expired": {
+    "message": "抖音播放地址已失效，请刷新视频页面、播放后再点重试"
+  },
+  "bg_download_complete": {
+    "message": "ClipGo 下载完成"
+  },
+  "bg_download_failed": {
+    "message": "ClipGo 无法下载"
+  },
+  "bg_host_disconnected": {
+    "message": "与本地助手的连接已断开"
+  },
+  "bg_host_empty_response": {
+    "message": "本地助手没有返回数据"
+  },
+  "bg_host_forbidden": {
+    "message": "本地助手拒绝了此扩展（扩展 ID 不匹配），请重新运行安装脚本"
+  },
+  "bg_host_not_found": {
+    "message": "未检测到 ClipGo 本地助手，请先运行安装脚本"
+  },
+  "bg_host_start_failed": {
+    "message": "本地助手启动失败，请重新运行安装脚本"
+  },
+  "bg_host_timeout": {
+    "message": "本地助手无响应"
+  },
+  "bg_instagram_login": {
+    "message": "Instagram 需要登录：请先在本浏览器登录 instagram.com 后重试"
+  },
+  "bg_interrupted": {
+    "message": "任务被中断（浏览器或扩展重启），请重试"
+  },
+  "bg_members_only": {
+    "message": "会员专属视频，需要登录有权限的账号"
+  },
+  "bg_menu_link": {
+    "message": "用 ClipGo 下载这个视频 (MP4)"
+  },
+  "bg_menu_page": {
+    "message": "用 ClipGo 下载当前视频 (MP4)"
+  },
+  "bg_network_error": {
+    "message": "网络错误，请检查网络（或代理）后重试：$1"
+  },
+  "bg_no_video": {
+    "message": "这个链接里没有视频（可能是图片帖子）"
+  },
+  "bg_not_video_page": {
+    "message": "这不是视频页面，请打开具体视频或粘贴视频链接"
+  },
+  "bg_private_video": {
+    "message": "这是私密视频，无法下载"
+  },
+  "bg_site_login": {
+    "message": "$1需要有效的登录状态或观看权限：请在本浏览器打开并播放该视频，刷新页面后重试"
+  },
+  "bg_site_no_video": {
+    "message": "$1的这个链接里没有可下载的视频（可能是图文内容）"
+  },
+  "bg_site_protected": {
+    "message": "$1的这个视频受加密保护，无法保存为普通 MP4"
+  },
+  "bg_site_rate_limit": {
+    "message": "$1暂时限制了请求，请稍后重试"
+  },
+  "bg_stage_douyin_page": {
+    "message": "读取抖音视频页面…"
+  },
+  "bg_stage_downloading": {
+    "message": "下载中"
+  },
+  "bg_stage_page_video": {
+    "message": "读取网页视频…"
+  },
+  "bg_stage_starting": {
+    "message": "启动本地助手…"
+  },
+  "bg_supported_sites": {
+    "message": "支持 YouTube、Instagram、B站、X、小红书、TikTok、抖音和腾讯视频链接"
+  },
+  "bg_tencent_preview": {
+    "message": "腾讯视频只返回了试看片段，未保存为完整视频。请确认本浏览器已登录有观看权限的账号后重试；仍受限时请使用腾讯视频客户端缓存"
+  },
+  "bg_tencent_protected": {
+    "message": "腾讯视频返回了受保护或暂不支持的视频格式，当前无法导出 MP4"
+  },
+  "bg_tencent_unverified": {
+    "message": "暂时无法确认腾讯视频是否完整，已停止保存以免只下载到片段，请稍后重试"
+  },
+  "bg_unexpected_error": {
+    "message": "发生错误：$1"
+  },
+  "bg_unknown_command": {
+    "message": "未知操作"
+  },
+  "bg_video_unavailable": {
+    "message": "视频不存在或已被删除"
+  },
+  "bg_x_login": {
+    "message": "X 需要登录或相应观看权限：请先在本浏览器登录 x.com，并确认可以播放该帖子中的视频"
+  },
+  "bg_x_no_video": {
+    "message": "这条 X 帖子里没有可下载的视频"
+  },
+  "bg_x_rate_limit": {
+    "message": "X 暂时限制了请求，请稍后重试"
+  },
+  "bg_youtube_login": {
+    "message": "YouTube 要求登录验证：请在本浏览器登录 YouTube，并在设置中开启「YouTube 使用登录状态」后重试"
+  },
+  "common_host_douyin_cdn_only": {
+    "message": "仅接受抖音视频 CDN 的 HTTPS 播放地址"
+  },
+  "common_host_douyin_title": {
+    "message": "抖音视频 $1"
+  },
+  "common_host_exit_code": {
+    "message": "yt-dlp 退出码 $1"
+  },
+  "common_host_internal": {
+    "message": "助手内部错误: $1"
+  },
+  "common_host_invalid_douyin_url": {
+    "message": "无效的抖音播放地址"
+  },
+  "common_host_invalid_text": {
+    "message": "下载器返回了无效的文本字段"
+  },
+  "common_host_media_mismatch": {
+    "message": "页面视频地址与下载任务不匹配"
+  },
+  "common_host_missing_engine": {
+    "message": "未找到 yt-dlp，请重新运行安装脚本"
+  },
+  "common_host_missing_id": {
+    "message": "缺少任务 id"
+  },
+  "common_host_supported_sites": {
+    "message": "仅支持 YouTube / Instagram / 哔哩哔哩 / X / 小红书 / TikTok / 抖音 / 腾讯视频链接"
+  },
+  "common_host_unknown_action": {
+    "message": "未知操作: $1"
+  },
+  "common_note_exists": {
+    "message": "文件已存在，已跳过"
+  },
+  "common_quality_360": {
+    "message": "360p"
+  },
+  "common_quality_480": {
+    "message": "480p"
+  },
+  "common_quality_720": {
+    "message": "720p"
+  },
+  "common_quality_best": {
+    "message": "最高画质 (4K)"
+  },
+  "common_quality_recommended": {
+    "message": "1080p（推荐）"
+  },
+  "common_site_bilibili": {
+    "message": "哔哩哔哩"
+  },
+  "common_site_douyin": {
+    "message": "抖音"
+  },
+  "common_site_instagram": {
+    "message": "Instagram"
+  },
+  "common_site_tencent": {
+    "message": "腾讯视频"
+  },
+  "common_site_tiktok": {
+    "message": "TikTok"
+  },
+  "common_site_twitter": {
+    "message": "X"
+  },
+  "common_site_xiaohongshu": {
+    "message": "小红书"
+  },
+  "common_site_youtube": {
+    "message": "YouTube"
+  },
+  "common_stage_merging": {
+    "message": "合并音视频为 MP4…"
+  },
+  "common_stage_parsing": {
+    "message": "解析视频信息…"
+  },
+  "common_stage_preparing": {
+    "message": "准备下载…"
+  },
+  "common_stage_remuxing": {
+    "message": "转封装为 MP4…"
+  },
+  "common_update_failed": {
+    "message": "更新失败: $1"
+  },
+  "common_updated": {
+    "message": "已更新到 $1"
+  },
+  "content_download_failed": {
+    "message": "下载失败"
+  },
+  "content_download_failed_prefix": {
+    "message": "下载失败："
+  },
+  "content_download_started": {
+    "message": "已开始下载，进度可在 ClipGo 图标里查看"
+  },
+  "content_download_title": {
+    "message": "用 ClipGo 下载为 MP4"
+  },
+  "content_downloaded_again": {
+    "message": "已下载 · 再下"
+  },
+  "content_error_prefix": {
+    "message": "ClipGo："
+  },
+  "content_extension_updated": {
+    "message": "ClipGo 已更新，请刷新此页面后再试"
+  },
+  "content_failed": {
+    "message": "失败"
+  },
+  "content_merging": {
+    "message": "合并中…"
+  },
+  "content_mp4": {
+    "message": "MP4"
+  },
+  "content_percent": {
+    "message": "$1%"
+  },
+  "content_preparing": {
+    "message": "准备中…"
+  },
+  "content_started": {
+    "message": "✓ 已开始"
+  },
+  "content_starting": {
+    "message": "启动中…"
+  },
+  "popup_cancel": {
+    "message": "取消"
+  },
+  "popup_cancelled": {
+    "message": "已取消"
+  },
+  "popup_change": {
+    "message": "更改"
+  },
+  "popup_clear_finished": {
+    "message": "清除已完成"
+  },
+  "popup_current_page": {
+    "message": "当前页面"
+  },
+  "popup_download": {
+    "message": "下载 MP4"
+  },
+  "popup_download_failed": {
+    "message": "下载失败"
+  },
+  "popup_empty": {
+    "message": "还没有下载任务"
+  },
+  "popup_engine": {
+    "message": "下载引擎"
+  },
+  "popup_engine_version": {
+    "message": "助手 $1 · yt-dlp $2"
+  },
+  "popup_helper_checking": {
+    "message": "检测助手…"
+  },
+  "popup_helper_disconnected": {
+    "message": "未连接助手"
+  },
+  "popup_helper_ready": {
+    "message": "助手已就绪"
+  },
+  "popup_helper_status": {
+    "message": "本地助手状态"
+  },
+  "popup_helper_version": {
+    "message": "ClipGo 助手 $1 · yt-dlp $2"
+  },
+  "popup_login_note": {
+    "message": "除 YouTube 可单独设置外，其他平台会自动使用本浏览器的登录状态。画质取决于账号权限；请只下载你有权保存的内容。"
+  },
+  "popup_merging": {
+    "message": "合并为 MP4…"
+  },
+  "popup_not_installed": {
+    "message": "未安装"
+  },
+  "popup_notify": {
+    "message": "下载完成时通知"
+  },
+  "popup_open": {
+    "message": "打开"
+  },
+  "popup_page_hint": {
+    "message": "打开视频页，或粘贴视频链接"
+  },
+  "popup_post_hint": {
+    "message": "在帖子上右键 →「用 ClipGo 下载」，或粘贴链接"
+  },
+  "popup_preparing": {
+    "message": "准备中…"
+  },
+  "popup_quality_label": {
+    "message": "画质"
+  },
+  "popup_quick_button": {
+    "message": "页面上的快速下载按钮"
+  },
+  "popup_quick_button_description": {
+    "message": "鼠标移到视频缩略图或播放器上时显示「MP4」按钮，点一下按上面选的画质直接下载"
+  },
+  "popup_recheck": {
+    "message": "我已安装，重新检测"
+  },
+  "popup_remaining": {
+    "message": "剩余 $1"
+  },
+  "popup_remove": {
+    "message": "移除"
+  },
+  "popup_retry": {
+    "message": "重试"
+  },
+  "popup_reveal": {
+    "message": "打开位置"
+  },
+  "popup_save_location": {
+    "message": "保存位置"
+  },
+  "popup_saved": {
+    "message": "✓ 已保存为 MP4"
+  },
+  "popup_settings": {
+    "message": "设置"
+  },
+  "popup_setup_description": {
+    "message": "首次使用请安装 ClipGo 本地助手，即可将视频保存为 MP4。"
+  },
+  "popup_setup_mac": {
+    "message": "在终端运行："
+  },
+  "popup_setup_title": {
+    "message": "还差一步：安装本地助手"
+  },
+  "popup_setup_windows": {
+    "message": "运行 ClipGo Windows 安装包"
+  },
+  "popup_start_failed": {
+    "message": "启动失败"
+  },
+  "popup_supported": {
+    "message": "支持 YouTube、Instagram、B站、X、小红书、TikTok、抖音、腾讯视频"
+  },
+  "popup_tasks": {
+    "message": "下载任务"
+  },
+  "popup_up_to_date": {
+    "message": "已是最新"
+  },
+  "popup_update": {
+    "message": "更新 yt-dlp"
+  },
+  "popup_update_failed": {
+    "message": "更新失败"
+  },
+  "popup_updating": {
+    "message": "更新中…"
+  },
+  "popup_url_label": {
+    "message": "视频链接"
+  },
+  "popup_url_placeholder": {
+    "message": "粘贴视频链接或分享文字"
+  },
+  "popup_video_hint": {
+    "message": "打开具体视频，或粘贴视频链接"
+  },
+  "popup_youtube_login": {
+    "message": "YouTube 使用登录状态"
+  },
+  "popup_youtube_login_description": {
+    "message": "遇到“请登录以确认你不是机器人”、年龄限制或会员视频时开启"
+  }
+}

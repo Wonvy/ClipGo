@@ -1,0 +1,416 @@
+{
+  "appDescription": {
+    "message": "Save supported videos as MP4 with the ClipGo desktop helper. Supports multiple video platforms. Helper installation required."
+  },
+  "appName": {
+    "message": "ClipGo - Video Downloader"
+  },
+  "bg_already_downloading": {
+    "message": "This video is already downloading."
+  },
+  "bg_bilibili_login": {
+    "message": "bilibili requires sign-in or viewing access. Sign in to an authorized account in this browser, then retry."
+  },
+  "bg_bilibili_rate_limit": {
+    "message": "bilibili is temporarily limiting requests. Retry later and check that this video plays in your browser."
+  },
+  "bg_douyin_request_rejected": {
+    "message": "Douyin rejected the video request. Open and play this video, then retry; refresh an already open page first."
+  },
+  "bg_douyin_url_expired": {
+    "message": "The Douyin playback URL has expired. Refresh and play the video, then retry."
+  },
+  "bg_download_complete": {
+    "message": "ClipGo download complete"
+  },
+  "bg_download_failed": {
+    "message": "ClipGo could not download"
+  },
+  "bg_host_disconnected": {
+    "message": "The connection to the local helper was lost."
+  },
+  "bg_host_empty_response": {
+    "message": "The local helper returned no data."
+  },
+  "bg_host_forbidden": {
+    "message": "The helper rejected this extension because its ID does not match. Run the installer again."
+  },
+  "bg_host_not_found": {
+    "message": "ClipGo's local helper was not found. Run the installer first."
+  },
+  "bg_host_start_failed": {
+    "message": "The local helper could not start. Run the installer again."
+  },
+  "bg_host_timeout": {
+    "message": "The local helper is not responding."
+  },
+  "bg_instagram_login": {
+    "message": "Instagram requires sign-in. Sign in at instagram.com in this browser, then retry."
+  },
+  "bg_interrupted": {
+    "message": "The task was interrupted by a browser or extension restart. Please retry."
+  },
+  "bg_members_only": {
+    "message": "This members-only video requires an account with access."
+  },
+  "bg_menu_link": {
+    "message": "Download this video with ClipGo (MP4)"
+  },
+  "bg_menu_page": {
+    "message": "Download the current video with ClipGo (MP4)"
+  },
+  "bg_network_error": {
+    "message": "Network error. Check your connection or proxy and retry: $1"
+  },
+  "bg_no_video": {
+    "message": "This link has no video; it may be an image post."
+  },
+  "bg_not_video_page": {
+    "message": "This is not a video page. Open a specific video or paste its link."
+  },
+  "bg_private_video": {
+    "message": "This video is private and cannot be downloaded."
+  },
+  "bg_site_login": {
+    "message": "$1 requires a valid login or viewing access. Open and play the video in this browser, refresh the page, and retry."
+  },
+  "bg_site_no_video": {
+    "message": "This $1 link has no downloadable video; it may contain images or text."
+  },
+  "bg_site_protected": {
+    "message": "This video on $1 is protected by encryption and cannot be saved as a standard MP4."
+  },
+  "bg_site_rate_limit": {
+    "message": "$1 is temporarily limiting requests. Please retry later."
+  },
+  "bg_stage_douyin_page": {
+    "message": "Reading the Douyin video page…"
+  },
+  "bg_stage_downloading": {
+    "message": "Downloading"
+  },
+  "bg_stage_page_video": {
+    "message": "Reading the video from the page…"
+  },
+  "bg_stage_starting": {
+    "message": "Starting the local helper…"
+  },
+  "bg_supported_sites": {
+    "message": "Supported links: YouTube, Instagram, bilibili, X, RedNote, TikTok, Douyin, and Tencent Video."
+  },
+  "bg_tencent_preview": {
+    "message": "Tencent Video returned only a preview, so it was not saved as a full video. Sign in to an account with viewing access in this browser and retry. If still restricted, use offline viewing in the Tencent Video app."
+  },
+  "bg_tencent_protected": {
+    "message": "Tencent Video returned a protected or unsupported format that cannot currently be exported to MP4."
+  },
+  "bg_tencent_unverified": {
+    "message": "The full length of this Tencent Video could not be verified. Saving was stopped to avoid an incomplete download. Please retry later."
+  },
+  "bg_unexpected_error": {
+    "message": "An error occurred: $1"
+  },
+  "bg_unknown_command": {
+    "message": "Unknown command"
+  },
+  "bg_video_unavailable": {
+    "message": "The video is unavailable or has been removed."
+  },
+  "bg_x_login": {
+    "message": "X requires sign-in or viewing access. Sign in at x.com in this browser and check that the post's video plays."
+  },
+  "bg_x_no_video": {
+    "message": "This X post has no downloadable video."
+  },
+  "bg_x_rate_limit": {
+    "message": "X is temporarily limiting requests. Please retry later."
+  },
+  "bg_youtube_login": {
+    "message": "YouTube requires sign-in verification. Sign in to YouTube in this browser, enable \"Use YouTube login\" in settings, and retry."
+  },
+  "common_host_douyin_cdn_only": {
+    "message": "Only HTTPS playback URLs from Douyin's video CDN are accepted."
+  },
+  "common_host_douyin_title": {
+    "message": "Douyin video $1"
+  },
+  "common_host_exit_code": {
+    "message": "yt-dlp exit code $1"
+  },
+  "common_host_internal": {
+    "message": "Helper error: $1"
+  },
+  "common_host_invalid_douyin_url": {
+    "message": "Invalid Douyin playback URL."
+  },
+  "common_host_invalid_text": {
+    "message": "The downloader returned an invalid text field."
+  },
+  "common_host_media_mismatch": {
+    "message": "The page video does not match this download."
+  },
+  "common_host_missing_engine": {
+    "message": "yt-dlp was not found. Run the installer again."
+  },
+  "common_host_missing_id": {
+    "message": "Missing task ID."
+  },
+  "common_host_supported_sites": {
+    "message": "Only YouTube, Instagram, bilibili, X, RedNote, TikTok, Douyin, and Tencent Video links are supported."
+  },
+  "common_host_unknown_action": {
+    "message": "Unknown action: $1"
+  },
+  "common_note_exists": {
+    "message": "File already exists; skipped"
+  },
+  "common_quality_360": {
+    "message": "360p"
+  },
+  "common_quality_480": {
+    "message": "480p"
+  },
+  "common_quality_720": {
+    "message": "720p"
+  },
+  "common_quality_best": {
+    "message": "Best quality (4K)"
+  },
+  "common_quality_recommended": {
+    "message": "1080p (recommended)"
+  },
+  "common_site_bilibili": {
+    "message": "bilibili"
+  },
+  "common_site_douyin": {
+    "message": "Douyin"
+  },
+  "common_site_instagram": {
+    "message": "Instagram"
+  },
+  "common_site_tencent": {
+    "message": "Tencent Video"
+  },
+  "common_site_tiktok": {
+    "message": "TikTok"
+  },
+  "common_site_twitter": {
+    "message": "X"
+  },
+  "common_site_xiaohongshu": {
+    "message": "RedNote"
+  },
+  "common_site_youtube": {
+    "message": "YouTube"
+  },
+  "common_stage_merging": {
+    "message": "Merging audio and video into MP4…"
+  },
+  "common_stage_parsing": {
+    "message": "Reading video information…"
+  },
+  "common_stage_preparing": {
+    "message": "Preparing download…"
+  },
+  "common_stage_remuxing": {
+    "message": "Remuxing to MP4…"
+  },
+  "common_update_failed": {
+    "message": "Update failed: $1"
+  },
+  "common_updated": {
+    "message": "Updated to $1"
+  },
+  "content_download_failed": {
+    "message": "Download failed"
+  },
+  "content_download_failed_prefix": {
+    "message": "Download failed: "
+  },
+  "content_download_started": {
+    "message": "Download started. Click the ClipGo icon to see progress."
+  },
+  "content_download_title": {
+    "message": "Download as MP4 with ClipGo"
+  },
+  "content_downloaded_again": {
+    "message": "Saved · Download again"
+  },
+  "content_error_prefix": {
+    "message": "ClipGo: "
+  },
+  "content_extension_updated": {
+    "message": "ClipGo has been updated. Refresh this page and try again."
+  },
+  "content_failed": {
+    "message": "Failed"
+  },
+  "content_merging": {
+    "message": "Merging…"
+  },
+  "content_mp4": {
+    "message": "MP4"
+  },
+  "content_percent": {
+    "message": "$1%"
+  },
+  "content_preparing": {
+    "message": "Preparing…"
+  },
+  "content_started": {
+    "message": "✓ Started"
+  },
+  "content_starting": {
+    "message": "Starting…"
+  },
+  "popup_cancel": {
+    "message": "Cancel"
+  },
+  "popup_cancelled": {
+    "message": "Cancelled"
+  },
+  "popup_change": {
+    "message": "Change"
+  },
+  "popup_clear_finished": {
+    "message": "Clear finished"
+  },
+  "popup_current_page": {
+    "message": "Current page"
+  },
+  "popup_download": {
+    "message": "Download MP4"
+  },
+  "popup_download_failed": {
+    "message": "Download failed"
+  },
+  "popup_empty": {
+    "message": "No downloads yet"
+  },
+  "popup_engine": {
+    "message": "Download engine"
+  },
+  "popup_engine_version": {
+    "message": "Helper $1 · yt-dlp $2"
+  },
+  "popup_helper_checking": {
+    "message": "Checking helper…"
+  },
+  "popup_helper_disconnected": {
+    "message": "Helper disconnected"
+  },
+  "popup_helper_ready": {
+    "message": "Helper ready"
+  },
+  "popup_helper_status": {
+    "message": "Local helper status"
+  },
+  "popup_helper_version": {
+    "message": "ClipGo helper $1 · yt-dlp $2"
+  },
+  "popup_login_note": {
+    "message": "Other sites automatically use your sign-in from this browser; YouTube has its own setting. Available quality depends on your account. Only download content you have permission to save."
+  },
+  "popup_merging": {
+    "message": "Merging into MP4…"
+  },
+  "popup_not_installed": {
+    "message": "Not installed"
+  },
+  "popup_notify": {
+    "message": "Notify when downloads finish"
+  },
+  "popup_open": {
+    "message": "Open"
+  },
+  "popup_page_hint": {
+    "message": "Open a video or paste its link"
+  },
+  "popup_post_hint": {
+    "message": "Right-click a post → “Download with ClipGo”, or paste its link"
+  },
+  "popup_preparing": {
+    "message": "Preparing…"
+  },
+  "popup_quality_label": {
+    "message": "Video quality"
+  },
+  "popup_quick_button": {
+    "message": "Quick download button on pages"
+  },
+  "popup_quick_button_description": {
+    "message": "Hover over a video thumbnail or player to show an MP4 button. Click it to download at the quality selected above."
+  },
+  "popup_recheck": {
+    "message": "Installed — check again"
+  },
+  "popup_remaining": {
+    "message": "$1 remaining"
+  },
+  "popup_remove": {
+    "message": "Remove"
+  },
+  "popup_retry": {
+    "message": "Retry"
+  },
+  "popup_reveal": {
+    "message": "Show in folder"
+  },
+  "popup_save_location": {
+    "message": "Save location"
+  },
+  "popup_saved": {
+    "message": "✓ Saved as MP4"
+  },
+  "popup_settings": {
+    "message": "Settings"
+  },
+  "popup_setup_description": {
+    "message": "Install the ClipGo helper once to save videos as MP4."
+  },
+  "popup_setup_mac": {
+    "message": "Run in Terminal:"
+  },
+  "popup_setup_title": {
+    "message": "One more step: install the helper"
+  },
+  "popup_setup_windows": {
+    "message": "Run the ClipGo Windows installer"
+  },
+  "popup_start_failed": {
+    "message": "Could not start download"
+  },
+  "popup_supported": {
+    "message": "Supports YouTube, Instagram, Bilibili, X, Xiaohongshu, TikTok, Douyin and Tencent Video"
+  },
+  "popup_tasks": {
+    "message": "Downloads"
+  },
+  "popup_up_to_date": {
+    "message": "Up to date"
+  },
+  "popup_update": {
+    "message": "Update yt-dlp"
+  },
+  "popup_update_failed": {
+    "message": "Update failed"
+  },
+  "popup_updating": {
+    "message": "Updating…"
+  },
+  "popup_url_label": {
+    "message": "Video link"
+  },
+  "popup_url_placeholder": {
+    "message": "Paste a video link or shared text"
+  },
+  "popup_video_hint": {
+    "message": "Open a specific video or paste its link"
+  },
+  "popup_youtube_login": {
+    "message": "Use your YouTube sign-in"
+  },
+  "popup_youtube_login_description": {
+    "message": "Enable for sign-in checks, age restrictions or members-only videos."
+  }
+}

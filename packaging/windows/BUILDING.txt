@@ -1,0 +1,37 @@
+ClipGo Windows installer
+
+Build prerequisites
+- Windows x64, PowerShell 5.1+, Node.js and NSIS.
+- Run: node i18n/build.mjs
+- Run: powershell -NoProfile -ExecutionPolicy Bypass -File packaging/windows/build.ps1
+- If NSIS is elsewhere, add -Compiler with the absolute path to makensis.exe.
+
+The builder downloads pinned official runtimes, verifies SHA256 hashes and
+stages only project program files. It does not package the installed helper,
+browser profiles, cookies, user settings, logs or videos. Runtime license and
+source references are included under licenses. The output is an offline,
+per-user installer with an uninstall entry and browser setup instructions.
+
+Validate the result
+- Run: powershell -NoProfile -ExecutionPolicy Bypass -File packaging/windows/test-installer.ps1
+- The test uses /S /TEST and a unique directory under build/windows. It verifies
+  installation, upgrade, user-data preservation and uninstall without modifying
+  the existing native-host registrations or Start menu shortcuts.
+- /TEST is only an integration-test flag. Normal recipients should double-click
+  the installer without flags. Chrome/Edge still require loading the extension.
+
+Store preparation
+- Run: powershell -NoProfile -ExecutionPolicy Bypass -File store/build-packages.ps1
+- Chrome and Edge ZIP files contain only the extension and omit the unpacked key.
+- Upload each ZIP as a draft to learn its store extension ID.
+- Enter those IDs in host/browser-stores.json, rebuild the installer, and publish
+  an accessible helper download and privacy policy before submitting for review.
+- Existing unpacked installations keep their original extension ID.
+
+Signing
+The generated installer is unsigned unless the publisher signs it separately
+with their own code-signing certificate. No private key is included or generated.
+The SHA256 sidecar identifies the exact installer file; it is not a signature.
+
+Packaging source changes are not a store submission. See
+dist/stores/submission-status.json for the current preparation status.

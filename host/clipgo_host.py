@@ -21,7 +21,7 @@ import time
 import traceback
 from urllib.parse import urlparse
 
-VERSION = "1.0.0"
+VERSION = "1.3.0"
 IS_WIN = sys.platform == "win32"
 EXE = ".exe" if IS_WIN else ""
 APP_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -46,9 +46,16 @@ CONFIG_FILE = os.path.join(APP_DIR, "config.json")
 LOG_FILE = os.path.join(APP_DIR, "host.log")
 DEFAULT_DIR = os.path.expanduser("~/Downloads/ClipGo")
 
-ALLOWED_HOSTS = ("youtube.com", "youtu.be", "instagram.com")
+ALLOWED_HOSTS = (
+    "youtube.com", "youtu.be", "instagram.com", "bilibili.com", "b23.tv", "x.com", "twitter.com",
+    "xiaohongshu.com", "xhslink.com", "tiktok.com", "douyin.com", "v.qq.com",
+)
+# Keep accepting the old unquoted protocol for compatibility with older tools.
 PROGRESS_TAG = "CLIPGO_P:"
 FILE_TAG = "CLIPGO_F:"
+PROGRESS_JSON_TAG = "CLIPGO_PJ:"
+FILE_JSON_TAG = "CLIPGO_FJ:"
+TITLE_JSON_TAG = "CLIPGO_TJ:"
 
 _out_lock = threading.Lock()
 _jobs = {}
@@ -169,17 +176,71 @@ def format_sort(quality):
     return "res:1080,+codec:avc:m4a"
 
 
-def build_command(url, quality, cookie_file, out_dir):
+def output_text(value, json_encoded=False):
+    """Decode JSON-escaped protocol text without guessing at legacy text."""
+    if not json_encoded:
+        return value.strip()
+    decoded = json.loads(value)
+    if not isinstance(decoded, str):
+        raise ValueError("下载器返回了无效的文本字段")
+    return decoded
+
+
+def douyin_media_info(page_url, media, title):
+    """Accept only a matching Douyin video and clear HTTPS video-CDN sources."""
+    match = re.fullmatch(r"https://www\.douyin\.com/video/(\d+)", page_url)
+    if not match or not isinstance(media, dict) or media.get("videoUrl") != page_url:
+        raise ValueError("页面视频地址与下载任务不匹配")
+
+    def source_url(raw):
+        if not isinstance(raw, str) or len(raw) > 16000:
+            raise ValueError("无效的抖音播放地址")
+        p = urlparse(raw)
+        hostname = (p.hostname or "").lower()
+        if (p.scheme != "https" or p.username or p.password or p.port is not None
+                or not (hostname == "douyinvod.com" or hostname.endswith(".douyinvod.com"))):
+            raise ValueError("仅接受抖音视频 CDN 的 HTTPS 播放地址")
+        return raw
+
+    primary = source_url(media.get("url"))
+    formats = []
+    candidates = media.get("formats") if isinstance(media.get("formats"), list) else []
+    for f in candidates[:16]:
+        if not isinstance(f, dict):
+            continue
+        source = source_url(f.get("url"))
+        item = {"url": source, "ext": "mp4", "protocol": "https", "format_id": str(len(formats))}
+        for key in ("width", "height"):
+            value = f.get(key)
+            if isinstance(value, (int, float)) and 0 < value <= 20000:
+                item[key] = value
+        bitrate = f.get("bitrate")
+        if isinstance(bitrate, (int, float)) and 0 < bitrate <= 1000000000:
+            item["tbr"] = bitrate / 1000
+        formats.append(item)
+    if not formats:
+        formats.append({"url": primary, "ext": "mp4", "protocol": "https", "format_id": "page"})
+    return {
+        "id": match.group(1), "title": title.strip()[:1000] if isinstance(title, str) and title.strip() else "抖音视频 " + match.group(1),
+        "webpage_url": page_url, "extractor": "ClipGoDouyin", "extractor_key": "Generic",
+        "formats": formats, "http_headers": {"Referer": "https://www.douyin.com/"},
+    }
+
+
+def build_command(url, quality, cookie_file, out_dir, info_file=None):
     cmd = [
         YTDLP,
         "--ignore-config",
-        "--no-playlist",
+        "--encoding", "utf-8",  # Match our pipe decoder, including Windows packaged yt-dlp
+        "--no-playlist",  # Bilibili: selected ?p=N part, or the first part by default
         "--no-mtime",
         "--newline",
         "--progress",
         "--progress-template",
-        "download:" + PROGRESS_TAG + "%(progress._percent_str)s|%(progress._speed_str)s|%(progress._eta_str)s|%(info.title)s",
-        "--print", "after_move:" + FILE_TAG + "%(filepath)s",
+        # j escapes Unicode and newlines as ASCII JSON, independent of code page.
+        "download:" + PROGRESS_JSON_TAG + "%(progress._percent_str)s|%(progress._speed_str)s|%(progress._eta_str)s|%(info.title)j",
+        "--print", "before_dl:" + TITLE_JSON_TAG + "%(title)j",
+        "--print", "after_move:" + FILE_JSON_TAG + "%(filepath)j",
         "--no-quiet",  # --print implies --quiet; keep [Merger] lines for the UI
         "--ffmpeg-location", BIN_DIR,
         "-f", "bv*+ba/b",
@@ -192,21 +253,32 @@ def build_command(url, quality, cookie_file, out_dir):
         cmd += ["--js-runtimes", "deno:" + DENO]
     if cookie_file:
         cmd += ["--cookies", cookie_file]
-    cmd += ["--", url]
+    if urlparse(url).hostname == "v.qq.com":
+        cmd += ["--plugin-dirs", APP_DIR]
+    if info_file:
+        cmd += ["--load-info-json", info_file]
+    else:
+        cmd += ["--", url]
     return cmd
 
 
 # ---------------------------------------------------------------- download job
 
-def run_download(job_id, url, quality, cookies):
+def run_download(job_id, url, quality, cookies, media_info=None):
     cookie_file = None
+    info_file = None
     files = []
+    metadata_title = None
     last_error = None
     tail = []
     try:
         cookie_file = write_cookie_file(cookies)
         out_dir = download_dir()
-        cmd = build_command(url, quality, cookie_file, out_dir)
+        if media_info:
+            fd, info_file = tempfile.mkstemp(prefix="clipgo_media_", suffix=".json")
+            with os.fdopen(fd, "w", encoding="utf-8") as f:
+                json.dump(media_info, f, ensure_ascii=True)
+        cmd = build_command(url, quality, cookie_file, out_dir, info_file)
         log("start", job_id, url, quality)
         proc = subprocess.Popen(
             cmd,
@@ -235,9 +307,15 @@ def run_download(job_id, url, quality, cookies):
             line = line.rstrip("\r\n")
             if not line:
                 continue
-            if line.startswith(PROGRESS_TAG):
+            if line.startswith(TITLE_JSON_TAG):
+                metadata_title = output_text(line[len(TITLE_JSON_TAG):], json_encoded=True)
+                send({"type": "stage", "id": job_id, "stage": "准备下载…", "title": metadata_title})
+                continue
+            if line.startswith((PROGRESS_TAG, PROGRESS_JSON_TAG)):
                 now = time.time()
-                parts = line[len(PROGRESS_TAG):].split("|", 3)
+                json_encoded = line.startswith(PROGRESS_JSON_TAG)
+                tag = PROGRESS_JSON_TAG if json_encoded else PROGRESS_TAG
+                parts = line[len(tag):].split("|", 3)
                 pct = parts[0].strip().rstrip("%")
                 is_final = pct.startswith("100")
                 if now - last_sent < 0.4 and not is_final:
@@ -253,11 +331,13 @@ def run_download(job_id, url, quality, cookies):
                     "percent": pct_val,
                     "speed": parts[1].strip() if len(parts) > 1 else "",
                     "eta": parts[2].strip() if len(parts) > 2 else "",
-                    "title": parts[3].strip() if len(parts) > 3 else "",
+                    "title": output_text(parts[3], json_encoded) if len(parts) > 3 else "",
                 })
                 continue
-            if line.startswith(FILE_TAG):
-                files.append(line[len(FILE_TAG):].strip())
+            if line.startswith((FILE_TAG, FILE_JSON_TAG)):
+                json_encoded = line.startswith(FILE_JSON_TAG)
+                tag = FILE_JSON_TAG if json_encoded else FILE_TAG
+                files.append(output_text(line[len(tag):], json_encoded))
                 continue
             if line.startswith("[Merger]"):
                 send({"type": "stage", "id": job_id, "stage": "合并音视频为 MP4…"})
@@ -274,10 +354,12 @@ def run_download(job_id, url, quality, cookies):
         if info.get("cancelled"):
             send({"type": "cancelled", "id": job_id})
         elif code == 0 and files:
-            send({"type": "done", "id": job_id, "files": files})
+            send({"type": "done", "id": job_id, "files": files,
+                  **({"title": metadata_title} if metadata_title is not None else {})})
         elif code == 0:
             # Already downloaded before: yt-dlp skips and prints nothing after_move.
-            send({"type": "done", "id": job_id, "files": [], "note": "文件已存在，已跳过"})
+            send({"type": "done", "id": job_id, "files": [], "note": "文件已存在，已跳过",
+                  **({"title": metadata_title} if metadata_title is not None else {})})
         else:
             msg = last_error or (tail[-1] if tail else "yt-dlp 退出码 %s" % code)
             log("fail", job_id, code, "\n".join(tail))
@@ -286,6 +368,11 @@ def run_download(job_id, url, quality, cookies):
         log("exception", job_id, traceback.format_exc())
         send({"type": "error", "id": job_id, "message": "助手内部错误: %s" % e})
     finally:
+        if info_file:
+            try:
+                os.remove(info_file)
+            except OSError:
+                pass
         if cookie_file:
             try:
                 os.remove(cookie_file)
@@ -331,25 +418,39 @@ def cancel_all():
 
 # ---------------------------------------------------------------- actions
 
-def pick_folder_dialog(current):
+def folder_dialog_title(locale):
+    locale = str(locale or "zh-CN").lower().replace("_", "-")
+    if locale.startswith("ja"):
+        return "ClipGo のダウンロード先を選択"
+    if locale.startswith("ko"):
+        return "ClipGo 다운로드 폴더 선택"
+    if locale in ("zh-tw", "zh-hk", "zh-mo") or locale.startswith("zh-hant"):
+        return "選擇 ClipGo 下載資料夾"
+    if locale.startswith("zh"):
+        return "选择 ClipGo 下载文件夹"
+    return "Choose the ClipGo download folder"
+
+
+def pick_folder_dialog(current, locale=None):
+    title = folder_dialog_title(locale)
     if IS_WIN:
         ps = (
             "[Console]::OutputEncoding=[Text.Encoding]::UTF8;"
             "Add-Type -AssemblyName System.Windows.Forms;"
             "$o=New-Object System.Windows.Forms.Form -Property @{TopMost=$true};"
             "$d=New-Object System.Windows.Forms.FolderBrowserDialog;"
-            "$d.Description='选择 ClipGo 下载文件夹';"
+            "$d.Description=$env:CLIPGO_DIALOG_TITLE;"
             "$d.SelectedPath=$env:CLIPGO_CUR;"
             "if($d.ShowDialog($o) -eq 'OK'){[Console]::Out.Write($d.SelectedPath)}"
         )
-        env = dict(os.environ, CLIPGO_CUR=current)
+        env = dict(os.environ, CLIPGO_CUR=current, CLIPGO_DIALOG_TITLE=title)
         out = subprocess.run(
             ["powershell.exe", "-NoProfile", "-STA", "-ExecutionPolicy", "Bypass", "-Command", ps],
             capture_output=True, env=env, creationflags=NO_WINDOW,
         )
         path = out.stdout.decode("utf-8", "replace").strip()
     else:
-        script = 'POSIX path of (choose folder with prompt "选择 ClipGo 下载文件夹" default location (POSIX file "%s"))' % current.replace('"', '\\"')
+        script = 'POSIX path of (choose folder with prompt "%s" default location (POSIX file "%s"))' % (title, current.replace('"', '\\"'))
         out = subprocess.run(["/usr/bin/osascript", "-e", script], capture_output=True, text=True)
         path = out.stdout.strip()
         if path != "/":
@@ -359,8 +460,8 @@ def pick_folder_dialog(current):
     return path
 
 
-def choose_dir():
-    path = pick_folder_dialog(download_dir())
+def choose_dir(locale=None):
+    path = pick_folder_dialog(download_dir(), locale)
     if not path:
         return None
     cfg = load_config()
@@ -377,6 +478,36 @@ def reveal(path):
             subprocess.run(["/usr/bin/open", "-R", path])
     else:
         open_dir(download_dir())
+
+
+def repair_paths(paths):
+    """Find uniquely identifiable legacy filenames without changing any files."""
+    if not isinstance(paths, list):
+        return {}
+    directory = os.path.abspath(load_config().get("downloadDir") or DEFAULT_DIR)
+    candidates = {}
+    for path in paths[:30]:
+        if not isinstance(path, str) or "\ufffd" not in path or not os.path.isabs(path):
+            continue
+        if os.path.normcase(os.path.abspath(os.path.dirname(path))) != os.path.normcase(directory):
+            continue
+        match = re.search(r" \[([A-Za-z0-9_-]+)\]\.mp4$", os.path.basename(path))
+        if match:
+            candidates[path] = match.group(0)
+    if not candidates:
+        return {}
+    try:
+        with os.scandir(directory) as entries:
+            filenames = [entry.name for entry in entries
+                         if "\ufffd" not in entry.name and entry.is_file(follow_symlinks=False)]
+    except OSError:
+        return {}
+    repaired = {}
+    for path, suffix in candidates.items():
+        matches = [name for name in filenames if name.endswith(suffix)]
+        if len(matches) == 1:
+            repaired[path] = os.path.join(directory, matches[0])
+    return repaired
 
 
 def open_dir(path):
@@ -440,15 +571,16 @@ def handle(msg):
         if not job_id:
             reply({"type": "error", "message": "缺少任务 id"})
         elif not is_allowed_url(url):
-            send({"type": "error", "id": job_id, "message": "仅支持 YouTube / Instagram 链接"})
+            send({"type": "error", "id": job_id, "message": "仅支持 YouTube / Instagram / 哔哩哔哩 / X / 小红书 / TikTok / 抖音 / 腾讯视频链接"})
         elif not os.path.exists(YTDLP):
             send({"type": "error", "id": job_id, "message": "未找到 yt-dlp，请重新运行安装脚本"})
         else:
+            media_info = douyin_media_info(url, msg["media"], msg.get("title")) if msg.get("media") else None
             with _jobs_lock:
                 _jobs[job_id] = {"cancelled": False, "proc": None}
             t = threading.Thread(
                 target=run_download,
-                args=(job_id, url, msg.get("quality", "1080"), msg.get("cookies") or []),
+                args=(job_id, url, msg.get("quality", "1080"), msg.get("cookies") or []) + ((media_info,) if media_info else ()),
                 daemon=True,
             )
             t.start()
@@ -457,11 +589,13 @@ def handle(msg):
     elif action == "reveal":
         reveal(msg.get("path") or "")
         reply({"type": "ok"})
+    elif action == "repairPaths":
+        reply({"type": "repairedPaths", "paths": repair_paths(msg.get("paths"))})
     elif action == "openDir":
         open_dir(download_dir())
         reply({"type": "ok"})
     elif action == "chooseDir":
-        reply({"type": "dir", "downloadDir": choose_dir() or download_dir()})
+        reply({"type": "dir", "downloadDir": choose_dir(msg.get("locale")) or download_dir()})
     elif action == "update":
         ok, text = update_ytdlp()
         reply({"type": "updated", "ok": ok, "output": text[-800:],
