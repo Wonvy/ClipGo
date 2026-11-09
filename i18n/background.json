@@ -1,0 +1,506 @@
+{
+  "common_quality_recommended": {
+    "zh_CN": "1080p（推荐）",
+    "zh_TW": "1080p（推薦）",
+    "en": "1080p (recommended)",
+    "ja": "1080p（推奨）",
+    "ko": "1080p(권장)"
+  },
+  "common_quality_best": {
+    "zh_CN": "最高画质 (4K)",
+    "zh_TW": "最高畫質 (4K)",
+    "en": "Best quality (4K)",
+    "ja": "最高画質 (4K)",
+    "ko": "최고 화질(4K)"
+  },
+  "common_quality_720": {
+    "zh_CN": "720p",
+    "zh_TW": "720p",
+    "en": "720p",
+    "ja": "720p",
+    "ko": "720p"
+  },
+  "common_quality_480": {
+    "zh_CN": "480p",
+    "zh_TW": "480p",
+    "en": "480p",
+    "ja": "480p",
+    "ko": "480p"
+  },
+  "common_quality_360": {
+    "zh_CN": "360p",
+    "zh_TW": "360p",
+    "en": "360p",
+    "ja": "360p",
+    "ko": "360p"
+  },
+  "common_site_youtube": {
+    "zh_CN": "YouTube",
+    "zh_TW": "YouTube",
+    "en": "YouTube",
+    "ja": "YouTube",
+    "ko": "YouTube"
+  },
+  "common_site_instagram": {
+    "zh_CN": "Instagram",
+    "zh_TW": "Instagram",
+    "en": "Instagram",
+    "ja": "Instagram",
+    "ko": "Instagram"
+  },
+  "common_site_bilibili": {
+    "zh_CN": "哔哩哔哩",
+    "zh_TW": "嗶哩嗶哩",
+    "en": "bilibili",
+    "ja": "ビリビリ",
+    "ko": "빌리빌리"
+  },
+  "common_site_twitter": {
+    "zh_CN": "X",
+    "zh_TW": "X",
+    "en": "X",
+    "ja": "X",
+    "ko": "X"
+  },
+  "common_site_xiaohongshu": {
+    "zh_CN": "小红书",
+    "zh_TW": "小紅書",
+    "en": "RedNote",
+    "ja": "小紅書",
+    "ko": "샤오홍슈"
+  },
+  "common_site_tiktok": {
+    "zh_CN": "TikTok",
+    "zh_TW": "TikTok",
+    "en": "TikTok",
+    "ja": "TikTok",
+    "ko": "TikTok"
+  },
+  "common_site_douyin": {
+    "zh_CN": "抖音",
+    "zh_TW": "抖音",
+    "en": "Douyin",
+    "ja": "Douyin",
+    "ko": "더우인"
+  },
+  "common_site_tencent": {
+    "zh_CN": "腾讯视频",
+    "zh_TW": "騰訊影片",
+    "en": "Tencent Video",
+    "ja": "テンセントビデオ",
+    "ko": "텐센트 비디오"
+  },
+  "common_stage_parsing": {
+    "zh_CN": "解析视频信息…",
+    "zh_TW": "解析影片資訊…",
+    "en": "Reading video information…",
+    "ja": "動画情報を解析中…",
+    "ko": "동영상 정보 분석 중…"
+  },
+  "common_stage_preparing": {
+    "zh_CN": "准备下载…",
+    "zh_TW": "準備下載…",
+    "en": "Preparing download…",
+    "ja": "ダウンロードを準備中…",
+    "ko": "다운로드 준비 중…"
+  },
+  "common_stage_merging": {
+    "zh_CN": "合并音视频为 MP4…",
+    "zh_TW": "將影音合併為 MP4…",
+    "en": "Merging audio and video into MP4…",
+    "ja": "音声と映像を MP4 に結合中…",
+    "ko": "오디오와 동영상을 MP4로 병합 중…"
+  },
+  "common_stage_remuxing": {
+    "zh_CN": "转封装为 MP4…",
+    "zh_TW": "重新封裝為 MP4…",
+    "en": "Remuxing to MP4…",
+    "ja": "MP4 に再格納中…",
+    "ko": "MP4로 리먹싱 중…"
+  },
+  "common_note_exists": {
+    "zh_CN": "文件已存在，已跳过",
+    "zh_TW": "檔案已存在，已略過",
+    "en": "File already exists; skipped",
+    "ja": "ファイルが既に存在するためスキップしました",
+    "ko": "파일이 이미 있어 건너뛰었습니다"
+  },
+  "common_host_missing_engine": {
+    "zh_CN": "未找到 yt-dlp，请重新运行安装脚本",
+    "zh_TW": "找不到 yt-dlp，請重新執行安裝程式",
+    "en": "yt-dlp was not found. Run the installer again.",
+    "ja": "yt-dlp が見つかりません。インストーラーをもう一度実行してください。",
+    "ko": "yt-dlp를 찾을 수 없습니다. 설치 프로그램을 다시 실행해 주세요."
+  },
+  "common_host_internal": {
+    "zh_CN": "助手内部错误: $1",
+    "zh_TW": "助手內部錯誤: $1",
+    "en": "Helper error: $1",
+    "ja": "ヘルパー内部エラー: $1",
+    "ko": "도우미 내부 오류: $1"
+  },
+  "common_update_failed": {
+    "zh_CN": "更新失败: $1",
+    "zh_TW": "更新失敗: $1",
+    "en": "Update failed: $1",
+    "ja": "更新に失敗しました: $1",
+    "ko": "업데이트 실패: $1"
+  },
+  "common_updated": {
+    "zh_CN": "已更新到 $1",
+    "zh_TW": "已更新至 $1",
+    "en": "Updated to $1",
+    "ja": "$1 に更新しました",
+    "ko": "$1(으)로 업데이트했습니다"
+  },
+  "common_host_invalid_text": {
+    "zh_CN": "下载器返回了无效的文本字段",
+    "zh_TW": "下載器傳回無效的文字欄位",
+    "en": "The downloader returned an invalid text field.",
+    "ja": "ダウンローダーが無効なテキストを返しました。",
+    "ko": "다운로더가 잘못된 텍스트 값을 반환했습니다."
+  },
+  "common_host_media_mismatch": {
+    "zh_CN": "页面视频地址与下载任务不匹配",
+    "zh_TW": "頁面影片網址與下載工作不符",
+    "en": "The page video does not match this download.",
+    "ja": "ページの動画がダウンロード対象と一致しません。",
+    "ko": "페이지의 동영상이 다운로드 작업과 일치하지 않습니다."
+  },
+  "common_host_invalid_douyin_url": {
+    "zh_CN": "无效的抖音播放地址",
+    "zh_TW": "無效的抖音播放網址",
+    "en": "Invalid Douyin playback URL.",
+    "ja": "Douyin の再生 URL が無効です。",
+    "ko": "더우인 재생 주소가 잘못되었습니다."
+  },
+  "common_host_douyin_cdn_only": {
+    "zh_CN": "仅接受抖音视频 CDN 的 HTTPS 播放地址",
+    "zh_TW": "僅接受抖音影片 CDN 的 HTTPS 播放網址",
+    "en": "Only HTTPS playback URLs from Douyin's video CDN are accepted.",
+    "ja": "Douyin の動画 CDN の HTTPS 再生 URL のみ使用できます。",
+    "ko": "더우인 동영상 CDN의 HTTPS 재생 주소만 사용할 수 있습니다."
+  },
+  "common_host_douyin_title": {
+    "zh_CN": "抖音视频 $1",
+    "zh_TW": "抖音影片 $1",
+    "en": "Douyin video $1",
+    "ja": "Douyin 動画 $1",
+    "ko": "더우인 동영상 $1"
+  },
+  "common_host_exit_code": {
+    "zh_CN": "yt-dlp 退出码 $1",
+    "zh_TW": "yt-dlp 結束代碼 $1",
+    "en": "yt-dlp exit code $1",
+    "ja": "yt-dlp 終了コード $1",
+    "ko": "yt-dlp 종료 코드 $1"
+  },
+  "common_host_missing_id": {
+    "zh_CN": "缺少任务 id",
+    "zh_TW": "缺少工作 id",
+    "en": "Missing task ID.",
+    "ja": "タスク ID がありません。",
+    "ko": "작업 ID가 없습니다."
+  },
+  "common_host_supported_sites": {
+    "zh_CN": "仅支持 YouTube / Instagram / 哔哩哔哩 / X / 小红书 / TikTok / 抖音 / 腾讯视频链接",
+    "zh_TW": "僅支援 YouTube / Instagram / 嗶哩嗶哩 / X / 小紅書 / TikTok / 抖音 / 騰訊影片連結",
+    "en": "Only YouTube, Instagram, bilibili, X, RedNote, TikTok, Douyin, and Tencent Video links are supported.",
+    "ja": "YouTube、Instagram、ビリビリ、X、小紅書、TikTok、Douyin、テンセントビデオのリンクに対応しています。",
+    "ko": "YouTube, Instagram, 빌리빌리, X, 샤오홍슈, TikTok, 더우인, 텐센트 비디오 링크만 지원합니다."
+  },
+  "common_host_unknown_action": {
+    "zh_CN": "未知操作: $1",
+    "zh_TW": "未知操作: $1",
+    "en": "Unknown action: $1",
+    "ja": "不明な操作: $1",
+    "ko": "알 수 없는 작업: $1"
+  },
+  "bg_interrupted": {
+    "zh_CN": "任务被中断（浏览器或扩展重启），请重试",
+    "zh_TW": "工作已中斷（瀏覽器或擴充功能重新啟動），請重試",
+    "en": "The task was interrupted by a browser or extension restart. Please retry.",
+    "ja": "ブラウザまたは拡張機能の再起動により中断されました。再試行してください。",
+    "ko": "브라우저 또는 확장 프로그램이 다시 시작되어 작업이 중단되었습니다. 다시 시도해 주세요."
+  },
+  "bg_host_not_found": {
+    "zh_CN": "未检测到 ClipGo 本地助手，请先运行安装脚本",
+    "zh_TW": "找不到 ClipGo 本機助手，請先執行安裝程式",
+    "en": "ClipGo's local helper was not found. Run the installer first.",
+    "ja": "ClipGo のローカルヘルパーが見つかりません。先にインストーラーを実行してください。",
+    "ko": "ClipGo 로컬 도우미를 찾을 수 없습니다. 먼저 설치 프로그램을 실행해 주세요."
+  },
+  "bg_host_forbidden": {
+    "zh_CN": "本地助手拒绝了此扩展（扩展 ID 不匹配），请重新运行安装脚本",
+    "zh_TW": "本機助手拒絕此擴充功能（擴充功能 ID 不符），請重新執行安裝程式",
+    "en": "The helper rejected this extension because its ID does not match. Run the installer again.",
+    "ja": "拡張機能の ID が一致しないため、ヘルパーが接続を拒否しました。インストーラーを再実行してください。",
+    "ko": "확장 프로그램 ID가 일치하지 않아 도우미가 연결을 거부했습니다. 설치 프로그램을 다시 실행해 주세요."
+  },
+  "bg_host_start_failed": {
+    "zh_CN": "本地助手启动失败，请重新运行安装脚本",
+    "zh_TW": "本機助手啟動失敗，請重新執行安裝程式",
+    "en": "The local helper could not start. Run the installer again.",
+    "ja": "ローカルヘルパーを起動できませんでした。インストーラーを再実行してください。",
+    "ko": "로컬 도우미를 시작할 수 없습니다. 설치 프로그램을 다시 실행해 주세요."
+  },
+  "bg_host_disconnected": {
+    "zh_CN": "与本地助手的连接已断开",
+    "zh_TW": "與本機助手的連線已中斷",
+    "en": "The connection to the local helper was lost.",
+    "ja": "ローカルヘルパーとの接続が切れました。",
+    "ko": "로컬 도우미와의 연결이 끊겼습니다."
+  },
+  "bg_douyin_url_expired": {
+    "zh_CN": "抖音播放地址已失效，请刷新视频页面、播放后再点重试",
+    "zh_TW": "抖音播放網址已失效，請重新整理影片頁面並播放後再重試",
+    "en": "The Douyin playback URL has expired. Refresh and play the video, then retry.",
+    "ja": "Douyin の再生 URL の有効期限が切れました。ページを更新して動画を再生し、再試行してください。",
+    "ko": "더우인 재생 주소가 만료되었습니다. 페이지를 새로고침하고 동영상을 재생한 뒤 다시 시도해 주세요."
+  },
+  "bg_douyin_request_rejected": {
+    "zh_CN": "抖音解析接口拒绝了请求，请打开这条视频并播放后重试；已打开的旧页面请先刷新",
+    "zh_TW": "抖音解析介面拒絕了請求，請開啟這部影片並播放後重試；已開啟的舊頁面請先重新整理",
+    "en": "Douyin rejected the video request. Open and play this video, then retry; refresh an already open page first.",
+    "ja": "Douyin が動画の取得を拒否しました。動画を開いて再生してから再試行してください。既に開いているページは先に更新してください。",
+    "ko": "더우인이 동영상 요청을 거부했습니다. 동영상을 열어 재생한 뒤 다시 시도해 주세요. 이미 열린 페이지는 먼저 새로고침해 주세요."
+  },
+  "bg_tencent_preview": {
+    "zh_CN": "腾讯视频只返回了试看片段，未保存为完整视频。请确认本浏览器已登录有观看权限的账号后重试；仍受限时请使用腾讯视频客户端缓存",
+    "zh_TW": "騰訊影片僅傳回試看片段，未儲存為完整影片。請確認此瀏覽器已登入具有觀看權限的帳號後重試；若仍受限，請使用騰訊影片用戶端快取",
+    "en": "Tencent Video returned only a preview, so it was not saved as a full video. Sign in to an account with viewing access in this browser and retry. If still restricted, use offline viewing in the Tencent Video app.",
+    "ja": "テンセントビデオからプレビューのみが返されたため、完全な動画として保存しませんでした。このブラウザで視聴権限のあるアカウントにログインして再試行してください。制限が続く場合は公式アプリのオフライン視聴をご利用ください。",
+    "ko": "텐센트 비디오가 미리보기만 반환하여 전체 동영상으로 저장하지 않았습니다. 이 브라우저에서 시청 권한이 있는 계정으로 로그인한 후 다시 시도해 주세요. 계속 제한되면 공식 앱의 오프라인 보기를 이용해 주세요."
+  },
+  "bg_tencent_unverified": {
+    "zh_CN": "暂时无法确认腾讯视频是否完整，已停止保存以免只下载到片段，请稍后重试",
+    "zh_TW": "暫時無法確認騰訊影片是否完整，已停止儲存以免僅下載到片段，請稍後重試",
+    "en": "The full length of this Tencent Video could not be verified. Saving was stopped to avoid an incomplete download. Please retry later.",
+    "ja": "テンセントビデオの動画が完全か確認できませんでした。不完全な動画を保存しないよう停止しました。しばらくしてから再試行してください。",
+    "ko": "텐센트 비디오의 전체 길이를 확인할 수 없습니다. 일부만 저장되는 것을 방지하기 위해 중단했습니다. 나중에 다시 시도해 주세요."
+  },
+  "bg_tencent_protected": {
+    "zh_CN": "腾讯视频返回了受保护或暂不支持的视频格式，当前无法导出 MP4",
+    "zh_TW": "騰訊影片傳回受保護或目前不支援的影片格式，暫時無法匯出 MP4",
+    "en": "Tencent Video returned a protected or unsupported format that cannot currently be exported to MP4.",
+    "ja": "テンセントビデオから保護された形式または未対応の形式が返されたため、現在 MP4 に保存できません。",
+    "ko": "텐센트 비디오가 보호된 형식 또는 지원되지 않는 형식을 반환하여 현재 MP4로 저장할 수 없습니다."
+  },
+  "bg_youtube_login": {
+    "zh_CN": "YouTube 要求登录验证：请在本浏览器登录 YouTube，并在设置中开启「YouTube 使用登录状态」后重试",
+    "zh_TW": "YouTube 要求登入驗證：請在此瀏覽器登入 YouTube，並在設定中開啟「YouTube 使用登入狀態」後重試",
+    "en": "YouTube requires sign-in verification. Sign in to YouTube in this browser, enable \"Use YouTube login\" in settings, and retry.",
+    "ja": "YouTube でログイン確認が必要です。このブラウザで YouTube にログインし、設定の「YouTube のログイン状態を使用」を有効にして再試行してください。",
+    "ko": "YouTube 로그인 확인이 필요합니다. 이 브라우저에서 YouTube에 로그인하고 설정에서 'YouTube 로그인 상태 사용'을 켠 후 다시 시도해 주세요."
+  },
+  "bg_instagram_login": {
+    "zh_CN": "Instagram 需要登录：请先在本浏览器登录 instagram.com 后重试",
+    "zh_TW": "Instagram 需要登入：請先在此瀏覽器登入 instagram.com 後重試",
+    "en": "Instagram requires sign-in. Sign in at instagram.com in this browser, then retry.",
+    "ja": "Instagram へのログインが必要です。このブラウザで instagram.com にログインしてから再試行してください。",
+    "ko": "Instagram 로그인이 필요합니다. 이 브라우저에서 instagram.com에 로그인한 후 다시 시도해 주세요."
+  },
+  "bg_bilibili_login": {
+    "zh_CN": "哔哩哔哩需要登录或相应观看权限：请在本浏览器登录有权限的账号后重试",
+    "zh_TW": "嗶哩嗶哩需要登入或相應的觀看權限：請在此瀏覽器登入有權限的帳號後重試",
+    "en": "bilibili requires sign-in or viewing access. Sign in to an authorized account in this browser, then retry.",
+    "ja": "ビリビリへのログインまたは視聴権限が必要です。このブラウザで権限のあるアカウントにログインして再試行してください。",
+    "ko": "빌리빌리 로그인 또는 시청 권한이 필요합니다. 이 브라우저에서 권한이 있는 계정으로 로그인한 후 다시 시도해 주세요."
+  },
+  "bg_bilibili_rate_limit": {
+    "zh_CN": "哔哩哔哩暂时限制了请求，请稍后重试，并确认本浏览器能正常播放该视频",
+    "zh_TW": "嗶哩嗶哩暫時限制了請求，請稍後重試，並確認此瀏覽器可正常播放該影片",
+    "en": "bilibili is temporarily limiting requests. Retry later and check that this video plays in your browser.",
+    "ja": "ビリビリが一時的にリクエストを制限しています。ブラウザで再生できることを確認し、しばらくしてから再試行してください。",
+    "ko": "빌리빌리가 요청을 일시적으로 제한하고 있습니다. 브라우저에서 동영상이 재생되는지 확인하고 나중에 다시 시도해 주세요."
+  },
+  "bg_x_login": {
+    "zh_CN": "X 需要登录或相应观看权限：请先在本浏览器登录 x.com，并确认可以播放该帖子中的视频",
+    "zh_TW": "X 需要登入或相應的觀看權限：請先在此瀏覽器登入 x.com，並確認可以播放該貼文中的影片",
+    "en": "X requires sign-in or viewing access. Sign in at x.com in this browser and check that the post's video plays.",
+    "ja": "X へのログインまたは視聴権限が必要です。このブラウザで x.com にログインし、投稿の動画を再生できることを確認してください。",
+    "ko": "X 로그인 또는 시청 권한이 필요합니다. 이 브라우저에서 x.com에 로그인하고 게시물의 동영상이 재생되는지 확인해 주세요."
+  },
+  "bg_x_rate_limit": {
+    "zh_CN": "X 暂时限制了请求，请稍后重试",
+    "zh_TW": "X 暫時限制了請求，請稍後重試",
+    "en": "X is temporarily limiting requests. Please retry later.",
+    "ja": "X が一時的にリクエストを制限しています。しばらくしてから再試行してください。",
+    "ko": "X가 요청을 일시적으로 제한하고 있습니다. 나중에 다시 시도해 주세요."
+  },
+  "bg_x_no_video": {
+    "zh_CN": "这条 X 帖子里没有可下载的视频",
+    "zh_TW": "這則 X 貼文中沒有可下載的影片",
+    "en": "This X post has no downloadable video.",
+    "ja": "この X の投稿にダウンロードできる動画はありません。",
+    "ko": "이 X 게시물에는 다운로드할 수 있는 동영상이 없습니다."
+  },
+  "bg_site_protected": {
+    "zh_CN": "$1的这个视频受加密保护，无法保存为普通 MP4",
+    "zh_TW": "$1的這部影片受到加密保護，無法儲存為一般 MP4",
+    "en": "This video on $1 is protected by encryption and cannot be saved as a standard MP4.",
+    "ja": "$1 のこの動画は暗号化で保護されているため、通常の MP4 として保存できません。",
+    "ko": "$1의 이 동영상은 암호화로 보호되어 일반 MP4로 저장할 수 없습니다."
+  },
+  "bg_site_login": {
+    "zh_CN": "$1需要有效的登录状态或观看权限：请在本浏览器打开并播放该视频，刷新页面后重试",
+    "zh_TW": "$1需要有效的登入狀態或觀看權限：請在此瀏覽器開啟並播放該影片，重新整理頁面後重試",
+    "en": "$1 requires a valid login or viewing access. Open and play the video in this browser, refresh the page, and retry.",
+    "ja": "$1 への有効なログインまたは視聴権限が必要です。このブラウザで動画を開いて再生し、ページを更新して再試行してください。",
+    "ko": "$1의 유효한 로그인 상태 또는 시청 권한이 필요합니다. 이 브라우저에서 동영상을 열어 재생하고 페이지를 새로고침한 후 다시 시도해 주세요."
+  },
+  "bg_site_rate_limit": {
+    "zh_CN": "$1暂时限制了请求，请稍后重试",
+    "zh_TW": "$1暫時限制了請求，請稍後重試",
+    "en": "$1 is temporarily limiting requests. Please retry later.",
+    "ja": "$1 が一時的にリクエストを制限しています。しばらくしてから再試行してください。",
+    "ko": "$1에서 요청을 일시적으로 제한하고 있습니다. 나중에 다시 시도해 주세요."
+  },
+  "bg_site_no_video": {
+    "zh_CN": "$1的这个链接里没有可下载的视频（可能是图文内容）",
+    "zh_TW": "$1的這個連結沒有可下載的影片（可能是圖文內容）",
+    "en": "This $1 link has no downloadable video; it may contain images or text.",
+    "ja": "この $1 のリンクにダウンロードできる動画はありません。画像やテキストの投稿の可能性があります。",
+    "ko": "이 $1 링크에는 다운로드할 수 있는 동영상이 없습니다. 이미지나 텍스트 게시물일 수 있습니다."
+  },
+  "bg_private_video": {
+    "zh_CN": "这是私密视频，无法下载",
+    "zh_TW": "這是私人影片，無法下載",
+    "en": "This video is private and cannot be downloaded.",
+    "ja": "非公開動画のためダウンロードできません。",
+    "ko": "비공개 동영상이므로 다운로드할 수 없습니다."
+  },
+  "bg_no_video": {
+    "zh_CN": "这个链接里没有视频（可能是图片帖子）",
+    "zh_TW": "這個連結沒有影片（可能是圖片貼文）",
+    "en": "This link has no video; it may be an image post.",
+    "ja": "このリンクに動画はありません。画像の投稿の可能性があります。",
+    "ko": "이 링크에는 동영상이 없습니다. 이미지 게시물일 수 있습니다."
+  },
+  "bg_video_unavailable": {
+    "zh_CN": "视频不存在或已被删除",
+    "zh_TW": "影片不存在或已遭刪除",
+    "en": "The video is unavailable or has been removed.",
+    "ja": "動画が存在しないか、削除されています。",
+    "ko": "동영상이 없거나 삭제되었습니다."
+  },
+  "bg_members_only": {
+    "zh_CN": "会员专属视频，需要登录有权限的账号",
+    "zh_TW": "會員專屬影片，需要登入有權限的帳號",
+    "en": "This members-only video requires an account with access.",
+    "ja": "メンバー限定の動画です。視聴権限のあるアカウントへのログインが必要です。",
+    "ko": "회원 전용 동영상입니다. 권한이 있는 계정으로 로그인해야 합니다."
+  },
+  "bg_network_error": {
+    "zh_CN": "网络错误，请检查网络（或代理）后重试：$1",
+    "zh_TW": "網路錯誤，請檢查網路（或代理伺服器）後重試：$1",
+    "en": "Network error. Check your connection or proxy and retry: $1",
+    "ja": "ネットワークエラーです。接続またはプロキシを確認して再試行してください: $1",
+    "ko": "네트워크 오류입니다. 인터넷 연결 또는 프록시를 확인한 후 다시 시도해 주세요: $1"
+  },
+  "bg_host_timeout": {
+    "zh_CN": "本地助手无响应",
+    "zh_TW": "本機助手沒有回應",
+    "en": "The local helper is not responding.",
+    "ja": "ローカルヘルパーから応答がありません。",
+    "ko": "로컬 도우미가 응답하지 않습니다."
+  },
+  "bg_host_empty_response": {
+    "zh_CN": "本地助手没有返回数据",
+    "zh_TW": "本機助手未傳回資料",
+    "en": "The local helper returned no data.",
+    "ja": "ローカルヘルパーからデータが返されませんでした。",
+    "ko": "로컬 도우미가 데이터를 반환하지 않았습니다."
+  },
+  "bg_stage_downloading": {
+    "zh_CN": "下载中",
+    "zh_TW": "下載中",
+    "en": "Downloading",
+    "ja": "ダウンロード中",
+    "ko": "다운로드 중"
+  },
+  "bg_download_complete": {
+    "zh_CN": "ClipGo 下载完成",
+    "zh_TW": "ClipGo 下載完成",
+    "en": "ClipGo download complete",
+    "ja": "ClipGo ダウンロード完了",
+    "ko": "ClipGo 다운로드 완료"
+  },
+  "bg_supported_sites": {
+    "zh_CN": "支持 YouTube、Instagram、B站、X、小红书、TikTok、抖音和腾讯视频链接",
+    "zh_TW": "支援 YouTube、Instagram、嗶哩嗶哩、X、小紅書、TikTok、抖音及騰訊影片連結",
+    "en": "Supported links: YouTube, Instagram, bilibili, X, RedNote, TikTok, Douyin, and Tencent Video.",
+    "ja": "YouTube、Instagram、ビリビリ、X、小紅書、TikTok、Douyin、テンセントビデオのリンクに対応しています。",
+    "ko": "YouTube, Instagram, 빌리빌리, X, 샤오홍슈, TikTok, 더우인, 텐센트 비디오 링크를 지원합니다."
+  },
+  "bg_not_video_page": {
+    "zh_CN": "这不是视频页面，请打开具体视频或粘贴视频链接",
+    "zh_TW": "這不是影片頁面，請開啟個別影片或貼上影片連結",
+    "en": "This is not a video page. Open a specific video or paste its link.",
+    "ja": "動画ページではありません。個別の動画を開くか、動画のリンクを貼り付けてください。",
+    "ko": "동영상 페이지가 아닙니다. 특정 동영상을 열거나 동영상 링크를 붙여 넣어 주세요."
+  },
+  "bg_already_downloading": {
+    "zh_CN": "这个视频正在下载中",
+    "zh_TW": "這部影片正在下載中",
+    "en": "This video is already downloading.",
+    "ja": "この動画は既にダウンロード中です。",
+    "ko": "이 동영상은 이미 다운로드 중입니다."
+  },
+  "bg_stage_starting": {
+    "zh_CN": "启动本地助手…",
+    "zh_TW": "啟動本機助手…",
+    "en": "Starting the local helper…",
+    "ja": "ローカルヘルパーを起動中…",
+    "ko": "로컬 도우미 시작 중…"
+  },
+  "bg_stage_douyin_page": {
+    "zh_CN": "读取抖音视频页面…",
+    "zh_TW": "讀取抖音影片頁面…",
+    "en": "Reading the Douyin video page…",
+    "ja": "Douyin の動画ページを読み込み中…",
+    "ko": "더우인 동영상 페이지 읽는 중…"
+  },
+  "bg_stage_page_video": {
+    "zh_CN": "读取网页视频…",
+    "zh_TW": "讀取網頁影片…",
+    "en": "Reading the video from the page…",
+    "ja": "ページの動画を読み込み中…",
+    "ko": "페이지의 동영상 읽는 중…"
+  },
+  "bg_unknown_command": {
+    "zh_CN": "未知操作",
+    "zh_TW": "未知操作",
+    "en": "Unknown command",
+    "ja": "不明な操作",
+    "ko": "알 수 없는 작업"
+  },
+  "bg_unexpected_error": {
+    "zh_CN": "发生错误：$1",
+    "zh_TW": "發生錯誤：$1",
+    "en": "An error occurred: $1",
+    "ja": "エラーが発生しました: $1",
+    "ko": "오류가 발생했습니다: $1"
+  },
+  "bg_menu_link": {
+    "zh_CN": "用 ClipGo 下载这个视频 (MP4)",
+    "zh_TW": "使用 ClipGo 下載這部影片 (MP4)",
+    "en": "Download this video with ClipGo (MP4)",
+    "ja": "この動画を ClipGo でダウンロード (MP4)",
+    "ko": "ClipGo로 이 동영상 다운로드(MP4)"
+  },
+  "bg_menu_page": {
+    "zh_CN": "用 ClipGo 下载当前视频 (MP4)",
+    "zh_TW": "使用 ClipGo 下載目前影片 (MP4)",
+    "en": "Download the current video with ClipGo (MP4)",
+    "ja": "現在の動画を ClipGo でダウンロード (MP4)",
+    "ko": "ClipGo로 현재 동영상 다운로드(MP4)"
+  },
+  "bg_download_failed": {
+    "zh_CN": "ClipGo 无法下载",
+    "zh_TW": "ClipGo 無法下載",
+    "en": "ClipGo could not download",
+    "ja": "ClipGo でダウンロードできません",
+    "ko": "ClipGo 다운로드 실패"
+  }
+}

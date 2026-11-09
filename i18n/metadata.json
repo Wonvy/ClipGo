@@ -1,0 +1,16 @@
+{
+  "appName": {
+    "zh_CN": "ClipGo - 多平台视频下载",
+    "zh_TW": "ClipGo - 多平台影片下載",
+    "en": "ClipGo - Video Downloader",
+    "ja": "ClipGo - 動画ダウンローダー",
+    "ko": "ClipGo - 동영상 다운로더"
+  },
+  "appDescription": {
+    "zh_CN": "使用 ClipGo 本地助手，将支持平台的视频保存为 MP4。支持多个视频平台，需单独安装助手。",
+    "zh_TW": "透過 ClipGo 本機助手，將支援平台的影片儲存為 MP4。支援多個影音平台，需另外安裝助手。",
+    "en": "Save supported videos as MP4 with the ClipGo desktop helper. Supports multiple video platforms. Helper installation required.",
+    "ja": "ClipGo デスクトップヘルパーで対応サイトの動画を MP4 として保存。複数の動画サイトに対応。ヘルパーの別途インストールが必要です。",
+    "ko": "ClipGo 데스크톱 도우미로 지원 사이트의 동영상을 MP4로 저장하세요. 여러 동영상 플랫폼을 지원하며 도우미를 별도로 설치해야 합니다."
+  }
+}

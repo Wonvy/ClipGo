@@ -1,0 +1,56 @@
+ClipGo 1.3.0 - store submission preparation
+
+Current state: local packages prepared; neither store has been uploaded to or
+submitted for review by this work. Registration/account access is not confirmed.
+
+Prepared artifacts in dist/stores:
+- ClipGo-1.3.0-Chrome.zip
+- ClipGo-1.3.0-Edge.zip
+- store-icon-128.png
+- screenshots/en.jpg, ja.jpg, ko.jpg, zh_CN.jpg, zh_TW.jpg (1280 x 800)
+- listings.json: complete store descriptions in the five interface languages.
+- privacy-policy.html: factual bilingual policy draft, not publicly hosted yet.
+- privacy-declarations.json: permissions, data handling and review evidence.
+- publisher.json and submission-status.json: outstanding publication fields.
+
+Before submission
+1. Complete developer registration and sign in to each official dashboard.
+2. Confirm the public developer name and support contact details.
+3. Upload each corresponding ZIP as a draft. The uploaded store edition may
+   receive an ID different from the unpacked development extension.
+4. Record both real IDs in host/browser-stores.json, then rebuild the Windows
+   helper installer. Never put wildcard or guessed IDs in allowed_origins.
+5. Publish the helper installer and final privacy policy at accessible URLs.
+   Set these real URLs in store/publisher.json and the store listing.
+6. Use listings.json, the icon and each locale's screenshot to fill the listing.
+   The screenshots render the actual UI with a clearly labeled sample helper
+   status and no user's tasks, credentials, videos or browsing information.
+7. Review the privacy worksheet against each dashboard's exact questions.
+   Do not describe cookies as never leaving the device: the helper uses them
+   for authorized requests to the corresponding video platform.
+8. Test each store edition with its registered helper ID before requesting review.
+
+Reviewer notes (adapt URLs after publishing)
+This MV3 extension uses a separate desktop Native Messaging helper. Its full
+browser code is in the ZIP. Install the published helper before testing, then
+open the extension popup and confirm that the helper is connected. Choose a
+public video that the reviewer is authorized to download, select a quality, and
+start the task. Cancellation and file reveal are available in the task list.
+The code does not bypass DRM. Some sites require the reviewer's own valid login
+and viewing access; do not provide or ask users to share personal passwords.
+The helper source and dependency versions should be linked for review. Native
+yt-dlp updates and its isolated Deno execution of site player scripts must be
+disclosed; the browser extension does not fetch executable extension code.
+
+Official dashboards
+https://chrome.google.com/webstore/devconsole/
+https://partner.microsoft.com/dashboard/microsoftedge/overview
+
+References
+https://developer.chrome.com/docs/webstore/publish
+https://developer.chrome.com/docs/webstore/images
+https://learn.microsoft.com/en-us/microsoft-edge/extensions/publish/publish-extension
+https://learn.microsoft.com/en-us/microsoft-edge/extensions/developer-guide/native-messaging
+
+Store approval is decided by the stores. Local tests and ZIP generation are not
+approval, a public listing, or evidence that a submission has been accepted.

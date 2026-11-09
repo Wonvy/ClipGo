@@ -1,0 +1,72 @@
+{
+  "English": {
+    "welcomeTitle": "Install ClipGo",
+    "welcomeText": "Install the download helper and all required components offline. No administrator access is needed.\n\nAfter installation, follow the guide to add the extension to Chrome or Edge.\n\nIf ClipGo is already installed, finish current downloads and close the browser before updating.",
+    "install": "Install",
+    "finishTitle": "ClipGo helper is installed",
+    "finishText": "Click Finish to open the setup assistant.\n\nChoose Chrome or Edge, paste the copied extensions page address in your browser, then follow the steps to load the folder. Reopen the guide from the Start menu anytime.",
+    "openGuide": "Open the extension setup guide",
+    "needsWin": "This installer requires 64-bit Windows 10 or Windows 11.",
+    "installing": "Installing and checking download components...",
+    "installFailed": "Installation could not finish. Close ClipGo downloads and your browser, then try again. Details are in the install.log file in the installation folder:",
+    "uninstallFailed": "Uninstall could not finish. Close ClipGo downloads and your browser, then try again. Saved videos are preserved.",
+    "guideShortcut": "ClipGo Setup Guide",
+    "uninstallShortcut": "Uninstall ClipGo"
+  },
+  "SimpChinese": {
+    "welcomeTitle": "安装 ClipGo",
+    "welcomeText": "安装下载助手和全部必需组件，无需联网下载组件，也不需要管理员权限。\n\n安装后，按指引在 Chrome 或 Edge 中加载扩展，即可开始使用。\n\n如已安装 ClipGo，请等待当前下载完成并关闭浏览器后再更新。",
+    "install": "安装",
+    "finishTitle": "ClipGo 助手已安装",
+    "finishText": "点击完成打开简约安装助手。\n\n选择 Chrome 或 Edge，复制扩展页地址，在浏览器粘贴并回车，再按指引加载扩展文件夹。\n\n以后可以从开始菜单再次打开。",
+    "openGuide": "打开扩展安装指引",
+    "needsWin": "此安装包需要 64 位 Windows 10 或 Windows 11。",
+    "installing": "正在安装并检查下载组件……",
+    "installFailed": "安装未完成。请先结束 ClipGo 下载并关闭浏览器，再重新安装。详细原因请查看安装目录中的 install.log：",
+    "uninstallFailed": "卸载未完成。请先结束 ClipGo 下载并关闭浏览器后重试。已下载的视频会保留。",
+    "guideShortcut": "ClipGo 安装指引",
+    "uninstallShortcut": "卸载 ClipGo"
+  },
+  "TradChinese": {
+    "welcomeTitle": "安裝 ClipGo",
+    "welcomeText": "安裝下載助手及所有必要元件，不需連線下載元件，也不需系統管理員權限。\n\n安裝後，依指引在 Chrome 或 Edge 中載入擴充功能，即可開始使用。\n\n若已安裝 ClipGo，請等待目前下載完成並關閉瀏覽器後再更新。",
+    "install": "安裝",
+    "finishTitle": "ClipGo 助手已安裝",
+    "finishText": "按完成開啟安裝助手。\n\n選擇 Chrome 或 Edge，複製擴充功能頁網址並在瀏覽器貼上，再依指引載入資料夾。之後可從開始功能表再次開啟。",
+    "openGuide": "開啟擴充功能安裝指引",
+    "needsWin": "此安裝程式需要 64 位元 Windows 10 或 Windows 11。",
+    "installing": "正在安裝並檢查下載元件……",
+    "installFailed": "安裝未完成。請先結束 ClipGo 下載並關閉瀏覽器，再重新安裝。詳細原因請查看安裝資料夾中的 install.log：",
+    "uninstallFailed": "解除安裝未完成。請先結束 ClipGo 下載並關閉瀏覽器後重試。已下載的影片會保留。",
+    "guideShortcut": "ClipGo 安裝指引",
+    "uninstallShortcut": "解除安裝 ClipGo"
+  },
+  "Japanese": {
+    "welcomeTitle": "ClipGo をインストール",
+    "welcomeText": "ダウンロードヘルパーと必要なコンポーネントをオフラインでインストールします。管理者権限は不要です。\n\n完了後、ガイドに従って Chrome または Edge に拡張機能を追加してください。\n\n更新する場合は、進行中のダウンロードを終了し、ブラウザーを閉じてください。",
+    "install": "インストール",
+    "finishTitle": "ヘルパーをインストールしました",
+    "finishText": "完了を押すと設定ガイドが開きます。\n\nブラウザーを選び、コピーした管理ページのアドレスを貼り付け、案内に沿ってフォルダーを読み込んでください。",
+    "openGuide": "拡張機能の設定ガイドを開く",
+    "needsWin": "64 ビット版 Windows 10 または Windows 11 が必要です。",
+    "installing": "コンポーネントをインストール・確認中...",
+    "installFailed": "インストールできませんでした。ClipGo のダウンロードを終了し、ブラウザーを閉じて再試行してください。詳細はインストール先の install.log をご確認ください：",
+    "uninstallFailed": "アンインストールできませんでした。ダウンロードを終了し、ブラウザーを閉じて再試行してください。保存済みの動画は削除されません。",
+    "guideShortcut": "ClipGo 設定ガイド",
+    "uninstallShortcut": "ClipGo のアンインストール"
+  },
+  "Korean": {
+    "welcomeTitle": "ClipGo 설치",
+    "welcomeText": "다운로드 도우미와 필요한 구성 요소를 오프라인으로 설치합니다. 관리자 권한이 필요하지 않습니다.\n\n설치 후 안내에 따라 Chrome 또는 Edge에 확장 프로그램을 추가하세요.\n\n업데이트할 때는 진행 중인 다운로드를 마치고 브라우저를 닫아 주세요.",
+    "install": "설치",
+    "finishTitle": "ClipGo 도우미 설치 완료",
+    "finishText": "완료를 누르면 설치 안내가 열립니다.\n\n브라우저를 선택하고 복사한 관리 페이지 주소를 붙여넣은 뒤 안내에 따라 폴더를 추가하세요.",
+    "openGuide": "확장 프로그램 설치 안내 열기",
+    "needsWin": "64비트 Windows 10 또는 Windows 11이 필요합니다.",
+    "installing": "다운로드 구성 요소 설치 및 확인 중...",
+    "installFailed": "설치를 완료하지 못했습니다. ClipGo 다운로드를 마치고 브라우저를 닫은 후 다시 시도하세요. 자세한 내용은 설치 폴더의 install.log를 확인하세요:",
+    "uninstallFailed": "제거를 완료하지 못했습니다. 다운로드를 마치고 브라우저를 닫은 후 다시 시도하세요. 저장한 동영상은 유지됩니다.",
+    "guideShortcut": "ClipGo 설치 안내",
+    "uninstallShortcut": "ClipGo 제거"
+  }
+}

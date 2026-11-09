@@ -1,0 +1,416 @@
+{
+  "appDescription": {
+    "message": "透過 ClipGo 本機助手，將支援平台的影片儲存為 MP4。支援多個影音平台，需另外安裝助手。"
+  },
+  "appName": {
+    "message": "ClipGo - 多平台影片下載"
+  },
+  "bg_already_downloading": {
+    "message": "這部影片正在下載中"
+  },
+  "bg_bilibili_login": {
+    "message": "嗶哩嗶哩需要登入或相應的觀看權限：請在此瀏覽器登入有權限的帳號後重試"
+  },
+  "bg_bilibili_rate_limit": {
+    "message": "嗶哩嗶哩暫時限制了請求，請稍後重試，並確認此瀏覽器可正常播放該影片"
+  },
+  "bg_douyin_request_rejected": {
+    "message": "抖音解析介面拒絕了請求，請開啟這部影片並播放後重試；已開啟的舊頁面請先重新整理"
+  },
+  "bg_douyin_url_expired": {
+    "message": "抖音播放網址已失效，請重新整理影片頁面並播放後再重試"
+  },
+  "bg_download_complete": {
+    "message": "ClipGo 下載完成"
+  },
+  "bg_download_failed": {
+    "message": "ClipGo 無法下載"
+  },
+  "bg_host_disconnected": {
+    "message": "與本機助手的連線已中斷"
+  },
+  "bg_host_empty_response": {
+    "message": "本機助手未傳回資料"
+  },
+  "bg_host_forbidden": {
+    "message": "本機助手拒絕此擴充功能（擴充功能 ID 不符），請重新執行安裝程式"
+  },
+  "bg_host_not_found": {
+    "message": "找不到 ClipGo 本機助手，請先執行安裝程式"
+  },
+  "bg_host_start_failed": {
+    "message": "本機助手啟動失敗，請重新執行安裝程式"
+  },
+  "bg_host_timeout": {
+    "message": "本機助手沒有回應"
+  },
+  "bg_instagram_login": {
+    "message": "Instagram 需要登入：請先在此瀏覽器登入 instagram.com 後重試"
+  },
+  "bg_interrupted": {
+    "message": "工作已中斷（瀏覽器或擴充功能重新啟動），請重試"
+  },
+  "bg_members_only": {
+    "message": "會員專屬影片，需要登入有權限的帳號"
+  },
+  "bg_menu_link": {
+    "message": "使用 ClipGo 下載這部影片 (MP4)"
+  },
+  "bg_menu_page": {
+    "message": "使用 ClipGo 下載目前影片 (MP4)"
+  },
+  "bg_network_error": {
+    "message": "網路錯誤，請檢查網路（或代理伺服器）後重試：$1"
+  },
+  "bg_no_video": {
+    "message": "這個連結沒有影片（可能是圖片貼文）"
+  },
+  "bg_not_video_page": {
+    "message": "這不是影片頁面，請開啟個別影片或貼上影片連結"
+  },
+  "bg_private_video": {
+    "message": "這是私人影片，無法下載"
+  },
+  "bg_site_login": {
+    "message": "$1需要有效的登入狀態或觀看權限：請在此瀏覽器開啟並播放該影片，重新整理頁面後重試"
+  },
+  "bg_site_no_video": {
+    "message": "$1的這個連結沒有可下載的影片（可能是圖文內容）"
+  },
+  "bg_site_protected": {
+    "message": "$1的這部影片受到加密保護，無法儲存為一般 MP4"
+  },
+  "bg_site_rate_limit": {
+    "message": "$1暫時限制了請求，請稍後重試"
+  },
+  "bg_stage_douyin_page": {
+    "message": "讀取抖音影片頁面…"
+  },
+  "bg_stage_downloading": {
+    "message": "下載中"
+  },
+  "bg_stage_page_video": {
+    "message": "讀取網頁影片…"
+  },
+  "bg_stage_starting": {
+    "message": "啟動本機助手…"
+  },
+  "bg_supported_sites": {
+    "message": "支援 YouTube、Instagram、嗶哩嗶哩、X、小紅書、TikTok、抖音及騰訊影片連結"
+  },
+  "bg_tencent_preview": {
+    "message": "騰訊影片僅傳回試看片段，未儲存為完整影片。請確認此瀏覽器已登入具有觀看權限的帳號後重試；若仍受限，請使用騰訊影片用戶端快取"
+  },
+  "bg_tencent_protected": {
+    "message": "騰訊影片傳回受保護或目前不支援的影片格式，暫時無法匯出 MP4"
+  },
+  "bg_tencent_unverified": {
+    "message": "暫時無法確認騰訊影片是否完整，已停止儲存以免僅下載到片段，請稍後重試"
+  },
+  "bg_unexpected_error": {
+    "message": "發生錯誤：$1"
+  },
+  "bg_unknown_command": {
+    "message": "未知操作"
+  },
+  "bg_video_unavailable": {
+    "message": "影片不存在或已遭刪除"
+  },
+  "bg_x_login": {
+    "message": "X 需要登入或相應的觀看權限：請先在此瀏覽器登入 x.com，並確認可以播放該貼文中的影片"
+  },
+  "bg_x_no_video": {
+    "message": "這則 X 貼文中沒有可下載的影片"
+  },
+  "bg_x_rate_limit": {
+    "message": "X 暫時限制了請求，請稍後重試"
+  },
+  "bg_youtube_login": {
+    "message": "YouTube 要求登入驗證：請在此瀏覽器登入 YouTube，並在設定中開啟「YouTube 使用登入狀態」後重試"
+  },
+  "common_host_douyin_cdn_only": {
+    "message": "僅接受抖音影片 CDN 的 HTTPS 播放網址"
+  },
+  "common_host_douyin_title": {
+    "message": "抖音影片 $1"
+  },
+  "common_host_exit_code": {
+    "message": "yt-dlp 結束代碼 $1"
+  },
+  "common_host_internal": {
+    "message": "助手內部錯誤: $1"
+  },
+  "common_host_invalid_douyin_url": {
+    "message": "無效的抖音播放網址"
+  },
+  "common_host_invalid_text": {
+    "message": "下載器傳回無效的文字欄位"
+  },
+  "common_host_media_mismatch": {
+    "message": "頁面影片網址與下載工作不符"
+  },
+  "common_host_missing_engine": {
+    "message": "找不到 yt-dlp，請重新執行安裝程式"
+  },
+  "common_host_missing_id": {
+    "message": "缺少工作 id"
+  },
+  "common_host_supported_sites": {
+    "message": "僅支援 YouTube / Instagram / 嗶哩嗶哩 / X / 小紅書 / TikTok / 抖音 / 騰訊影片連結"
+  },
+  "common_host_unknown_action": {
+    "message": "未知操作: $1"
+  },
+  "common_note_exists": {
+    "message": "檔案已存在，已略過"
+  },
+  "common_quality_360": {
+    "message": "360p"
+  },
+  "common_quality_480": {
+    "message": "480p"
+  },
+  "common_quality_720": {
+    "message": "720p"
+  },
+  "common_quality_best": {
+    "message": "最高畫質 (4K)"
+  },
+  "common_quality_recommended": {
+    "message": "1080p（推薦）"
+  },
+  "common_site_bilibili": {
+    "message": "嗶哩嗶哩"
+  },
+  "common_site_douyin": {
+    "message": "抖音"
+  },
+  "common_site_instagram": {
+    "message": "Instagram"
+  },
+  "common_site_tencent": {
+    "message": "騰訊影片"
+  },
+  "common_site_tiktok": {
+    "message": "TikTok"
+  },
+  "common_site_twitter": {
+    "message": "X"
+  },
+  "common_site_xiaohongshu": {
+    "message": "小紅書"
+  },
+  "common_site_youtube": {
+    "message": "YouTube"
+  },
+  "common_stage_merging": {
+    "message": "將影音合併為 MP4…"
+  },
+  "common_stage_parsing": {
+    "message": "解析影片資訊…"
+  },
+  "common_stage_preparing": {
+    "message": "準備下載…"
+  },
+  "common_stage_remuxing": {
+    "message": "重新封裝為 MP4…"
+  },
+  "common_update_failed": {
+    "message": "更新失敗: $1"
+  },
+  "common_updated": {
+    "message": "已更新至 $1"
+  },
+  "content_download_failed": {
+    "message": "下載失敗"
+  },
+  "content_download_failed_prefix": {
+    "message": "下載失敗："
+  },
+  "content_download_started": {
+    "message": "已開始下載，可點擊 ClipGo 圖示查看進度"
+  },
+  "content_download_title": {
+    "message": "使用 ClipGo 下載為 MP4"
+  },
+  "content_downloaded_again": {
+    "message": "已下載 · 再下載"
+  },
+  "content_error_prefix": {
+    "message": "ClipGo："
+  },
+  "content_extension_updated": {
+    "message": "ClipGo 已更新，請重新整理此頁面後再試"
+  },
+  "content_failed": {
+    "message": "失敗"
+  },
+  "content_merging": {
+    "message": "合併中…"
+  },
+  "content_mp4": {
+    "message": "MP4"
+  },
+  "content_percent": {
+    "message": "$1%"
+  },
+  "content_preparing": {
+    "message": "準備中…"
+  },
+  "content_started": {
+    "message": "✓ 已開始"
+  },
+  "content_starting": {
+    "message": "啟動中…"
+  },
+  "popup_cancel": {
+    "message": "取消"
+  },
+  "popup_cancelled": {
+    "message": "已取消"
+  },
+  "popup_change": {
+    "message": "變更"
+  },
+  "popup_clear_finished": {
+    "message": "清除已完成"
+  },
+  "popup_current_page": {
+    "message": "目前頁面"
+  },
+  "popup_download": {
+    "message": "下載 MP4"
+  },
+  "popup_download_failed": {
+    "message": "下載失敗"
+  },
+  "popup_empty": {
+    "message": "尚無下載工作"
+  },
+  "popup_engine": {
+    "message": "下載引擎"
+  },
+  "popup_engine_version": {
+    "message": "助手 $1 · yt-dlp $2"
+  },
+  "popup_helper_checking": {
+    "message": "偵測助手…"
+  },
+  "popup_helper_disconnected": {
+    "message": "未連線至助手"
+  },
+  "popup_helper_ready": {
+    "message": "助手已就緒"
+  },
+  "popup_helper_status": {
+    "message": "本機助手狀態"
+  },
+  "popup_helper_version": {
+    "message": "ClipGo 助手 $1 · yt-dlp $2"
+  },
+  "popup_login_note": {
+    "message": "除 YouTube 可單獨設定外，其他平台會自動使用此瀏覽器的登入狀態。畫質取決於帳號權限；請只下載你有權儲存的內容。"
+  },
+  "popup_merging": {
+    "message": "合併為 MP4…"
+  },
+  "popup_not_installed": {
+    "message": "尚未安裝"
+  },
+  "popup_notify": {
+    "message": "下載完成時通知"
+  },
+  "popup_open": {
+    "message": "開啟"
+  },
+  "popup_page_hint": {
+    "message": "開啟影片頁面，或貼上影片連結"
+  },
+  "popup_post_hint": {
+    "message": "在貼文上按右鍵 →「用 ClipGo 下載」，或貼上連結"
+  },
+  "popup_preparing": {
+    "message": "準備中…"
+  },
+  "popup_quality_label": {
+    "message": "畫質"
+  },
+  "popup_quick_button": {
+    "message": "頁面上的快速下載按鈕"
+  },
+  "popup_quick_button_description": {
+    "message": "滑鼠移到影片縮圖或播放器上時顯示「MP4」按鈕，點一下即可依上方選擇的畫質下載"
+  },
+  "popup_recheck": {
+    "message": "已安裝，重新偵測"
+  },
+  "popup_remaining": {
+    "message": "剩餘 $1"
+  },
+  "popup_remove": {
+    "message": "移除"
+  },
+  "popup_retry": {
+    "message": "重試"
+  },
+  "popup_reveal": {
+    "message": "開啟位置"
+  },
+  "popup_save_location": {
+    "message": "儲存位置"
+  },
+  "popup_saved": {
+    "message": "✓ 已儲存為 MP4"
+  },
+  "popup_settings": {
+    "message": "設定"
+  },
+  "popup_setup_description": {
+    "message": "首次使用請安裝 ClipGo 本機助手，即可將影片儲存為 MP4。"
+  },
+  "popup_setup_mac": {
+    "message": "在終端機執行："
+  },
+  "popup_setup_title": {
+    "message": "還差一步：安裝本機助手"
+  },
+  "popup_setup_windows": {
+    "message": "執行 ClipGo Windows 安裝程式"
+  },
+  "popup_start_failed": {
+    "message": "啟動失敗"
+  },
+  "popup_supported": {
+    "message": "支援 YouTube、Instagram、嗶哩嗶哩、X、小紅書、TikTok、抖音、騰訊視頻"
+  },
+  "popup_tasks": {
+    "message": "下載工作"
+  },
+  "popup_up_to_date": {
+    "message": "已是最新"
+  },
+  "popup_update": {
+    "message": "更新 yt-dlp"
+  },
+  "popup_update_failed": {
+    "message": "更新失敗"
+  },
+  "popup_updating": {
+    "message": "更新中…"
+  },
+  "popup_url_label": {
+    "message": "影片連結"
+  },
+  "popup_url_placeholder": {
+    "message": "貼上影片連結或分享文字"
+  },
+  "popup_video_hint": {
+    "message": "開啟個別影片，或貼上影片連結"
+  },
+  "popup_youtube_login": {
+    "message": "YouTube 使用登入狀態"
+  },
+  "popup_youtube_login_description": {
+    "message": "遇到「請登入以確認你不是機器人」、年齡限制或會員影片時開啟"
+  }
+}

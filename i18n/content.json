@@ -1,0 +1,100 @@
+{
+  "content_download_title": {
+    "zh_CN": "用 ClipGo 下载为 MP4",
+    "zh_TW": "使用 ClipGo 下載為 MP4",
+    "en": "Download as MP4 with ClipGo",
+    "ja": "ClipGo で MP4 としてダウンロード",
+    "ko": "ClipGo로 MP4 다운로드"
+  },
+  "content_mp4": {
+    "zh_CN": "MP4",
+    "zh_TW": "MP4",
+    "en": "MP4",
+    "ja": "MP4",
+    "ko": "MP4"
+  },
+  "content_merging": {
+    "zh_CN": "合并中…",
+    "zh_TW": "合併中…",
+    "en": "Merging…",
+    "ja": "結合中…",
+    "ko": "병합 중…"
+  },
+  "content_percent": {
+    "zh_CN": "$1%",
+    "zh_TW": "$1%",
+    "en": "$1%",
+    "ja": "$1%",
+    "ko": "$1%"
+  },
+  "content_preparing": {
+    "zh_CN": "准备中…",
+    "zh_TW": "準備中…",
+    "en": "Preparing…",
+    "ja": "準備中…",
+    "ko": "준비 중…"
+  },
+  "content_downloaded_again": {
+    "zh_CN": "已下载 · 再下",
+    "zh_TW": "已下載 · 再下載",
+    "en": "Saved · Download again",
+    "ja": "保存済み · 再保存",
+    "ko": "저장됨 · 다시 저장"
+  },
+  "content_starting": {
+    "zh_CN": "启动中…",
+    "zh_TW": "啟動中…",
+    "en": "Starting…",
+    "ja": "開始中…",
+    "ko": "시작 중…"
+  },
+  "content_extension_updated": {
+    "zh_CN": "ClipGo 已更新，请刷新此页面后再试",
+    "zh_TW": "ClipGo 已更新，請重新整理此頁面後再試",
+    "en": "ClipGo has been updated. Refresh this page and try again.",
+    "ja": "ClipGo が更新されました。このページを再読み込みして、もう一度お試しください。",
+    "ko": "ClipGo가 업데이트되었습니다. 이 페이지를 새로고침한 후 다시 시도하세요."
+  },
+  "content_started": {
+    "zh_CN": "✓ 已开始",
+    "zh_TW": "✓ 已開始",
+    "en": "✓ Started",
+    "ja": "✓ 開始しました",
+    "ko": "✓ 시작됨"
+  },
+  "content_download_started": {
+    "zh_CN": "已开始下载，进度可在 ClipGo 图标里查看",
+    "zh_TW": "已開始下載，可點擊 ClipGo 圖示查看進度",
+    "en": "Download started. Click the ClipGo icon to see progress.",
+    "ja": "ダウンロードを開始しました。ClipGo アイコンから進行状況を確認できます。",
+    "ko": "다운로드를 시작했습니다. ClipGo 아이콘에서 진행 상황을 확인하세요."
+  },
+  "content_failed": {
+    "zh_CN": "失败",
+    "zh_TW": "失敗",
+    "en": "Failed",
+    "ja": "失敗",
+    "ko": "실패"
+  },
+  "content_download_failed": {
+    "zh_CN": "下载失败",
+    "zh_TW": "下載失敗",
+    "en": "Download failed",
+    "ja": "ダウンロードに失敗しました",
+    "ko": "다운로드 실패"
+  },
+  "content_error_prefix": {
+    "zh_CN": "ClipGo：",
+    "zh_TW": "ClipGo：",
+    "en": "ClipGo: ",
+    "ja": "ClipGo：",
+    "ko": "ClipGo: "
+  },
+  "content_download_failed_prefix": {
+    "zh_CN": "下载失败：",
+    "zh_TW": "下載失敗：",
+    "en": "Download failed: ",
+    "ja": "ダウンロード失敗：",
+    "ko": "다운로드 실패: "
+  }
+}

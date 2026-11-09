@@ -1,0 +1,48 @@
+{
+  "en": {
+    "title": "ClipGo - Video Downloader",
+    "description": "Save supported videos as MP4 with ClipGo and its desktop helper. Start from a video page, paste a video link, use the right-click menu, or click the MP4 button on a supported video.\n\nClipGo supports YouTube, Instagram, Bilibili, X, Xiaohongshu, TikTok, Douyin and Tencent Video. It handles individual videos or episodes, not entire channels or series. Available quality depends on the source video and your viewing permissions.\n\nChoose a quality, follow download progress, cancel or retry a task, and open the saved file location. Choose your download folder and turn completion notifications on or off. The interface follows your browser language and supports English, Japanese, Korean, Simplified Chinese and Traditional Chinese.\n\nA separate ClipGo desktop helper is required. The Windows installer includes the required runtime components; macOS uses the manual helper installer. Installing this browser extension alone does not install the helper.\n\nDownloads use your browser's sign-in state for the selected platform when needed; YouTube sign-in use is off by default and can be enabled in settings. Download tasks and settings are stored locally. ClipGo has no analytics or developer-operated download server.\n\nSave only content you are authorized to download. DRM-protected content is not supported. The extension does not bypass subscriptions or viewing permissions. ClipGo is an independent project and is not affiliated with the supported platforms.\n\nHelper download and installation instructions (Windows 10/11 x64): https://github.com/Wonvy/ClipGo/releases/tag/v1.3.0\nInstall the helper, restart your browser, and confirm that ClipGo reports the helper is ready. The installer does not automatically install the browser extension.",
+    "searchTerms": [
+      "video",
+      "MP4",
+      "download",
+      "local"
+    ]
+  },
+  "zh_CN": {
+    "title": "ClipGo - 多平台视频下载",
+    "description": "ClipGo 配合本地助手，将支持平台的视频保存为 MP4。你可以打开具体视频页、粘贴视频链接、使用右键菜单，或点击支持页面上的 MP4 按钮开始下载。\n\n支持 YouTube、Instagram、哔哩哔哩、X、小红书、TikTok、抖音和腾讯视频，处理单个视频或单集，不批量下载整个频道或整部剧集。实际可用画质取决于视频源和账号观看权限。\n\n可选择画质、查看下载进度、取消或重试任务、打开文件位置，并设置保存文件夹和完成通知。界面跟随浏览器语言，支持简体中文、繁体中文、英文、日文和韩文。\n\n必须单独安装 ClipGo 本地助手。Windows 安装包包含所需运行组件；macOS 使用手动助手安装脚本。只安装浏览器扩展还不能下载视频。\n\n下载时会按需使用当前浏览器中对应平台的登录状态；YouTube 登录状态默认关闭，可在设置中开启。任务和设置保存在本机，没有分析追踪服务，也没有开发者运营的下载服务器。\n\n请只保存你有权下载的内容。不支持 DRM 保护内容，不绕过订阅或观看权限。ClipGo 是独立项目，与所支持的平台没有隶属关系。\n\n本地助手下载及安装说明（Windows 10/11 x64）：https://github.com/Wonvy/ClipGo/releases/tag/v1.3.0\n安装助手后重新打开浏览器，确认 ClipGo 显示“助手已就绪”。安装包不会自动安装浏览器扩展。",
+    "searchTerms": [
+      "视频下载",
+      "MP4",
+      "本地保存"
+    ]
+  },
+  "zh_TW": {
+    "title": "ClipGo - 多平台影片下載",
+    "description": "ClipGo 搭配本機助手，將支援平台的影片儲存為 MP4。你可以開啟特定影片頁面、貼上影片連結、使用右鍵選單，或按一下支援頁面上的 MP4 按鈕開始下載。\n\n支援 YouTube、Instagram、嗶哩嗶哩、X、小紅書、TikTok、抖音與騰訊影片，處理單一影片或單集，不批次下載整個頻道或整部影集。實際可用畫質取決於影片來源及帳號的觀看權限。\n\n可選擇畫質、查看下載進度、取消或重試工作、開啟檔案位置，並設定儲存資料夾及完成通知。介面依瀏覽器語言顯示，支援繁體中文、簡體中文、英文、日文與韓文。\n\n必須另外安裝 ClipGo 本機助手。Windows 安裝程式包含必要的執行元件；macOS 使用手動助手安裝指令稿。僅安裝瀏覽器擴充功能尚無法下載影片。\n\n下載時會依需要使用目前瀏覽器中對應平台的登入狀態；YouTube 登入狀態預設關閉，可在設定中開啟。工作與設定儲存在本機，沒有分析追蹤服務，也沒有開發者營運的下載伺服器。\n\n請只儲存你有權下載的內容。不支援 DRM 保護內容，不繞過訂閱或觀看權限。ClipGo 是獨立專案，與支援的平台沒有隸屬關係。\n\n本機助手下載及安裝說明（Windows 10/11 x64）：https://github.com/Wonvy/ClipGo/releases/tag/v1.3.0\n安裝助手後重新開啟瀏覽器，確認 ClipGo 顯示助手已就緒。安裝程式不會自動安裝瀏覽器擴充功能。",
+    "searchTerms": [
+      "影片下載",
+      "MP4",
+      "本機儲存"
+    ]
+  },
+  "ja": {
+    "title": "ClipGo - 動画ダウンローダー",
+    "description": "ClipGo とデスクトップヘルパーを使って、対応サイトの動画を MP4 として保存できます。動画ページ、貼り付けた動画リンク、右クリックメニュー、または対応ページの MP4 ボタンからダウンロードを開始できます。\n\nYouTube、Instagram、Bilibili、X、Xiaohongshu、TikTok、Douyin、Tencent Video に対応しています。個別の動画やエピソードを扱い、チャンネルやシリーズ全体の一括ダウンロードには対応していません。利用できる画質は動画とアカウントの視聴権限によって異なります。\n\n画質の選択、進行状況の確認、キャンセル、再試行、保存先の表示が可能です。保存フォルダーと完了通知も設定できます。表示言語はブラウザーに従い、日本語、韓国語、英語、簡体字中国語、繁体字中国語に対応しています。\n\nClipGo デスクトップヘルパーを別途インストールする必要があります。Windows 用インストーラーには必要な実行コンポーネントが含まれます。macOS では手動インストールスクリプトを使用します。拡張機能だけではダウンロードできません。\n\n必要に応じて、対象サイトのブラウザー内ログイン状態を利用します。YouTube のログイン状態の利用は初期設定ではオフです。タスクと設定は端末内に保存され、アクセス解析や開発者運営のダウンロードサーバーはありません。\n\nダウンロードする権利のあるコンテンツだけを保存してください。DRM 保護されたコンテンツには対応せず、購読や視聴権限の制限を回避しません。ClipGo は各対応プラットフォームとは無関係の独立したプロジェクトです。\n\nヘルパーのダウンロードとインストール手順（Windows 10/11 x64）：https://github.com/Wonvy/ClipGo/releases/tag/v1.3.0\nヘルパーをインストールし、ブラウザーを再起動して接続を確認してください。インストーラーはブラウザー拡張機能を自動インストールしません。",
+    "searchTerms": [
+      "動画",
+      "MP4",
+      "ダウンロード"
+    ]
+  },
+  "ko": {
+    "title": "ClipGo - 동영상 다운로더",
+    "description": "ClipGo와 데스크톱 도우미를 사용하여 지원 사이트의 동영상을 MP4로 저장하세요. 동영상 페이지에서 시작하거나, 링크를 붙여넣거나, 마우스 오른쪽 버튼 메뉴 또는 지원 페이지의 MP4 버튼을 사용할 수 있습니다.\n\nYouTube, Instagram, Bilibili, X, Xiaohongshu, TikTok, Douyin, Tencent Video를 지원합니다. 개별 동영상이나 에피소드를 처리하며 전체 채널 또는 시리즈를 일괄 다운로드하지 않습니다. 이용할 수 있는 화질은 원본 동영상과 계정의 시청 권한에 따라 달라집니다.\n\n화질 선택, 다운로드 진행 상황 확인, 취소, 재시도 및 저장 위치 열기를 지원합니다. 저장 폴더와 완료 알림도 설정할 수 있습니다. 인터페이스는 브라우저 언어를 따르며 한국어, 일본어, 영어, 중국어 간체 및 번체를 지원합니다.\n\nClipGo 데스크톱 도우미를 별도로 설치해야 합니다. Windows 설치 프로그램에는 필요한 실행 구성 요소가 포함되어 있습니다. macOS에서는 수동 도우미 설치 스크립트를 사용합니다. 브라우저 확장 프로그램만 설치하면 동영상을 다운로드할 수 없습니다.\n\n필요한 경우 해당 플랫폼의 브라우저 로그인 상태를 사용합니다. YouTube 로그인 상태 사용은 기본적으로 꺼져 있으며 설정에서 켤 수 있습니다. 작업과 설정은 기기에 저장되고, 분석 추적 서비스나 개발자가 운영하는 다운로드 서버는 없습니다.\n\n다운로드할 권한이 있는 콘텐츠만 저장하세요. DRM으로 보호된 콘텐츠는 지원하지 않으며 구독 또는 시청 권한 제한을 우회하지 않습니다. ClipGo는 지원 플랫폼과 제휴하지 않은 독립 프로젝트입니다.\n\n도우미 다운로드 및 설치 안내(Windows 10/11 x64): https://github.com/Wonvy/ClipGo/releases/tag/v1.3.0\n도우미를 설치한 후 브라우저를 다시 열고 연결 상태를 확인하세요. 설치 프로그램은 브라우저 확장 프로그램을 자동으로 설치하지 않습니다.",
+    "searchTerms": [
+      "동영상",
+      "MP4",
+      "다운로드"
+    ]
+  }
+}

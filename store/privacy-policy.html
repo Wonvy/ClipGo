@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>ClipGo 隐私政策 / Privacy Policy</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif; color: #20312c; background: #f5f7f6; }
+    * { box-sizing: border-box; }
+    body { margin: 0; line-height: 1.75; }
+    main { max-width: 880px; margin: 32px auto; padding: 36px; background: white; border: 1px solid #dce5df; border-radius: 18px; }
+    h1 { margin: 0 0 10px; font-size: clamp(1.6rem, 4vw, 2.2rem); line-height: 1.3; }
+    h2 { margin-top: 32px; font-size: 1.25rem; line-height: 1.4; }
+    p, ul { margin: 12px 0; }
+    li { margin: 7px 0; }
+    a { color: #136b50; text-underline-offset: 3px; overflow-wrap: anywhere; }
+    code { font-size: .9em; overflow-wrap: anywhere; }
+    .draft { border-left: 4px solid #ae741c; padding: 12px 16px; background: #fff6e6; border-radius: 5px; }
+    .meta { color: #586b61; font-size: .9rem; }
+    .language { margin-bottom: 24px; }
+    section[lang="en"] { margin-top: 52px; padding-top: 36px; border-top: 1px solid #dce5df; }
+    @media (max-width: 600px) { main { margin: 0; padding: 24px 18px; border: 0; border-radius: 0; } }
+    @media print { main { margin: 0; border: 0; } .language { display: none; } }
+  </style>
+</head>
+<body>
+<main>
+  <p class="meta">核对版本 / Reviewed version: 1.3.0 · 核对日期 / Reviewed: 2026-11-09 · 生效日期 / Effective date: 2026-11-09</p>
+  <nav class="language" aria-label="Language"><a href="#zh">简体中文</a> · <a href="#en">English</a></nav>
+
+  <section id="zh" lang="zh-CN">
+    <h1>ClipGo 隐私政策</h1>
+    <p>ClipGo 由浏览器扩展和安装在您电脑上的本地助手组成，用于将所选网站视频保存到您指定的文件夹。本政策说明当前版本实际访问、处理和保存的数据。不同发行版本支持的网站可能不同，以已安装版本和商店说明为准。</p>
+
+    <h2>1. 访问和处理哪些数据</h2>
+    <ul>
+      <li><strong>视频页面信息：</strong>扩展会在支持的网站识别当前视频、卡片或播放器，读取相关链接、标题和视频标识，以显示下载按钮并确定下载对象。您粘贴或通过右键菜单选择的链接也会被处理。部分链接含有网站签名或访问参数，例如小红书的 <code>xsec_token</code>，会随任务链接保留。</li>
+      <li><strong>抖音网页视频信息：</strong>页面脚本会观察抖音网页正常发起的部分同源视频 JSON 响应，并读取页面初始数据。视频标识、标题、媒体地址及格式信息最多暂存 100 条于页面内存。选中视频的媒体地址可能包含临时签名；它会传给本地助手，但不会专门保存到扩展任务字段。找不到旧视频来源时，扩展可能暂时打开该视频的后台网页，获取匹配信息后关闭；您主动使用或导航的标签页会保留。</li>
+      <li><strong>登录状态和 Cookie：</strong>开始下载时，扩展按目标网站读取相关 Cookie（包括可能代表登录状态的值），经浏览器 Native Messaging 传给本地助手。Instagram、哔哩哔哩、X/Twitter、小红书、TikTok、抖音及腾讯视频使用相应网站范围的 Cookie；YouTube 仅在您开启“使用登录状态”选项时读取，默认关闭。已取得抖音网页直链时不另外导出 Cookie。</li>
+      <li><strong>任务、设置和本地路径：</strong>扩展在浏览器本地存储中保存任务链接、网站、标题、清晰度、状态、进度、时间、文件路径及错误信息，并保存清晰度、通知和按钮等偏好。本地助手的 <code>config.json</code> 保存您选择的下载目录。完成通知可能向操作系统显示视频标题。</li>
+    </ul>
+
+    <h2>2. 数据发送到哪里</h2>
+    <p>当前代码没有将这些数据上传到 ClipGo 自建服务器的功能，也未加入分析统计、广告或自动崩溃报告服务。扩展与本地助手之间的通信在本机进行，但<strong>下载并不完全离线，Cookie 也并非永不离开本机</strong>：助手及下载引擎会向目标网站、其接口和媒体 CDN 发起请求，按网站认证需要发送相应 Cookie 或登录信息。腾讯视频还会将相关 Cookie 中的登录字段按其播放器机制传给腾讯的第一方视频 API。媒体请求会使用所选地址及其签名参数。</p>
+    <p>这些第三方会接收到请求所需的信息，例如 IP 地址、请求头、资源地址和适用的登录凭据，并按各自政策处理。后台打开的抖音网页也会像普通浏览网页一样与该网站通信。ClipGo 当前没有出售数据或向广告商共享数据的功能。</p>
+
+    <h2>3. 本地保存时间与删除</h2>
+    <ul>
+      <li>创建新任务时，扩展最多保留 30 条已结束任务，并另行保留进行中的任务；任务刚结束时，数量可能暂时超过 30 条。您可以移除单条记录或清空已结束任务。清空记录不会删除已下载文件或助手日志。</li>
+      <li>下载文件保留在您选择的目录，默认是用户下载文件夹下的 <code>ClipGo</code> 文件夹，直到您自行删除。下载或合并中断可能留下部分文件。</li>
+      <li>助手会将 Cookie 临时写入系统临时目录中的 <code>clipgo_*.txt</code>，将抖音媒体信息临时写入 <code>clipgo_media_*.json</code>。任务结束时会尝试删除这些文件；强制退出、系统崩溃或删除失败可能留下文件，需要您自行清理。</li>
+      <li>助手目录中的 <code>host.log</code> 记录时间、版本、任务链接、清晰度、失败输出和异常。错误输出可能含文件路径、标题、媒体地址或签名参数。日志超过约 1 MB 时，会在下一次写入前删除重建；没有按天清理规则。请先检查并删去敏感内容再向他人分享日志。</li>
+      <li>下载引擎可能使用自己的本地缓存保存客户端标识、签名等信息；当前助手未禁用其缓存。该缓存不属于扩展任务清单。页面内存中的抖音记录随页面关闭或重载释放。</li>
+    </ul>
+    <p>您可以在浏览器设置中控制网站访问权限、停用或卸载扩展；也可以关闭完成通知、悬浮按钮或 YouTube 登录状态选项。Windows 助手卸载程序保留下载文件、<code>config.json</code>、<code>host.log</code> 和未知用户文件，不会替您清理浏览器扩展数据、系统临时目录或下载引擎缓存。若要清除这些本地数据，请分别在浏览器或相应文件位置处理。</p>
+
+    <h2>4. 权限用途</h2>
+    <p><code>nativeMessaging</code> 用于与本地助手通信；<code>storage</code> 用于保存本地设置和任务；<code>contextMenus</code> 用于右键下载；<code>cookies</code> 用于上述网站登录状态；<code>notifications</code> 用于完成通知和部分操作错误提示；<code>activeTab</code> 用于您打开扩展时识别当前页。所列网站的主机权限用于在这些页面识别视频、读取相关 Cookie 和与页面脚本通信。扩展没有申请读取全部浏览历史的 <code>history</code> 权限。</p>
+
+    <h2>5. 安装、更新与第三方组件</h2>
+    <p>Windows 一键安装包包含 Python、yt-dlp、FFmpeg 和 Deno，安装这些已打包组件无需联网下载。手动安装脚本会从 Python 官方网站、GitHub 上相关项目的发布渠道获取组件；macOS 的 FFmpeg 来自 <code>ffmpeg.martin-riedl.de</code>。构建安装包时也会下载已锁定版本并核对 SHA-256。</p>
+    <p>您点击“更新下载引擎”时，Windows 助手调用 yt-dlp 自身更新功能，macOS 助手下载 GitHub 上 yt-dlp 的最新官方包并替换本地引擎。这些请求会向对应下载服务披露 IP 地址等连接信息，并可能跟随其下载 CDN 的重定向，不会附加扩展导出的目标网站 Cookie。</p>
+    <p>当前扩展脚本随扩展打包，不从远程加载执行代码。YouTube 支持版本中的原生下载引擎会使用本地 Deno 和官方可执行文件内置的 EJS 组件处理网站提供的播放器及验证脚本。yt-dlp 另有从 GitHub 或 npm 获取远程组件的能力，但当前助手不启用 <code>--remote-components</code>，下载命令也忽略用户的 yt-dlp 配置。引擎更新可能改变第三方行为，后续发布需要重新核对。参考：<a href="https://github.com/yt-dlp/yt-dlp/wiki/EJS">yt-dlp EJS 官方说明</a>及<a href="https://github.com/yt-dlp/yt-dlp/blob/2026.10.26/README.md">当前锁定版本文档</a>。</p>
+
+    <h2>6. 联系与政策变更</h2>
+    <p>开发者：Wonvy。隐私问题请通过 <a href="https://github.com/Wonvy/ClipGo/issues">ClipGo GitHub Issues</a> 联系。Issues 为公开页面，请勿提交 Cookie、登录凭据、私人文件或未脱敏日志。数据处理方式发生变化时，我们将更新本政策及日期。</p>
+  </section>
+
+  <section id="en" lang="en">
+    <h1>ClipGo Privacy Policy</h1>
+    <p>ClipGo consists of a browser extension and a helper installed on your computer. It saves selected website videos to a folder you choose. This policy describes data accessed, processed, and stored by the reviewed version. Supported sites can differ between distributions; consult your installed version and its store listing.</p>
+
+    <h2>1. Data we access and process</h2>
+    <ul>
+      <li><strong>Video page information:</strong> the extension identifies videos, cards, and players on supported sites and reads relevant links, titles, and video identifiers to display download controls and select the correct item. It also processes links you paste or select through the context menu. Site access parameters, such as Xiaohongshu's <code>xsec_token</code>, may remain in a stored task URL.</li>
+      <li><strong>Douyin page media:</strong> a page script observes certain same-origin video JSON responses normally requested by the website and reads its initial page data. It keeps up to 100 video identifiers, titles, media URLs, and format records in page memory. A selected media URL may contain a temporary signature and is sent to the local helper; it is not intentionally stored as an extension task field. To retrieve a source for an older video, the extension may open its normal watch page in a background tab and close it afterward. A tab you take over or navigate is retained.</li>
+      <li><strong>Cookies and login state:</strong> when starting a download, the extension reads target-site cookies, which may contain login credentials, and sends them to the local helper through browser Native Messaging. This applies to Instagram, Bilibili, X/Twitter, Xiaohongshu, TikTok, Douyin, and Tencent Video within their corresponding site scope. YouTube cookies are read only when its login-state option is enabled; it is off by default. An available Douyin page-media URL is used without additionally exporting cookies.</li>
+      <li><strong>Tasks, preferences, and paths:</strong> browser local storage holds task URLs, sites, titles, quality, status, progress, timestamps, file paths, and errors, plus preferences such as quality, notifications, and quick buttons. The helper saves your download folder in <code>config.json</code>. Completion notifications may display video titles through the operating system.</li>
+    </ul>
+
+    <h2>2. Where data goes</h2>
+    <p>The reviewed code has no feature that uploads this data to a ClipGo-operated server and includes no analytics, advertising, or automatic crash-reporting service. Communication between the extension and helper is local. However, <strong>downloads are not entirely offline, and cookies do not necessarily stay on your device</strong>: the helper and download engine request the target website, its APIs, and media CDNs, sending applicable cookies or login information as needed. For Tencent Video, relevant login fields are also extracted from cookies and sent to Tencent's first-party video API following its player mechanism. Media requests use the selected resource URL and its signature parameters.</p>
+    <p>These third parties receive information needed for the request, such as your IP address, request headers, resource URL, and applicable authentication details, under their own policies. A background Douyin page communicates with that site like an ordinary page visit. ClipGo currently has no functionality for selling data or sharing it with advertisers.</p>
+
+    <h2>3. Local retention and deletion</h2>
+    <ul>
+      <li>When a new task is created, the extension retains up to 30 finished tasks plus active tasks. The finished count may temporarily exceed 30 as active tasks complete. You can remove individual records or clear finished tasks. This does not delete downloaded files or helper logs.</li>
+      <li>Downloaded files remain in your chosen folder, by default <code>ClipGo</code> inside your user's Downloads folder, until you delete them. Interrupted downloads or merges may leave partial files.</li>
+      <li>Cookies are written to temporary <code>clipgo_*.txt</code> files, and Douyin media information to temporary <code>clipgo_media_*.json</code> files, in the system temporary directory. The helper attempts deletion after the task; a forced exit, crash, or deletion failure may leave files for you to remove.</li>
+      <li><code>host.log</code> in the helper folder records timestamps, versions, task URLs, quality, failure output, and exceptions. Error output may include paths, titles, media URLs, or signature parameters. A log larger than approximately 1 MB is deleted before the next write; there is no time-based expiry. Review and redact sensitive information before sharing a log.</li>
+      <li>The download engine may maintain its own local cache of information such as client identifiers and signatures. The helper does not disable that cache, which is separate from the extension task list. In-memory Douyin records are released when the page closes or reloads.</li>
+    </ul>
+    <p>You can manage website access in browser settings, disable or uninstall the extension, and turn off notifications, quick buttons, or YouTube login-state use. The Windows helper uninstaller preserves downloads, <code>config.json</code>, <code>host.log</code>, and unknown user files. It does not clear browser extension data, system temporary files, or the engine's cache. Remove those separately through your browser or the relevant file locations.</p>
+
+    <h2>4. Why permissions are requested</h2>
+    <p><code>nativeMessaging</code> communicates with the local helper; <code>storage</code> saves local tasks and preferences; <code>contextMenus</code> provides right-click downloading; <code>cookies</code> provides the login-state handling described above; <code>notifications</code> reports completion and some operation errors; and <code>activeTab</code> identifies the current page when you open the extension. Listed website host permissions enable video identification, relevant cookie access, and page-script communication on those sites. The extension does not request the <code>history</code> permission to read your entire browsing history.</p>
+
+    <h2>5. Installation, updates, and third-party components</h2>
+    <p>The Windows installer bundles Python, yt-dlp, FFmpeg, and Deno, so installation of those bundled components does not download them again. Manual installation scripts retrieve components from Python's official website and the relevant GitHub project releases; macOS FFmpeg comes from <code>ffmpeg.martin-riedl.de</code>. Building the installer also retrieves pinned components and verifies their SHA-256 hashes.</p>
+    <p>When you select “Update download engine,” the Windows helper runs yt-dlp's updater; the macOS helper retrieves the latest official yt-dlp package from GitHub and replaces its local engine. Download services receive connection information such as your IP address, and requests may follow their CDN redirects. These update requests do not receive the target-site cookies exported by the extension.</p>
+    <p>Extension scripts are packaged with the extension and do not load executable code remotely. In editions supporting YouTube, the native engine uses local Deno and EJS components bundled in official executables to process site-provided player and challenge scripts. yt-dlp can optionally fetch components from GitHub or npm, but the current helper does not enable <code>--remote-components</code> and its download command ignores user yt-dlp configuration. Future engine updates can change third-party behavior and require review. See the <a href="https://github.com/yt-dlp/yt-dlp/wiki/EJS">official EJS documentation</a> and <a href="https://github.com/yt-dlp/yt-dlp/blob/2026.10.26/README.md">the pinned version's documentation</a>.</p>
+
+    <h2>6. Contact and changes</h2>
+    <p>Developer: Wonvy. For privacy questions, contact us through <a href="https://github.com/Wonvy/ClipGo/issues">ClipGo GitHub Issues</a>. Issues are public: do not post cookies, login credentials, private files, or unredacted logs. We will update this policy and its date when data handling changes.</p>
+  </section>
+</main>
+</body>
+</html>

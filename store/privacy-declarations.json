@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "product": "ClipGo",
+  "reviewedVersion": "1.3.0",
+  "reviewedDate": "2026-11-09",
+  "status": "draft_not_published",
+  "effectiveDate": null,
+  "purpose": "Evidence-backed privacy and permission worksheet; not a completed store submission or a compliance approval.",
+  "contact": {
+    "developerIdentity": null,
+    "email": null,
+    "storeListingUrls": [],
+    "route": "Use the developer contact details on the installed edition's Chrome Web Store or Microsoft Edge Add-ons listing once those details are confirmed.",
+    "publicPrivacyPolicyUrl": null
+  },
+  "scope": {
+    "components": ["browser extension", "local native messaging helper", "download engine and media tools", "installation and manual update workflows"],
+    "note": "This worksheet describes the full source manifest. Store distributions may remove a site; reconcile each generated manifest and listing before submission."
+  },
+  "permissions": [
+    {"name": "nativeMessaging", "purpose": "Send selected download tasks, applicable cookies, and optional media metadata to the locally installed com.clipgo.host helper; receive progress, titles, errors, paths, and helper status; request folder selection, file reveal, and engine updates.", "evidence": ["extension/background.js: ensurePort, hostRequest, startDownload"]},
+    {"name": "storage", "purpose": "Persist tasks and preferences in chrome.storage.local. No chrome.storage.sync use is implemented.", "evidence": ["extension/background.js: load, persist", "extension/popup.js: saveSettings"]},
+    {"name": "contextMenus", "purpose": "Offer download actions for supported video links and the current supported page.", "evidence": ["extension/background.js: contextMenus.create and onClicked"]},
+    {"name": "cookies", "purpose": "Read target-site cookies for user-requested downloads with the existing browser login. Cookie values can be authentication credentials; they are passed to the local helper and used with target website requests.", "evidence": ["extension/background.js: collectCookies", "host/clipgo_host.py: write_cookie_file, build_command"]},
+    {"name": "notifications", "purpose": "Display completion messages, which may include video titles, and context-menu operation errors. Completion notifications respect the notify preference.", "evidence": ["extension/background.js: notifyDone, contextMenus.onClicked, notifications.onClicked"]},
+    {"name": "activeTab", "purpose": "Read the current tab's URL/title when the user opens the popup to identify an eligible video.", "evidence": ["extension/popup.js: chrome.tabs.query"]}
+  ],
+  "hostPermissions": [
+    {"pattern": "*://*.youtube.com/*", "site": "YouTube", "use": "Page video detection and optional youtube.com cookie reading; cookies off by default."},
+    {"pattern": "*://youtu.be/*", "site": "YouTube short links", "use": "Recognize a supported short video URL; no content script or cookie collection specific to this host."},
+    {"pattern": "*://*.instagram.com/*", "site": "Instagram", "use": "Page/card video detection and instagram.com cookie reading on download."},
+    {"pattern": "*://*.bilibili.com/*", "site": "Bilibili", "use": "Video/part/card detection and bilibili.com cookie reading on download."},
+    {"pattern": "*://b23.tv/*", "site": "Bilibili short links", "use": "Recognize a supported short video URL; no content script or cookie collection specific to this host."},
+    {"pattern": "*://*.x.com/*", "site": "X", "use": "Tweet video and selected attachment detection; x.com and twitter.com cookies read on download."},
+    {"pattern": "*://*.twitter.com/*", "site": "Twitter", "use": "Tweet video and selected attachment detection; x.com and twitter.com cookies read on download."},
+    {"pattern": "*://*.xiaohongshu.com/*", "site": "Xiaohongshu", "use": "Video note/card/modal detection and xiaohongshu.com cookie reading on download; signed note URL parameters can be retained."},
+    {"pattern": "*://*.xhslink.com/*", "site": "Xiaohongshu short links", "use": "Recognize supported short URLs; no content script or cookie collection specific to this host."},
+    {"pattern": "*://*.tiktok.com/*", "site": "TikTok", "use": "Video/card detection, short-link recognition, and tiktok.com cookie reading on download."},
+    {"pattern": "*://*.douyin.com/*", "site": "Douyin", "use": "Video/card/modal detection, normal same-origin page response observation and initial-data parsing, temporary exact-watch-page lookup, and douyin.com cookie reading when using the extractor rather than an available page-media source."},
+    {"pattern": "*://v.qq.com/*", "site": "Tencent Video", "use": "Specific episode/player detection and cookies applicable to https://v.qq.com/ on download. The helper maps relevant login fields to the first-party Tencent video API."}
+  ],
+  "permissionsNotRequested": ["history", "webRequest", "debugger", "downloads", "tabs", "<all_urls>"],
+  "tabBehavior": {
+    "note": "The tabs API can perform these operations without requesting the tabs permission; supported host permissions and activeTab provide relevant URL access.",
+    "operations": ["Read current tab for popup context", "Query up to 12 open Douyin tabs for the requested video", "Open a muted inactive exact Douyin watch-page tab when a matching source is unavailable", "Poll matching page metadata for up to 24 half-second intervals", "Close only the temporary tab if the user did not activate, detach, or navigate it"]
+  },
+  "dataHandling": [
+    {
+      "category": "video_urls_titles_and_page_content",
+      "access": "Supported page DOM links, video identifiers, readable titles, player elements, user-pasted links, and context-menu targets. Links may contain site access tokens; Xiaohongshu xsec_token is retained.",
+      "purpose": "Identify the selected video, offer a download action, name files, show progress, and retry the same item.",
+      "storage": "Selected URLs and titles are stored in extension task history. Current page detection also uses transient memory.",
+      "recipients": ["local helper", "target website and its APIs/CDNs during the download"],
+      "evidence": ["extension/common.js: detect", "extension/content.js: currentVideoInfo and DOM title detection", "extension/background.js: startDownload"]
+    },
+    {
+      "category": "douyin_page_media",
+      "access": "Normal same-origin video API JSON responses and RENDER_DATA; exact video ID, title, HTTPS douyinvod.com media URL and up to 16 formats. Responses are bounded to 2 MiB; up to 100 parsed records are held in page memory.",
+      "purpose": "Use the exact selected video's normal webpage media source when available; resolve the exact requested direct watch page for retries.",
+      "storage": "Transient page and background memory, then a temporary helper info JSON file. Direct media URLs are not intentionally persisted as extension task fields; error output can still contain URLs.",
+      "recipients": ["local helper", "Douyin media CDN"],
+      "ordinaryCurrentVideoGuard": "Media is bound to a matching, visible, loaded video owner. A dedicated exact /video/id page lookup can use matching initial/observed metadata without visible playback.",
+      "evidence": ["extension/douyin-page.js", "extension/douyin-media.js", "extension/content.js: douyinMediaFor, pageVideo", "extension/background.js: findDouyinMedia", "host/clipgo_host.py: run_download"]
+    },
+    {
+      "category": "cookies_and_authentication",
+      "fields": ["domain", "hostOnly", "path", "secure", "expirationDate", "name", "value"],
+      "collectionTrigger": "A user-requested download using the standard extractor path. An available Douyin page-media source skips this export.",
+      "siteRules": {
+        "instagram": ["instagram.com"],
+        "bilibili": ["bilibili.com"],
+        "twitter": ["x.com", "twitter.com"],
+        "xiaohongshu": ["xiaohongshu.com"],
+        "tiktok": ["tiktok.com"],
+        "douyin": ["douyin.com"],
+        "youtube": "youtube.com only when ytCookies is true; default false",
+        "tencent": "Cookies applicable to https://v.qq.com/"
+      },
+      "localTransfer": "Browser Native Messaging to the installed helper, then a Netscape-format temporary cookie file for yt-dlp.",
+      "networkUse": "The engine sends applicable cookies to target sites according to cookie scope and site authentication flow. Cookies can therefore leave the device. They are not sent to a ClipGo-operated service.",
+      "tencentSpecialHandling": "Relevant v.qq.com cookie login fields are mapped to logintoken and sent to Tencent's first-party video API. The plugin does not broaden cookie-jar domains or copy Cookie headers to a CDN. API errors in that login-token path are replaced with a generic message to avoid exposing that query.",
+      "storage": "Not intentionally persisted in extension task records or settings. Temporary cookie file removal is attempted in finally; abrupt process termination or deletion failure can leave it behind.",
+      "evidence": ["extension/background.js: collectCookies, startDownload", "host/clipgo_host.py: write_cookie_file, run_download", "host/plugins/yt_dlp_plugins/extractor/clipgo_tencent.py: _login_token, _download_webpage"]
+    },
+    {
+      "category": "local_tasks_and_preferences",
+      "fields": ["task ID", "URL", "site", "quality", "status", "stage", "percent", "title", "createdAt", "finishedAt where available", "speed", "ETA", "file paths", "notes", "error", "rawError", "downloadSource marker", "quality preference", "YouTube cookie preference", "notification preference", "quick button preference"],
+      "location": "chrome.storage.local",
+      "retention": "Trim to at most 30 finished tasks when a new task starts, preserving active tasks. Completion can temporarily leave more than 30 finished entries. User can remove one finished task or clear all finished tasks. Preferences remain until reset or browser extension data removal.",
+      "network": "No task-history synchronization or upload is implemented. A selected task URL is used again when retrying.",
+      "evidence": ["extension/background.js: MAX_TASKS, persist, startDownload, remove, clearFinished", "extension/common.js: DEFAULT_SETTINGS", "extension/popup.js: saveSettings"]
+    },
+    {
+      "category": "downloaded_files_and_local_configuration",
+      "location": "Chosen download directory, default ~/Downloads/ClipGo; helper config.json stores downloadDir.",
+      "retention": "Files remain until the user deletes them. Failed/cancelled downloads can leave partial media files. Removing task history does not delete files. Windows helper uninstall preserves config.json, host.log, downloaded media and unknown user files.",
+      "network": "Media is downloaded from the target site/CDN, not uploaded by ClipGo.",
+      "evidence": ["host/clipgo_host.py: DEFAULT_DIR, download_dir, save_config, build_command", "packaging/windows/uninstall-runtime.ps1"]
+    },
+    {
+      "category": "logs_errors_and_temporary_files",
+      "location": "host.log in the helper directory; clipgo_*.txt and clipgo_media_*.json in the system temporary directory; local installation logs and engine update staging files.",
+      "contents": "Host version, timestamps, task ID, task URL, quality, exception details and the last 30 download-engine output lines on failure. Errors may contain titles, local paths, resource URLs or signed parameters. Installer logs can contain local paths and installation errors.",
+      "retention": "host.log is deleted before the next write after its existing size exceeds 1,000,000 bytes, with no time expiry. Cookie/info temporary files are deleted on normal task cleanup; crashes or deletion failures may leave them. macOS engine update staging is removed in finally. Download engine cache and partial files have separate lifetimes.",
+      "sharing": "No automatic log or crash upload is implemented. Users should review and redact logs before manually sharing them.",
+      "evidence": ["host/clipgo_host.py: log, run_download, update_ytdlp", "packaging/windows/install-runtime.ps1"]
+    },
+    {
+      "category": "third_party_engine_cache",
+      "access": "yt-dlp may retain downloaded information such as client IDs and signatures in its default local cache.",
+      "retention": "ClipGo's command does not disable the engine cache. It is outside extension task cleanup and Windows helper inventory uninstall.",
+      "evidence": ["host/clipgo_host.py: build_command", "https://github.com/yt-dlp/yt-dlp/blob/2026.10.26/README.md#filesystem-options"]
+    }
+  ],
+  "serverAndAnalytics": {
+    "clipgoOperatedDataServerImplemented": false,
+    "analyticsSdkImplemented": false,
+    "advertisingSdkImplemented": false,
+    "automaticCrashUploadImplemented": false,
+    "saleOrAdvertisingSharingImplemented": false,
+    "note": "These are implementation observations, not a claim that no personal data is accessed, processed, locally stored, or sent to target websites."
+  },
+  "networkRecipients": [
+    {"recipient": "Selected target sites, their first-party APIs and media CDNs", "trigger": "Download, metadata extraction, and ordinary temporary Douyin watch-page loading", "information": "IP address, HTTP request metadata, resource URLs, relevant signatures and authentication material when needed"},
+    {"recipient": "GitHub and its release/CDN endpoints", "trigger": "Manual installation, packaging build, or user-requested download-engine update", "information": "IP address and HTTP download metadata; no browser-exported site cookies are supplied by these update/install paths"},
+    {"recipient": "www.python.org and its delivery infrastructure", "trigger": "Windows manual install or build-time retrieval of Python", "information": "IP address and HTTP download metadata"},
+    {"recipient": "ffmpeg.martin-riedl.de and redirect destinations", "trigger": "macOS manual install of FFmpeg/ffprobe", "information": "IP address and HTTP download metadata"},
+    {"recipient": "Browser extension store/update infrastructure", "trigger": "If installed or updated through a browser store", "information": "Handled by that browser/store under its own policy; store publication is not yet complete"}
+  ],
+  "thirdPartyComponents": {
+    "windowsOfflineInstaller": {"bundles": ["Python 3.12.10", "yt-dlp 2026.10.26", "FFmpeg build autobuild-2026-11-08-18-52", "Deno 2.9.8"], "installationDownloadsRequired": false, "buildSource": "packaging/windows/runtime-lock.json", "buildChecks": "Pinned download URLs and SHA-256 verification"},
+    "downloadUrls": [
+      {"component": "Python Windows embedded", "workflow": "manual install and pinned packaging build", "url": "https://www.python.org/ftp/python/3.12.10/python-3.12.10-embed-amd64.zip"},
+      {"component": "yt-dlp Windows", "workflow": "pinned packaging build", "url": "https://github.com/yt-dlp/yt-dlp/releases/download/2026.10.26/yt-dlp.exe"},
+      {"component": "yt-dlp Windows", "workflow": "manual install", "url": "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp.exe"},
+      {"component": "yt-dlp macOS", "workflow": "manual install and helper engine update", "url": "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_macos.zip"},
+      {"component": "FFmpeg Windows", "workflow": "pinned packaging build", "url": "https://github.com/yt-dlp/FFmpeg-Builds/releases/download/autobuild-2026-11-08-18-52/ffmpeg-N-128713-g0f89d936b3-win64-gpl.zip"},
+      {"component": "FFmpeg Windows", "workflow": "manual install", "url": "https://github.com/yt-dlp/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-gpl.zip"},
+      {"component": "FFmpeg/ffprobe macOS", "workflow": "manual install", "urlTemplate": "https://ffmpeg.martin-riedl.de/redirect/latest/macos/{arm64|amd64}/release/{ffmpeg|ffprobe}.zip"},
+      {"component": "Deno Windows", "workflow": "pinned packaging build", "url": "https://github.com/denoland/deno/releases/download/v2.9.8/deno-x86_64-pc-windows-msvc.zip"},
+      {"component": "Deno Windows", "workflow": "manual install", "url": "https://github.com/denoland/deno/releases/latest/download/deno-x86_64-pc-windows-msvc.zip"},
+      {"component": "Deno macOS", "workflow": "manual install", "urlTemplate": "https://github.com/denoland/deno/releases/latest/download/deno-{aarch64|x86_64}-apple-darwin.zip"}
+    ],
+    "userRequestedEngineUpdate": {
+      "windows": "Execute bundled yt-dlp -U; upstream updater contacts its official release infrastructure and replaces the native executable.",
+      "macOS": "Download the latest official yt-dlp_macos.zip from GitHub into a temporary directory, verify the executable runs with --version, then replace the local engine.",
+      "browserCookiesSupplied": false,
+      "note": "An engine update can change native extraction/network behavior independently of the extension version."
+    },
+    "remoteExecutableCode": {
+      "extension": "No remote executable-code loading is implemented; scripts are packaged in the extension.",
+      "nativeHelper": "The helper runs installed native tools and can replace yt-dlp after a user-requested update. This must be disclosed separately from extension scripts.",
+      "ejs": "Official yt-dlp executables bundle EJS, which works with a local JavaScript runtime to process site-provided player/challenge scripts. Current ClipGo download commands use local Deno where present, do not enable --remote-components, and include --ignore-config. Upstream also supports optional ejs:github and ejs:npm remote fetching, which is not enabled by this command.",
+      "upstreamReferences": ["https://github.com/yt-dlp/yt-dlp/wiki/EJS", "https://github.com/yt-dlp/yt-dlp/blob/2026.10.26/README.md"],
+      "reviewRequiredAfterEngineChange": true
+    }
+  },
+  "storeWorksheetNotes": {
+    "singlePurpose": "Save the user's selected supported website video to local storage using a locally installed helper, with task progress and basic download management.",
+    "sensitiveDataCategoriesToReview": ["Authentication information: site cookies and Tencent login fields", "Web history / browsing activity: selected page URLs and task history, despite no history API permission", "Website content: video titles, identifiers, URLs, metadata, and downloaded media", "User activity: selected download actions and task progress stored locally"],
+    "doNotClaim": ["No data is accessed or processed", "Cookies never leave the device", "All data is deleted on uninstall", "The entire product has no downloaded executable components", "Store approval or legal compliance is already established"],
+    "pendingBeforeSubmission": ["Confirm developer identity and contact route", "Publish the final privacy policy at a stable public URL", "Reconcile each store edition's generated manifest and supported sites", "Map these facts to each store's current definitions of collection, transfer, and remote code", "Review the final packaged native helper and any updated engine version", "Ensure store listing claims match the implemented behavior"],
+    "submissionComplete": false
+  }
+}

@@ -1,0 +1,101 @@
+ClipGo for Windows - third-party software and source references
+Runtime versions recorded: 2026-11-09
+
+The third-party programs retain their own copyrights and licenses. Their
+license texts are in the adjacent licenses directory. ClipGo does not modify
+the supplied runtime executables. This notice identifies source locations;
+it does not state that all corresponding source archives are inside the EXE.
+
+Python embedded 3.12.10, Windows x64
+  License: PSF-2.0 and the incorporated-software terms in
+    licenses/Python-3.12.10-LICENSE.txt (copied intact from the embedded package).
+  Binary:
+    https://www.python.org/ftp/python/3.12.10/python-3.12.10-embed-amd64.zip
+  Source:
+    https://www.python.org/ftp/python/3.12.10/Python-3.12.10.tar.xz
+
+yt-dlp 2026.10.26, Windows x64 standalone executable
+  The yt-dlp project source is Unlicense. The official PyInstaller executable
+  includes other projects and is distributed as a combined GPL-3.0-or-later
+  work. Preserve both license files:
+    licenses/yt-dlp-2026.10.26-LICENSE.txt
+    licenses/yt-dlp-2026.10.26-THIRD_PARTY_LICENSES.txt
+  The second file contains the bundled components' license texts and original
+  project source locations. It is copied intact from the matching release.
+  Binary:
+    https://github.com/yt-dlp/yt-dlp/releases/download/2026.10.26/yt-dlp.exe
+  Project source distribution:
+    https://github.com/yt-dlp/yt-dlp/releases/download/2026.10.26/yt-dlp.tar.gz
+  Build recipes and dependency declarations:
+    https://github.com/yt-dlp/yt-dlp/tree/2026.10.26/bundle
+    https://github.com/yt-dlp/yt-dlp/blob/2026.10.26/pyproject.toml
+    https://github.com/yt-dlp/yt-dlp/blob/2026.10.26/.github/workflows/build.yml
+  A yt-dlp-only source archive is not all the source of its bundled dependencies.
+
+FFmpeg / FFprobe N-128713-g0f89d936b3-20261108, win64-gpl
+  License: GPL-3.0-or-later (this build enables GPL and version 3).
+    licenses/FFmpeg-GPL-3.0.txt
+  The build recipes have their separate MIT license:
+    licenses/FFmpeg-Builds-MIT.txt
+  Fixed binary release:
+    https://github.com/yt-dlp/FFmpeg-Builds/releases/download/autobuild-2026-11-08-18-52/ffmpeg-N-128713-g0f89d936b3-win64-gpl.zip
+  FFmpeg source revision:
+    https://github.com/FFmpeg/FFmpeg/tree/0f89d936b39e1cb438a874ecfccffe253be6b63b
+  FFmpeg source archive:
+    https://api.github.com/repos/FFmpeg/FFmpeg/tarball/0f89d936b39e1cb438a874ecfccffe253be6b63b
+  Build recipes, configuration and patches:
+    https://github.com/yt-dlp/FFmpeg-Builds/tree/2e105eceb226411f9a56c821306c2c2d00b7a389
+  Build recipe source archive:
+    https://api.github.com/repos/yt-dlp/FFmpeg-Builds/tarball/2e105eceb226411f9a56c821306c2c2d00b7a389
+  The ffmpeg-deps group in licenses/SOURCE-MANIFEST.json indexes the upstream
+  source repositories and fixed revisions from all 133 recipe source entries,
+  including conditional/other-platform recipes that may not be in this binary.
+  Each entry links to the exact upstream recipe. Retain those recipes, patches,
+  source dependencies, and their own license texts when assembling source.
+  GitHub's automatic FFmpeg-Builds source archive contains build recipes;
+  it does not contain FFmpeg itself or all the linked libraries' source.
+
+Deno 2.9.8, Windows x64
+  Deno license: MIT, in licenses/Deno-2.9.8-LICENSE.txt.
+  Binary:
+    https://github.com/denoland/deno/releases/download/v2.9.8/deno-x86_64-pc-windows-msvc.zip
+  Project source distribution:
+    https://github.com/denoland/deno/releases/download/v2.9.8/deno_src.tar.gz
+  Exact dependency lock:
+    https://github.com/denoland/deno/blob/v2.9.8/Cargo.lock
+    licenses/Deno-2.9.8-Cargo.lock
+  Additional notices preserved from the matching source tree:
+    licenses/Deno-2.9.8-Node-LICENSE.txt
+    licenses/Deno-2.9.8-Undici-LICENSE.txt
+    licenses/Deno-2.9.8-WebGPU-LICENSE.txt
+    licenses/Rusty-V8-150.4.0-LICENSE.txt
+    licenses/V8-ac1e23989121713ca642f6650b34deff7b686896-LICENSE.txt
+    licenses/TypeScript-6.0.3-LICENSE.txt
+  Their precise origins are in licenses/Deno-NOTICE-SOURCES.json.
+  Rusty V8 is pinned by Cargo.lock to 150.4.0; its V8 source is pinned to
+  ac1e23989121713ca642f6650b34deff7b686896. Its other submodules are recorded at:
+    https://github.com/denoland/rusty_v8/tree/v150.4.0
+  The deno-deps group in licenses/SOURCE-MANIFEST.json includes the locked Rust
+  source archives, their upstream SHA-256 hashes, and Git dependencies. It also
+  includes development and other-platform dependencies. The Deno source tarball
+  alone does not vendor all those crates or V8 submodules. The notice files
+  listed above are not a claim to enumerate every linked Rust/V8 dependency.
+
+Optional source retrieval
+  licenses/fetch-sources.py is provided for inspecting and downloading the
+  pinned source references. Installation never runs it. It does not compile
+  software, change the installed runtime, or collect browser/user data.
+  Python 3.9+ is required; Git/SVN are also needed for those source entries.
+
+  List the references without downloading:
+    python fetch-sources.py --group core
+  Explicitly fetch the main project sources into a new directory:
+    python fetch-sources.py --group core --fetch --output source-downloads
+  Fetch the indexed dependency sources as well (can be large):
+    python fetch-sources.py --group ffmpeg-deps --group deno-deps --fetch --output dependency-sources
+
+  The downloader checks published hashes where supplied and records hashes for
+  downloaded archives. It preserves Git submodules recursively. Build systems
+  may fetch further dependencies described by the upstream recipes; inspect
+  those recipes before describing an assembled archive as complete source.
+  Keep any source companion archive with the installer when sharing it.

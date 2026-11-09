@@ -11,86 +11,87 @@
       <img src="icons/icon32.png" width="22" height="22" alt="">
       <span>ClipGo</span>
     </div>
-    <button id="helperStatus" class="status" title="本地助手状态">
-      <i class="dot"></i><span>检测助手…</span>
+    <button id="helperStatus" class="status" title="本地助手状态" data-i18n-title="popup_helper_status">
+      <i class="dot"></i><span data-i18n="popup_helper_checking">检测助手…</span>
     </button>
   </header>
 
   <section id="setup" class="setup" hidden>
-    <h2>还差一步：安装本地助手</h2>
-    <p>ClipGo 通过本机的 yt-dlp + ffmpeg 下载并合成 MP4，需要先安装一次助手（约 150MB）。</p>
+    <h2 data-i18n="popup_setup_title">还差一步：安装本地助手</h2>
+    <p data-i18n="popup_setup_description">首次使用请安装 ClipGo 本地助手，即可将视频保存为 MP4。</p>
     <div class="os">
       <b>Windows</b>
-      <span>双击 <code>host\install-windows.bat</code></span>
+      <span data-i18n="popup_setup_windows">运行 ClipGo Windows 安装包</span>
     </div>
     <div class="os">
       <b>macOS</b>
-      <span>终端运行 <code>bash host/install-mac.sh</code></span>
+      <span><span data-i18n="popup_setup_mac">在终端运行：</span> <code>bash host/install-mac.sh</code></span>
     </div>
     <p class="muted" id="setupDetail"></p>
-    <button id="recheck" class="ghost">我已安装，重新检测</button>
+    <button id="recheck" class="ghost" data-i18n="popup_recheck">我已安装，重新检测</button>
   </section>
 
   <section class="card">
     <div class="source">
       <span id="siteBadge" class="badge">—</span>
-      <span id="pageHint" class="hint">打开 YouTube / Instagram 视频，或粘贴链接</span>
+      <span id="pageHint" class="hint" data-i18n="popup_page_hint">打开视频页，或粘贴视频链接</span>
     </div>
-    <input id="url" type="url" spellcheck="false" placeholder="https://www.youtube.com/watch?v=… 或 instagram.com/reel/…">
+    <input id="url" type="text" spellcheck="false" placeholder="粘贴视频链接或分享文字" aria-label="视频链接" data-i18n-placeholder="popup_url_placeholder" data-i18n-aria-label="popup_url_label">
+    <p class="muted supported" data-i18n="popup_supported">支持 YouTube、Instagram、B站、X、小红书、TikTok、抖音、腾讯视频</p>
     <div class="row">
-      <select id="quality" aria-label="画质"></select>
-      <button id="download" class="primary" disabled>下载 MP4</button>
+      <select id="quality" aria-label="画质" data-i18n-aria-label="popup_quality_label"></select>
+      <button id="download" class="primary" disabled data-i18n="popup_download">下载 MP4</button>
     </div>
     <p id="formError" class="error" hidden></p>
   </section>
 
   <section class="tasks">
     <div class="tasks-head">
-      <h3>下载任务</h3>
-      <button id="clear" class="link">清除已完成</button>
+      <h3 data-i18n="popup_tasks">下载任务</h3>
+      <button id="clear" class="link" data-i18n="popup_clear_finished">清除已完成</button>
     </div>
     <ul id="taskList"></ul>
-    <p id="empty" class="empty">还没有下载任务</p>
+    <p id="empty" class="empty" data-i18n="popup_empty">还没有下载任务</p>
   </section>
 
   <details class="settings">
-    <summary>设置</summary>
+    <summary data-i18n="popup_settings">设置</summary>
     <div class="setting">
       <div>
-        <div class="label">保存位置</div>
+        <div class="label" data-i18n="popup_save_location">保存位置</div>
         <div id="dir" class="path">—</div>
       </div>
       <div class="btns">
-        <button id="openDir" class="ghost small">打开</button>
-        <button id="chooseDir" class="ghost small">更改</button>
+        <button id="openDir" class="ghost small" data-i18n="popup_open">打开</button>
+        <button id="chooseDir" class="ghost small" data-i18n="popup_change">更改</button>
       </div>
     </div>
     <label class="setting check">
       <input id="quickButton" type="checkbox">
       <div>
-        <div class="label">页面上的快速下载按钮</div>
-        <div class="muted">鼠标移到视频缩略图或播放器上时显示「MP4」按钮，点一下按上面选的画质直接下载</div>
+        <div class="label" data-i18n="popup_quick_button">页面上的快速下载按钮</div>
+        <div class="muted" data-i18n="popup_quick_button_description">鼠标移到视频缩略图或播放器上时显示「MP4」按钮，点一下按上面选的画质直接下载</div>
       </div>
     </label>
     <label class="setting check">
       <input id="ytCookies" type="checkbox">
       <div>
-        <div class="label">YouTube 使用登录状态</div>
-        <div class="muted">遇到“请登录以确认你不是机器人”、年龄限制或会员视频时开启</div>
+        <div class="label" data-i18n="popup_youtube_login">YouTube 使用登录状态</div>
+        <div class="muted" data-i18n="popup_youtube_login_description">遇到“请登录以确认你不是机器人”、年龄限制或会员视频时开启</div>
       </div>
     </label>
     <label class="setting check">
       <input id="notify" type="checkbox">
-      <div class="label">下载完成时通知</div>
+      <div class="label" data-i18n="popup_notify">下载完成时通知</div>
     </label>
     <div class="setting">
       <div>
-        <div class="label">下载引擎</div>
+        <div class="label" data-i18n="popup_engine">下载引擎</div>
         <div id="engine" class="muted">—</div>
       </div>
-      <button id="update" class="ghost small">更新 yt-dlp</button>
+      <button id="update" class="ghost small" data-i18n="popup_update">更新 yt-dlp</button>
     </div>
-    <p class="muted small-note">Instagram 会自动使用本浏览器的登录状态。请只下载你有权保存的内容。</p>
+    <p class="muted small-note" data-i18n="popup_login_note">除 YouTube 可单独设置外，其他平台会自动使用本浏览器的登录状态。画质取决于账号权限；请只下载你有权保存的内容。</p>
   </details>
 
   <script src="common.js"></script>
