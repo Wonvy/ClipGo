@@ -181,6 +181,24 @@ test("YouTube player targeting stays intact", async () => {
   assert.equal(p.messages[0].url, "https://www.youtube.com/watch?v=jNQXAC9IVRw");
 });
 
+test("the quick-download button hides while a video is fullscreen", async () => {
+  const p = await page("https://www.youtube.com/watch?v=jNQXAC9IVRw");
+  const player = new Element("div", { id: "movie_player" });
+  const video = player.appendChild(new Element("video"));
+  p.hover(video);
+  assert.ok(p.button.classList.contains("show"));
+  const doc = p.context.document;
+  doc.fullscreenElement = player;
+  doc.listeners.fullscreenchange();
+  assert.ok(!p.button.classList.contains("show"));
+  p.hover(video);
+  assert.ok(!p.button.classList.contains("show"));
+  doc.fullscreenElement = null;
+  doc.listeners.fullscreenchange();
+  p.hover(video);
+  assert.ok(p.button.classList.contains("show"));
+});
+
 test("Instagram feed videos still use their article permalink", async () => {
   const p = await page("https://www.instagram.com/");
   const article = new Element("article");

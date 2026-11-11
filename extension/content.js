@@ -527,6 +527,11 @@
     return tasks.find((t) => t.url === url);
   }
 
+  // Watching a video fullscreen: never overlay the quick-download button.
+  function inFullscreen() {
+    return !!(document.fullscreenElement || document.webkitFullscreenElement);
+  }
+
   function render() {
     // Bilibili reuses its player while switching parts/videos with pushState.
     // Read the current address instead of retaining the previous part's URL.
@@ -546,7 +551,7 @@
       if (url) current.url = url;
       else current = null;
     }
-    if (!current || !enabled) {
+    if (!current || !enabled || inFullscreen()) {
       btn.classList.remove("show");
       return;
     }
@@ -632,6 +637,9 @@
   }, { passive: true });
   // Content moves under a still pointer when scrolling (page or inner panes).
   window.addEventListener("scroll", relookup, { passive: true, capture: true });
+  for (const name of ["fullscreenchange", "webkitfullscreenchange"]) {
+    document.addEventListener(name, () => (inFullscreen() ? render() : relookup()), { passive: true });
+  }
 
   btn.addEventListener("mousedown", (e) => { e.preventDefault(); e.stopPropagation(); });
   btn.addEventListener("click", async (e) => {
